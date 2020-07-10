@@ -1,0 +1,41 @@
+{
+	"app": {
+		"hello": "Hello Welt!"
+	},
+	"welcome": {
+		"guest_login": "GAST-LOGIN"
+	},
+	"language": {
+		"english": "Englisch",
+		"german": "Deutsche",
+		"english_original": "English",
+		"german_original": "Deutsch"
+	},
+	"navigation": {
+		"home": "Zuhause",
+		"help": "Hilfe",
+		"settings": "die Einstellungen",
+		"logout": "Ausloggen",
+		"local_offers": "Lokale Angebote",
+		"online_offers": "Online-Angebote",
+		"favorites": "Favoriten",
+		"language_selection": "Sprachauswahl",
+		"login": "Login",
+		"user_profile": "Profile",
+		"welcome": "Welcome",
+		"new_customer": "New Customer",
+		"new_user": "New User"
+	},
+	"settings": {
+		"notifications": {
+			"title_notifications": "Benachrichtigungen"
+		},
+		"more": {
+			"title_more": "Mehr",
+			"language_selection": "Sprachauswahl",
+			"rate_us": "Bewerten Sie uns",
+			"recommend_us": "Empfehlen Sie uns weiter",
+			"logout": "Ausloggen"
+		}
+	}
+}
