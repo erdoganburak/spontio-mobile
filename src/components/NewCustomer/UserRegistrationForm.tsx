@@ -15,6 +15,7 @@ import { changeLoggedInState } from '../../redux/actions/session';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import { SpontioColors } from '../../enums/spontioColors.enum';
 import { Session } from '../../redux/reducer/sessionReducer';
+import ButtonOutline from '../Button/ButtonOutline';
 
 class UserRegistrationForm extends Component<Props, State> {
 
@@ -63,12 +64,9 @@ class UserRegistrationForm extends Component<Props, State> {
         <Text style={styles.passwordDescription}>
           Your password must be at least 8 characters, with at least 1 number and 1 special character.
         </Text>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={this.onLoginButtonClicked}>
-          <Text style={styles.buttonText}>{"REGISTER"}
-          </Text>
-        </TouchableOpacity>
+        <View style={styles.buttonContainer}>
+          <ButtonOutline  width={250} title={"REGISTER"} onPress={this.onLoginButtonClicked.bind(this)}></ButtonOutline>
+        </View>
       </View>
     );
   }
@@ -116,7 +114,11 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(12),
     paddingVertical: moderateScale(10),
     textAlign: 'justify'
-  }
+  },
+  buttonContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+}
 });
 
 interface IStateProps {

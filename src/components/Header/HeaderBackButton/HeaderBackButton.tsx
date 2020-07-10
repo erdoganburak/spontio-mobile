@@ -1,5 +1,5 @@
 import React, { Component, Dispatch } from 'react';
-import { View, Text, StyleSheet, ScrollView, Dimensions, FlatList, Animated, Easing, Platform } from 'react-native';
+import { View, Text, StyleSheet} from 'react-native';
 import { TRootReducer } from '../../../redux/store';
 import { connect } from 'react-redux';
 import { NavigationProp } from '@react-navigation/native';

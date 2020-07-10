@@ -4,7 +4,7 @@ import { TRootReducer } from '../../redux/store';
 import { connect } from 'react-redux';
 import { NavigationProp, DrawerActions } from '@react-navigation/native';
 import { Session } from '../../redux/reducer/sessionReducer';
-import { createStackNavigator, HeaderBackButton, CardStyleInterpolators } from '@react-navigation/stack';
+import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import { SpontioColors } from '../../enums/spontioColors.enum';
 import HomeTabs from './HomeTabs';
 import NewCustomerStack from './NewCustomerStack';
@@ -18,6 +18,7 @@ import { AnyAction } from 'redux';
 import { showCamera, showTakenPicture, changePicture } from '../../redux/actions/camera';
 import { changeUserProfilePicture } from '../../redux/actions/user';
 import { translate } from '../../managers/language.manager';
+import HeaderBackButton from '../Header/HeaderBackButton/HeaderBackButton';
 
 const MainStackNavigator = createStackNavigator();
 
@@ -39,7 +40,7 @@ class MainStack extends Component<Props, State> {
           headerBackground: (props) => (
             <View style={{ backgroundColor: SpontioColors.Primary, flex: 1 }}>
               {this.props.navigationProperty.showHeaderLogo ? <Image
-                style={{ width: moderateScale(150), height: moderateScale(50), backgroundColor: SpontioColors.Primary, alignSelf: 'center', justifyContent: 'center', flex: 1 }}
+                style={{ width: moderateScale(140), height: moderateScale(40), backgroundColor: SpontioColors.Primary, alignSelf: 'center', justifyContent: 'center', flex: 1 }}
                 source={require('../../assets/spontio_name_logo1.png')}
                 resizeMode='contain'
               /> : < View ></View>}

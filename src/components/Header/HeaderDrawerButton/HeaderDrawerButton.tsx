@@ -1,5 +1,5 @@
-import React, { Component, Dispatch } from 'react';
-import { View, Text, StyleSheet, ScrollView, Dimensions, FlatList, Animated, Easing, Platform } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet} from 'react-native';
 import { TRootReducer } from '../../../redux/store';
 import { connect } from 'react-redux';
 import { NavigationProp } from '@react-navigation/native';
@@ -28,7 +28,7 @@ class HeaderDrawerButton extends Component<Props, State> {
   render() {
     return (
       <TouchableOpacity style={styles.headerButton} onPress={() => this.props.onPress()}>
-        <FontAwesomeIcon icon="grip-lines" size={scale(22)} color={SpontioColors.Black} />
+        <FontAwesomeIcon icon="grip-lines" size={scale(22)} color={SpontioColors.White} />
       </TouchableOpacity>
     )
   }

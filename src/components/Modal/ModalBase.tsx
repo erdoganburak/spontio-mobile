@@ -82,7 +82,7 @@ const styles = (props: IProps) =>
 	StyleSheet.create({
 		container: {
 			backgroundColor: SpontioColors.White,
-			height: props.size ? props.size : '98%',
+			height: props.size ? props.size : '95%',
 			margin: moderateScale(3),
 			borderRadius: 10
 		},

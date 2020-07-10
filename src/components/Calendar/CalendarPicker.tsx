@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, StatusBar } from 'react-native';
 import { SpontioColors } from '../../enums/spontioColors.enum';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import { connect } from 'react-redux';
 import Calendar from './Calendar';
 import ButtonCalendar from './ButtonCalendar';
 import moment from 'moment';
+import { TextInput } from 'react-native-gesture-handler';
 
 class CalendarPicker extends Component<Props, State> {
 
@@ -29,12 +30,18 @@ class CalendarPicker extends Component<Props, State> {
                     <ButtonCalendar onPress={this.onClick.bind(this)}></ButtonCalendar>
                 </View>
                 <View style={styles.textContainer}>
-                    <Text style={styles.title}>
-                        {this.props.title}
-                    </Text>
-                    <Text style={styles.text}>
-                        {this.props.date ? moment(this.props.date).format('DD/MM/YYYY') : "../../...."}
-                    </Text>
+                    <StatusBar barStyle="light-content" />
+                    <TextInput
+                        autoCapitalize={'none'}
+                        autoCorrect={false}
+                        keyboardType="default"
+                        placeholder={"Birthdate"}
+                        placeholderTextColor="rgba(255,255,255,0.8)"
+                        style={styles.input}
+                        returnKeyType="next"
+                        value={this.props.date ? moment(this.props.date).format('DD/MM/YYYY') : ""}
+                        editable = {false}
+                    />
                 </View>
             </View>
         );
@@ -69,9 +76,8 @@ class CalendarPicker extends Component<Props, State> {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         flexDirection: 'row',
-        height: moderateScale(45),
-        marginBottom: moderateScale(10)
     },
     buttonContainer: {
         flex: 0.2
@@ -79,7 +85,6 @@ const styles = StyleSheet.create({
     textContainer: {
         flex: 0.8,
         backgroundColor: SpontioColors.Primary,
-        justifyContent: 'flex-end',
     },
     text: {
         fontSize: moderateScale(14),
@@ -91,6 +96,15 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: SpontioColors.White,
         textDecorationLine: "underline"
+    },
+    input: {
+        height: moderateScale(45),
+        backgroundColor: 'rgba(255,255,255,0.2)',
+        marginBottom: scale(10),
+        color: SpontioColors.White,
+        paddingHorizontal: scale(10),
+        borderStyle: 'solid',
+        fontSize: moderateScale(12),
     }
 });
 

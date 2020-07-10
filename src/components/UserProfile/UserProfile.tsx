@@ -140,7 +140,7 @@ class UserProfile extends Component<Props, State> {
                                 <View style={styles.calenderPicker}>
                                     <CalendarPicker title={"Birthdate"} date={this.state.date} onDateChange={this.onDateChange.bind(this)}></CalendarPicker>
                                 </View>
-                                <View>
+                                <View style={styles.genderSelector}>
                                     <GenderPicker title={"Gender"} onClickGender={this.onClickGender.bind(this)}></GenderPicker>
                                 </View>
                             </View>
@@ -183,11 +183,16 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     subWrapper: {
-        paddingVertical: moderateScale(30)
+        flex: 2,
+        paddingBottom: moderateScale(20),
     },
     calenderPicker: {
-        paddingBottom: moderateScale(10)
-    }
+        flex: 1,
+    },
+    genderSelector: {
+        flex: 1,
+        paddingBottom: moderateScale(10),
+    },
 });
 
 interface IStateProps {

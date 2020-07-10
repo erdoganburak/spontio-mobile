@@ -146,9 +146,10 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        paddingTop:moderateScale(30)
     },
     buttonContainer: {
-        flex: 1,
+        flex: 2,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -175,29 +176,26 @@ const styles = StyleSheet.create({
     footer: {
         flex: 1,
         flexDirection: 'column',
-        alignContent: 'center',
         justifyContent: 'flex-end',
-        paddingBottom: moderateScale(20)
     },
     termsAndConditionsContainer: {
         flex: 1,
-        flexDirection: 'row',
+        flexDirection: 'column',
         alignSelf: 'center',
     },
     textFirstHalf: {
-        flex: 0.7,
         color: SpontioColors.White,
-        textAlign: 'left',
-        textAlignVertical: 'bottom'
+        textAlign: 'center',
     },
     buttonSecondHalf: {
-        flex: 0.3,
+        flex: 0.5,
     },
     buttonTextSecondHalf: {
         color: SpontioColors.White,
         fontWeight: 'bold',
-        textAlign: 'right',
-        textAlignVertical: 'bottom'
+        textAlign: 'center',
+        padding: moderateScale(10),
+        fontSize: moderateScale(14)
     }
 });
 

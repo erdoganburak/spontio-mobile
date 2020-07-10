@@ -16,9 +16,11 @@ class ButtonOutline extends Component<Props, State> {
     }
 
     render() {
+        const styleDefinitions = styles(this.props);
+
         return (
-            <TouchableOpacity style={styles.container} onPress={this.props.onPress}>
-                <Text style={styles.text}>
+            <TouchableOpacity style={styleDefinitions.button} onPress={this.props.onPress}>
+                <Text style={styleDefinitions.text}>
                     {this.props.title}
                 </Text>
             </TouchableOpacity>
@@ -27,24 +29,25 @@ class ButtonOutline extends Component<Props, State> {
 
 }
 
-const styles = StyleSheet.create({
-    container: {
-        width: scale(300),
-        height: moderateScale(45),
-        marginBottom: moderateScale(10),
-        backgroundColor: SpontioColors.Primary,
-        borderColor: SpontioColors.White,
-        borderWidth: 2
-    },
-    text: {
-        color: SpontioColors.White,
-        fontWeight: "bold",
-        flex: 1,
-        textAlign: 'center',
-        textAlignVertical: 'center',
-        fontSize: moderateScale(14),
-    }
-});
+const styles = (props: Props) =>
+    StyleSheet.create({
+        button: {
+            width: scale(props.width ? props.width : 300),
+            height: moderateScale(45),
+            marginBottom: moderateScale(10),
+            backgroundColor: SpontioColors.Primary,
+            borderColor: SpontioColors.White,
+            borderWidth: 2,
+        },
+        text: {
+            color: SpontioColors.White,
+            fontWeight: "bold",
+            flex: 1,
+            textAlign: 'center',
+            fontSize: moderateScale(14),
+            paddingVertical: moderateScale(12)
+        }
+    });
 
 interface IStateProps {
 
@@ -54,6 +57,7 @@ export interface OwnProps {
     navigation: NavigationProp<any>;
     onPress: () => void;
     title: string,
+    width: number
 }
 
 type State = {

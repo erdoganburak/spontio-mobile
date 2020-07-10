@@ -33,11 +33,6 @@ class GenderPicker extends Component<Props, State> {
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.textContainer}>
-                    <Text style={styles.title}>
-                        {this.props.title}
-                    </Text>
-                </View>
                 <View style={styles.genderContainer}>
                     <View style={styles.button}>
                         <ButtonGender selected={Gender.Male === this.state.selectedGender} gender={Gender.Male} onPress={this.onClickGender.bind(this, Gender.Male)}></ButtonGender>
@@ -45,6 +40,11 @@ class GenderPicker extends Component<Props, State> {
                     <View style={styles.button}>
                         <ButtonGender selected={Gender.Female === this.state.selectedGender} gender={Gender.Female} onPress={this.onClickGender.bind(this, Gender.Female)}></ButtonGender>
                     </View>
+                </View>
+                <View style={styles.textContainer}>
+                    <Text style={styles.title}>
+                        {this.props.title}
+                    </Text>
                 </View>
             </View>
         );
@@ -55,26 +55,26 @@ class GenderPicker extends Component<Props, State> {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        height: moderateScale(45),
-        marginBottom: moderateScale(10)
+        flex: 1
     },
     genderContainer: {
-        flex: 0.8,
+        flex: 0.4,
         flexDirection: 'row',
     },
     textContainer: {
-        flex: 0.2,
+        flex: 0.6,
         backgroundColor: SpontioColors.Primary,
         justifyContent: 'center',
         alignItems: 'flex-start'
     },
     text: {
-        fontSize: moderateScale(14),
+        fontSize: moderateScale(12),
         fontWeight: 'bold',
         color: SpontioColors.White,
+        textAlign:'left'
     },
     title: {
-        fontSize: moderateScale(14),
+        fontSize: moderateScale(12),
         fontWeight: 'bold',
         color: SpontioColors.White,
     },

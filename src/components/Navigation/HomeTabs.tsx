@@ -15,6 +15,8 @@ import { translate } from '../../managers/language.manager';
 
 const HomeTabsNavigator = createBottomTabNavigator();
 
+// TODO check tab size for new iphones
+
 class HomeTabs extends Component<Props, State> {
 
   public readonly state: State = {
