@@ -6,12 +6,14 @@ import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { AnyAction } from 'redux';
 import { showCamera, } from '../../redux/actions/camera';
-import { changePicture, showGallery } from '../../redux/actions/gallery';
 import { TRootReducer } from '../../redux/store';
 import { Camera } from '../../redux/reducer/cameraReducer';
 import NavigationManager from '../../managers/navigation.manager';
 import { User } from '../../redux/reducer/userReducer';
-import { Gallery } from '../../redux/reducer/galleryReducer';
+import GalleryManager from '../../managers/gallery.manager';
+import { Role } from '../../enums/role.enum';
+import { showPictureSelectorModal } from '../../redux/actions/pictureSelector';
+import { PictureSelectorObject } from '../../redux/reducer/pictureSelectorReducer';
 
 class ModalPictureSelector extends Component<Props, State> {
 
@@ -25,11 +27,13 @@ class ModalPictureSelector extends Component<Props, State> {
 
     private onPressCamera() {
         this.props.showCamera(true);
+        this.props.showPictureSelectorModal(false);
         NavigationManager.showHeader(false);
     }
 
     private onPressGallery() {
-        this.props.showGallery(true);
+        // TODO this will come from USER redux
+        GalleryManager.openGallery(Role.User);
     }
     render() {
         return (
@@ -100,14 +104,14 @@ const styles = StyleSheet.create({
 interface IStateProps {
     camera: Camera,
     user: User,
-    gallery: Gallery
+    pictureSelector: PictureSelectorObject 
 }
 
 const mapStateToProps = (state: TRootReducer): IStateProps => {
     return {
         camera: state.cameraReducer.camera,
         user: state.userReducer.user,
-        gallery: state.galleryReducer.gallery
+        pictureSelector: state.pictureSelectorReducer.pictureSelectorObject
     }
 }
 
@@ -117,15 +121,13 @@ export interface OwnProps {
 
 interface IDispatchProps {
     showCamera: (show: boolean) => void;
-    showGallery: (show: boolean) => void;
-    changePicture: (picture: string) => void;
+    showPictureSelectorModal: (show: boolean) => void;
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
     return {
         showCamera: (show: boolean) => dispatch(showCamera(show)),
-        showGallery: (show: boolean) => dispatch(showGallery(show)),
-        changePicture: (picture: string) => dispatch(changePicture(picture))
+        showPictureSelectorModal: (show: boolean) => dispatch(showPictureSelectorModal(show)),
     }
 }
 

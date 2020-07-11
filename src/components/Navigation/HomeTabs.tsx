@@ -52,17 +52,22 @@ class HomeTabs extends Component<Props, State> {
             }
             return <Ionicons name={iconName} size={moderateScale(size)} color={color} />;
           },
+
         })
         }
         tabBarOptions={{
           activeTintColor: SpontioColors.Primary,
           inactiveTintColor: SpontioColors.Gray,
           labelStyle: {
-            fontSize: moderateScale(10),
+            fontSize: moderateScale(12),
           },
           style: {
-            height: moderateScale(50)
-          }
+            height: moderateScale(50),
+          },
+          safeAreaInsets:{
+            // TODO problem with iphone x and upper models
+            bottom:-5
+          },
         }}
       >
         <HomeTabsNavigator.Screen name={translate("navigation.local_offers")} component={LocalOffers} />

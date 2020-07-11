@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Dispatch } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { SpontioColors } from '../../enums/spontioColors.enum';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
@@ -7,11 +7,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import ModalBase from '../Modal/ModalBase';
 import { ModalSize } from '../../enums/modalSize.enum';
 import ModalPictureSelector from '../PictureSelector/ModalPictureSelector';
+import { TRootReducer } from '../../redux/store';
+import { AnyAction } from 'redux';
+import { PictureSelectorObject } from '../../redux/reducer/pictureSelectorReducer';
+import { showPictureSelectorModal } from '../../redux/actions/pictureSelector';
 
 class NoPictureViewer extends Component<Props, State> {
 
     public readonly state: State = {
-        showModal: false
+    
     }
 
     async componentDidMount() {
@@ -23,13 +27,13 @@ class NoPictureViewer extends Component<Props, State> {
     }
 
     private onPressCamera() {
-        this.setState({ showModal: true });
+        this.props.showPictureSelectorModal(true);
     }
 
     private renderModal() {
         return (
             <ModalBase
-                isVisible={this.state.showModal}
+                isVisible={this.props.pictureSelector.showPictureSelectorModal}
                 onBackdropPress={this.onBackdropPressModal.bind(this)}
                 title={"Choose"}
                 closeButtonHide={false}
@@ -47,23 +51,20 @@ class NoPictureViewer extends Component<Props, State> {
     }
 
     private onCloseModal(): void {
-        this.setState({ showModal: false });
+        this.props.showPictureSelectorModal(false);
     }
 
     private onBackdropPressModal(): void {
-        this.setState({ showModal: false });
+        this.props.showPictureSelectorModal(false);
     }
 
     render() {
         return (
             <View style={styles.wrapper}>
                 {this.renderModal()}
-                <View style={styles.smileContainer}>
-                    <FontAwesomeIcon style={styles.smile} icon="smile" size={scale(100)} color={SpontioColors.White} />
-                </View>
                 <View style={styles.cameraContainer}>
                     <TouchableOpacity onPress={this.onPressCamera.bind(this)}>
-                        <FontAwesomeIcon style={styles.smile} icon="camera" size={scale(20)} color={SpontioColors.White} />
+                        <FontAwesomeIcon icon="camera" size={scale(70)} color={SpontioColors.White} />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -78,42 +79,45 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    smileContainer: {
+    cameraContainer: {
         borderRadius: 100,
         borderColor: SpontioColors.PrimaryLight,
         borderWidth: 2,
-        padding: moderateScale(10),
+        padding: moderateScale(30),
         marginHorizontal: moderateScale(15),
         marginVertical: moderateScale(0)
-    },
-    smile: {
-
-    },
-    cameraContainer: {
-        alignSelf: 'center',
-        borderRadius: 100,
-        borderColor: SpontioColors.PrimaryLight,
-        borderWidth: 2,
-        padding: moderateScale(10),
-        marginLeft: moderateScale(125),
-    },
-    camera: {
-
     }
 });
 
 interface IStateProps {
-
+    pictureSelector: PictureSelectorObject 
 }
 
+const mapStateToProps = (state: TRootReducer): IStateProps => {
+    return {
+        pictureSelector: state.pictureSelectorReducer.pictureSelectorObject
+    }
+}
+
+
 export interface OwnProps {
-    picture: string;
+    picture: string,
+}
+
+interface IDispatchProps {
+    showPictureSelectorModal: (show: boolean) => void;
+}
+
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
+    return {
+        showPictureSelectorModal: (show: boolean) => dispatch(showPictureSelectorModal(show)),
+    }
 }
 
 type State = {
-    showModal: boolean;
+
 }
 
-type Props = IStateProps & OwnProps
+type Props = IStateProps & IDispatchProps & OwnProps
 
-export default connect<IStateProps, {}, OwnProps>(null, null)(NoPictureViewer); 
+export default connect<IStateProps, IDispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(NoPictureViewer);

@@ -3,14 +3,14 @@ import sessionReducers from "./reducer/sessionReducer";
 import navigationReducers from "./reducer/navigationReducer";
 import cameraReducers from "./reducer/cameraReducer";
 import userReducers from "./reducer/userReducer";
-import galleryReducers from "./reducer/galleryReducer";
+import pictureSelectorReducers from "./reducer/pictureSelectorReducer";
 
 const rootReducer = combineReducers({
     sessionReducer: sessionReducers,
     navigationReducer: navigationReducers,
     cameraReducer: cameraReducers,
     userReducer: userReducers,
-    galleryReducer: galleryReducers
+    pictureSelectorReducer: pictureSelectorReducers
 })
 
 const store = createStore(rootReducer);

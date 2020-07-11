@@ -12,8 +12,6 @@ import { showCamera, showTakenPicture, changePicture } from '../../redux/actions
 import { User } from '../../redux/reducer/userReducer';
 import { changeUserProfilePicture } from '../../redux/actions/user';
 import { SpontioColors } from '../../enums/spontioColors.enum';
-import { Gallery } from '../../redux/reducer/galleryReducer';
-import GalleryComponent from '../GalleryComponent/GalleryComponent';
 import { TextInput, ScrollView } from 'react-native-gesture-handler';
 import ButtonOutline from '../Button/ButtonOutline';
 import CalendarPicker from '../Calendar/CalendarPicker';
@@ -21,6 +19,8 @@ import GenderPicker from '../Gender/GenderPicker';
 import { Gender } from '../../enums/gender.enum';
 import NavigationManager from '../../managers/navigation.manager';
 import CameraManager from '../../managers/camera.manager';
+import { PictureSelectorObject } from '../../redux/reducer/pictureSelectorReducer';
+import { showPictureSelectorModal } from '../../redux/actions/pictureSelector';
 
 class UserProfile extends Component<Props, State> {
 
@@ -51,12 +51,7 @@ class UserProfile extends Component<Props, State> {
     private onPictureSave() {
         if (this.props.camera.picture) {
             this.props.changeUserProfilePicture(this.props.camera.picture);
-        }
-    }
-
-    private onPictureSaveFromGallery() {
-        if (this.props.gallery.picture) {
-            this.props.changeUserProfilePicture(this.props.gallery.picture);
+            this.props.showPictureSelectorModal(false);
         }
     }
 
@@ -78,10 +73,6 @@ class UserProfile extends Component<Props, State> {
         if (this.props.camera.showCamera)
             return (
                 <CameraComponent navigation={this.props.navigation} onPictureSave={this.onPictureSave.bind(this)}></CameraComponent>
-            );
-        if (this.props.gallery.showGallery)
-            return (
-                <GalleryComponent onPictureSaveFromGallery={this.onPictureSaveFromGallery.bind(this)}></GalleryComponent>
             );
         return (
             <KeyboardAvoidingView style={styles.container}>
@@ -198,14 +189,14 @@ const styles = StyleSheet.create({
 interface IStateProps {
     camera: Camera,
     user: User,
-    gallery: Gallery
+    pictureSelector: PictureSelectorObject 
 }
 
 const mapStateToProps = (state: TRootReducer): IStateProps => {
     return {
         camera: state.cameraReducer.camera,
         user: state.userReducer.user,
-        gallery: state.galleryReducer.gallery
+        pictureSelector: state.pictureSelectorReducer.pictureSelectorObject
     }
 }
 
@@ -218,6 +209,7 @@ interface IDispatchProps {
     changeUserProfilePicture: (profilePicture: string) => void
     showTakenPicture: (showTakenPicture: boolean) => void;
     changePicture: (picture: string) => void;
+    showPictureSelectorModal: (show: boolean) => void;
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
@@ -225,7 +217,8 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
         showCamera: (show: boolean) => dispatch(showCamera(show)),
         changeUserProfilePicture: (profilePicture: string) => dispatch(changeUserProfilePicture(profilePicture)),
         showTakenPicture: (show: boolean) => dispatch(showTakenPicture(show)),
-        changePicture: (picture: string) => dispatch(changePicture(picture))
+        changePicture: (picture: string) => dispatch(changePicture(picture)),
+        showPictureSelectorModal: (show: boolean) => dispatch(showPictureSelectorModal(show)),
     }
 }
 

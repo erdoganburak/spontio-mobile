@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, StatusBar } from 'react-native';
 import { SpontioColors } from '../../enums/spontioColors.enum';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import { connect } from 'react-redux';
 import ButtonGender from './ButtonGender';
 import { Gender } from '../../enums/gender.enum';
+import { TextInput } from 'react-native-gesture-handler';
 
 class GenderPicker extends Component<Props, State> {
 
@@ -41,11 +42,6 @@ class GenderPicker extends Component<Props, State> {
                         <ButtonGender selected={Gender.Female === this.state.selectedGender} gender={Gender.Female} onPress={this.onClickGender.bind(this, Gender.Female)}></ButtonGender>
                     </View>
                 </View>
-                <View style={styles.textContainer}>
-                    <Text style={styles.title}>
-                        {this.props.title}
-                    </Text>
-                </View>
             </View>
         );
     }
@@ -55,7 +51,8 @@ class GenderPicker extends Component<Props, State> {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        flex: 1
+        flex: 1,
+        alignSelf:'center'
     },
     genderContainer: {
         flex: 0.4,
@@ -64,8 +61,6 @@ const styles = StyleSheet.create({
     textContainer: {
         flex: 0.6,
         backgroundColor: SpontioColors.Primary,
-        justifyContent: 'center',
-        alignItems: 'flex-start'
     },
     text: {
         fontSize: moderateScale(12),
@@ -80,6 +75,15 @@ const styles = StyleSheet.create({
     },
     button: {
         paddingRight: moderateScale(5)
+    },
+    input: {
+        height: moderateScale(45),
+        backgroundColor: 'rgba(255,255,255,0.2)',
+        marginBottom: scale(10),
+        color: SpontioColors.White,
+        paddingHorizontal: scale(10),
+        borderStyle: 'solid',
+        fontSize: moderateScale(12),
     }
 });
 

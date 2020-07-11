@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, StatusBar } from 'react-native';
+import { View, StyleSheet, Text, StatusBar, Platform } from 'react-native';
 import { SpontioColors } from '../../enums/spontioColors.enum';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import { connect } from 'react-redux';
-import Calendar from './Calendar';
+import AndroidCalendar from './AndroidCalendar';
+import IOSCalendar from './IOSCalendar';
 import ButtonCalendar from './ButtonCalendar';
 import moment from 'moment';
 import { TextInput } from 'react-native-gesture-handler';
+import { ModalSize } from '../../enums/modalSize.enum';
+import ModalBase from '../Modal/ModalBase';
 
 class CalendarPicker extends Component<Props, State> {
 
     public readonly state: State = {
-        showDatePicker: false
+        showDatePicker: false,
+        showIOSModal: false
     }
 
     async componentDidMount() {
@@ -26,11 +30,12 @@ class CalendarPicker extends Component<Props, State> {
         return (
             <View style={styles.container}>
                 {this.renderDatePicker()}
+                {this.renderIOSModal()}
                 <View style={styles.buttonContainer}>
                     <ButtonCalendar onPress={this.onClick.bind(this)}></ButtonCalendar>
                 </View>
                 <View style={styles.textContainer}>
-                    <StatusBar barStyle="light-content" />
+                    <StatusBar barStyle="light-content" />
                     <TextInput
                         autoCapitalize={'none'}
                         autoCorrect={false}
@@ -40,7 +45,7 @@ class CalendarPicker extends Component<Props, State> {
                         style={styles.input}
                         returnKeyType="next"
                         value={this.props.date ? moment(this.props.date).format('DD/MM/YYYY') : ""}
-                        editable = {false}
+                        editable={false}
                     />
                 </View>
             </View>
@@ -48,13 +53,29 @@ class CalendarPicker extends Component<Props, State> {
     }
 
     private onClick() {
-        console.log("click")
-        this.setState({ showDatePicker: true });
+        if (Platform.OS === "ios") {
+            this.setState({ showIOSModal: true });
+        }
+        else if (Platform.OS === "android") {
+            this.setState({ showDatePicker: true });
+        }
     }
 
     private onTouchCancel() {
-        console.log("cancel")
-        this.setState({ showDatePicker: false });
+        if (Platform.OS === "ios") {
+            this.setState({ showIOSModal: false });
+        }
+        else if (Platform.OS === "android") {
+            this.setState({ showDatePicker: false });
+        }
+    }
+
+    private onCloseModal(): void {
+        this.setState({ showIOSModal: false });
+    }
+
+    private onBackdropPressModal(): void {
+        this.setState({ showIOSModal: false });
     }
 
     private onDateChange(event, date) {
@@ -62,16 +83,38 @@ class CalendarPicker extends Component<Props, State> {
         this.props.onDateChange(event, date);
     }
 
-    private renderDatePicker() {
-        if (this.state.showDatePicker)
+    private renderIOSModal() {
             return (
-                <View>
-                    <Calendar date={this.props.date} onDateChange={this.onDateChange.bind(this)} onTouchCancel={this.onTouchCancel.bind(this)}></Calendar>
-                </View>
+                <ModalBase
+                    isVisible={this.state.showIOSModal}
+                    onBackdropPress={this.onBackdropPressModal.bind(this)}
+                    title={"Choose"}
+                    closeButtonHide={false}
+                    needKeyboardAvoid={false}
+                    onClose={this.onCloseModal.bind(this)}
+                    backdropColor={SpontioColors.Black}
+                    backdropOpacity={0.15}
+                    size={ModalSize.Sm}
+                >
+                    <View>
+                        <IOSCalendar date={this.props.date} onDateChange={this.onDateChange.bind(this)} onTouchCancel={this.onTouchCancel.bind(this)}></IOSCalendar>
+                    </View>
+                </ModalBase>
             );
-        return (<></>)
     }
 
+    private renderDatePicker() {
+        if (this.state.showDatePicker) {
+            if (Platform.OS === "android") {
+                return (
+                    <View>
+                        <AndroidCalendar date={this.props.date} onDateChange={this.onDateChange.bind(this)} onTouchCancel={this.onTouchCancel.bind(this)}></AndroidCalendar>
+                    </View>
+                );
+            }
+        }
+        return (<></>)
+    }
 }
 
 const styles = StyleSheet.create({
@@ -120,6 +163,7 @@ export interface OwnProps {
 
 type State = {
     showDatePicker: boolean;
+    showIOSModal: boolean;
 }
 
 type Props = IStateProps & OwnProps

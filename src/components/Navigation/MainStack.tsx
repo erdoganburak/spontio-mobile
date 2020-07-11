@@ -40,7 +40,7 @@ class MainStack extends Component<Props, State> {
           headerBackground: (props) => (
             <View style={{ backgroundColor: SpontioColors.Primary, flex: 1 }}>
               {this.props.navigationProperty.showHeaderLogo ? <Image
-                style={{ width: moderateScale(140), height: moderateScale(40), backgroundColor: SpontioColors.Primary, alignSelf: 'center', justifyContent: 'center', flex: 1 }}
+                style={{ marginTop:moderateScale(10), width: moderateScale(140), height: moderateScale(40), backgroundColor: SpontioColors.Primary, alignSelf: 'center', justifyContent: 'center', flex: 1 }}
                 source={require('../../assets/spontio_name_logo1.png')}
                 resizeMode='contain'
               /> : < View ></View>}

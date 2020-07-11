@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Dispatch } from 'react';
 import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { SpontioColors } from '../../enums/spontioColors.enum';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
@@ -7,29 +7,33 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import ModalBase from '../Modal/ModalBase';
 import { ModalSize } from '../../enums/modalSize.enum';
 import ModalPictureSelector from '../PictureSelector/ModalPictureSelector';
+import { TRootReducer } from '../../redux/store';
+import { AnyAction } from 'redux';
+import { PictureSelectorObject } from '../../redux/reducer/pictureSelectorReducer';
+import { showPictureSelectorModal } from '../../redux/actions/pictureSelector';
 
 class ProfilePictureViewer extends Component<Props, State> {
 
     public readonly state: State = {
-        showModal: false
+   
     }
 
     async componentDidMount() {
+    
     }
-
 
     async componentWillUnmount() {
 
     }
 
     private onPressCamera() {
-        this.setState({ showModal: true });
+        this.props.showPictureSelectorModal(true);
     }
 
     private renderModal() {
         return (
             <ModalBase
-                isVisible={this.state.showModal}
+                isVisible={this.props.pictureSelector.showPictureSelectorModal}
                 onBackdropPress={this.onBackdropPressModal.bind(this)}
                 title={"Choose"}
                 closeButtonHide={false}
@@ -47,11 +51,11 @@ class ProfilePictureViewer extends Component<Props, State> {
     }
 
     private onCloseModal(): void {
-        this.setState({ showModal: false });
+        this.props.showPictureSelectorModal(false);
     }
 
     private onBackdropPressModal(): void {
-        this.setState({ showModal: false });
+        this.props.showPictureSelectorModal(false);
     }
 
     render() {
@@ -62,7 +66,7 @@ class ProfilePictureViewer extends Component<Props, State> {
                 </View>
 
                 <View style={styles.imageWrapper}>
-                    <Image style={styles.image} source={{ uri: `data:image/gif;base64,${this.props.picture}` }} />
+                    <Image style={styles.image} source={{ uri: this.props.picture }} />
                 </View>
 
                 <View style={styles.buttonWrapper}>
@@ -111,17 +115,33 @@ const styles = StyleSheet.create({
 });
 
 interface IStateProps {
+    pictureSelector: PictureSelectorObject 
+}
 
+const mapStateToProps = (state: TRootReducer): IStateProps => {
+    return {
+        pictureSelector: state.pictureSelectorReducer.pictureSelectorObject
+    }
 }
 
 export interface OwnProps {
-    picture: string;
+    picture: string,
+}
+
+interface IDispatchProps {
+    showPictureSelectorModal: (show: boolean) => void;
+}
+
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
+    return {
+        showPictureSelectorModal: (show: boolean) => dispatch(showPictureSelectorModal(show)),
+    }
 }
 
 type State = {
-    showModal: boolean;
+
 }
 
-type Props = IStateProps & OwnProps
+type Props = IStateProps & IDispatchProps & OwnProps
 
-export default connect<IStateProps, {}, OwnProps>(null, null)(ProfilePictureViewer); 
+export default connect<IStateProps, IDispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(ProfilePictureViewer);
