@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, Text, StyleSheet, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 import Modal, { ModalProps } from 'react-native-modal';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
@@ -6,6 +6,7 @@ import HelperUtils from '../../utils/helper.utils';
 import { SpontioColors } from '../../enums/spontioColors.enum';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { ModalSize } from '../../enums/modalSize.enum';
+import { connect } from 'react-redux';
 
 export interface IProps extends ModalProps {
 	isVisible: boolean;
@@ -20,7 +21,7 @@ export interface IProps extends ModalProps {
 /**
  * Modal for Spontio
  */
-export default class ModalBase extends React.Component<IProps> {
+class ModalBase extends Component<Props, State> {
 	constructor(props: any) {
 		super(props);
 		this.onCloseButtonClicked = this.onCloseButtonClicked.bind(this);
@@ -28,34 +29,34 @@ export default class ModalBase extends React.Component<IProps> {
 
 	public render() {
 		return (
-			<Modal style={{ margin: 0, justifyContent: 'flex-end' }}{...this.props} useNativeDriver={true} hideModalContentWhileAnimating={true}>
-				{this.props.needKeyboardAvoid && (
+			<Modal style={{ margin: 0, justifyContent: 'flex-end' }}{...this.props.modalProps} useNativeDriver={true} hideModalContentWhileAnimating={true}>
+				{this.props.modalProps.needKeyboardAvoid && (
 					<KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'position' : null}>
 						{this.renderModalContent()}
 					</KeyboardAvoidingView>
 				)}
-				{!this.props.needKeyboardAvoid && this.renderModalContent()}
+				{!this.props.modalProps.needKeyboardAvoid && this.renderModalContent()}
 			</Modal>
 		);
 	}
 
 	private renderModalContent() {
-		const styleDefinitions = styles(this.props);
+		const styleDefinitions = styles(this.props.modalProps);
 
 		return (
 			<View style={styleDefinitions.container}>
 				<View style={styleDefinitions.modal}>
 					<View style={styleDefinitions.header}>
 						<View style={styleDefinitions.closeButton}>
-							{!this.props.closeButtonHide && (
+							{!this.props.modalProps.closeButtonHide && (
 								<TouchableOpacity onPress={this.onCloseButtonClicked.bind(this)}>
 									<FontAwesomeIcon style={styleDefinitions.icon} icon="times" size={scale(22)} />
 								</TouchableOpacity>
 							)}
 						</View>
-						{this.props.title ?
+						{this.props.modalProps.title ?
 							(<View style={styleDefinitions.titleContainer}>
-								{HelperUtils.hasValueV2(this.props.title) && <Text numberOfLines={1} style={styleDefinitions.title}>{this.props.title}</Text>}
+								{HelperUtils.hasValueV2(this.props.modalProps.title) && <Text numberOfLines={1} style={styleDefinitions.title}>{this.props.modalProps.title}</Text>}
 							</View>)
 							:
 							(<View >
@@ -63,7 +64,7 @@ export default class ModalBase extends React.Component<IProps> {
 							</View>)
 						}
 					</View>
-					<View style={HelperUtils.hasValueV2(this.props.title) ? styleDefinitions.content : styleDefinitions.content} >
+					<View style={HelperUtils.hasValueV2(this.props.modalProps.title) ? styleDefinitions.content : styleDefinitions.content} >
 						{this.props.children}
 					</View>
 				</View>
@@ -72,8 +73,8 @@ export default class ModalBase extends React.Component<IProps> {
 	}
 
 	private onCloseButtonClicked() {
-		if (this.props.onClose) {
-			this.props.onClose();
+		if (this.props.modalProps.onClose) {
+			this.props.modalProps.onClose();
 		}
 	}
 }
@@ -139,3 +140,19 @@ const styles = (props: IProps) =>
 			justifyContent: 'center'
 		}
 	});
+
+interface IStateProps {
+
+}
+
+export interface OwnProps {
+	modalProps: IProps
+}
+
+type State = {
+
+}
+
+type Props = OwnProps & IProps & IStateProps;
+
+export default connect<IStateProps, {}, OwnProps>(null, null)(ModalBase)

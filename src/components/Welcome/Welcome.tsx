@@ -7,7 +7,7 @@ import { TRootReducer } from '../../redux/store';
 import { AnyAction } from 'redux';
 import { connect } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import ModalBase from '../Modal/ModalBase';
+import ModalBase, { IProps } from '../Modal/ModalBase';
 import TermsAndConditions from '../TermsAndConditions/TermsAndConditions';
 import { changeLoggedInState } from '../../redux/actions/session';
 import { translate } from '../../managers/language.manager';
@@ -86,7 +86,7 @@ class Welcome extends Component<Props, State> {
             CommonActions.reset({
                 index: 0,
                 routes: [
-                    { name: translate("navigation.home")},
+                    { name: translate("navigation.home") },
                 ],
             })
         );
@@ -115,16 +115,20 @@ class Welcome extends Component<Props, State> {
     }
 
     private renderModal() {
+        const _modalProps: IProps = {
+            isVisible: this.state.showModal,
+            onBackdropPress: this.onBackdropPressModal.bind(this),
+            title: "Terms And Conditions",
+            closeButtonHide: false,
+            needKeyboardAvoid: false,
+            onClose: this.onCloseModal.bind(this),
+            backdropColor: SpontioColors.Black,
+            backdropOpacity: 0.15
+        }
         return (
             <ModalBase
-                isVisible={this.state.showModal}
-                onBackdropPress={this.onBackdropPressModal.bind(this)}
-                title={"Terms and Conditions"}
-                closeButtonHide={false}
-                needKeyboardAvoid={false}
-                onClose={this.onCloseModal.bind(this)}
-                backdropColor={SpontioColors.Black}
-                backdropOpacity={0.15}>
+                modalProps={_modalProps}
+            >
                 <View>
                     <TermsAndConditions></TermsAndConditions>
                 </View>
@@ -146,7 +150,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        paddingTop:moderateScale(30)
+        paddingTop: moderateScale(30)
     },
     buttonContainer: {
         flex: 2,

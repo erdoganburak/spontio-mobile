@@ -9,7 +9,7 @@ import ButtonCalendar from './ButtonCalendar';
 import moment from 'moment';
 import { TextInput } from 'react-native-gesture-handler';
 import { ModalSize } from '../../enums/modalSize.enum';
-import ModalBase from '../Modal/ModalBase';
+import ModalBase, { IProps } from '../Modal/ModalBase';
 
 class CalendarPicker extends Component<Props, State> {
 
@@ -84,23 +84,27 @@ class CalendarPicker extends Component<Props, State> {
     }
 
     private renderIOSModal() {
-            return (
-                <ModalBase
-                    isVisible={this.state.showIOSModal}
-                    onBackdropPress={this.onBackdropPressModal.bind(this)}
-                    title={"Choose"}
-                    closeButtonHide={false}
-                    needKeyboardAvoid={false}
-                    onClose={this.onCloseModal.bind(this)}
-                    backdropColor={SpontioColors.Black}
-                    backdropOpacity={0.15}
-                    size={ModalSize.Sm}
-                >
-                    <View>
-                        <IOSCalendar date={this.props.date} onDateChange={this.onDateChange.bind(this)} onTouchCancel={this.onTouchCancel.bind(this)}></IOSCalendar>
-                    </View>
-                </ModalBase>
-            );
+        const _modalProps: IProps = {
+            isVisible: this.state.showIOSModal,
+            onBackdropPress: this.onBackdropPressModal.bind(this),
+            title: "Choose",
+            closeButtonHide: false,
+            needKeyboardAvoid: false,
+            onClose: this.onCloseModal.bind(this),
+            backdropColor: SpontioColors.Black,
+            backdropOpacity: 0.15,
+            size: ModalSize.Sm,
+        }
+
+        return (
+            <ModalBase
+                modalProps={_modalProps}
+            >
+                <View>
+                    <IOSCalendar date={this.props.date} onDateChange={this.onDateChange.bind(this)} onTouchCancel={this.onTouchCancel.bind(this)}></IOSCalendar>
+                </View>
+            </ModalBase>
+        );
     }
 
     private renderDatePicker() {

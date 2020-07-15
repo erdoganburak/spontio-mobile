@@ -12,9 +12,10 @@ class GalleryManagerInstance {
 	/**
 	* Opens gallery
 	*
-	* @param role To know who opened gallery.
+	* @param role To know who opened the gallery.
 	*/
 	public openGallery(role: Role): void {
+
 		let options = {
             title: 'Select Image',
             customButtons: [
@@ -46,6 +47,7 @@ class GalleryManagerInstance {
 				}
             }
         });
+        
 	}
 
 }

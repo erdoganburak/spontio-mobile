@@ -4,7 +4,7 @@ import { SpontioColors } from '../../enums/spontioColors.enum';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import ModalBase from '../Modal/ModalBase';
+import ModalBase, { IProps } from '../Modal/ModalBase';
 import { ModalSize } from '../../enums/modalSize.enum';
 import ModalPictureSelector from '../PictureSelector/ModalPictureSelector';
 import { TRootReducer } from '../../redux/store';
@@ -15,11 +15,11 @@ import { showPictureSelectorModal } from '../../redux/actions/pictureSelector';
 class ProfilePictureViewer extends Component<Props, State> {
 
     public readonly state: State = {
-   
+
     }
 
     async componentDidMount() {
-    
+
     }
 
     async componentWillUnmount() {
@@ -31,17 +31,22 @@ class ProfilePictureViewer extends Component<Props, State> {
     }
 
     private renderModal() {
+
+        const _modalProps: IProps = {
+            isVisible: this.props.pictureSelector.showPictureSelectorModal,
+            onBackdropPress: this.onBackdropPressModal.bind(this),
+            title: "Choose",
+            closeButtonHide: false,
+            needKeyboardAvoid: false,
+            onClose: this.onCloseModal.bind(this),
+            backdropColor: SpontioColors.Black,
+            backdropOpacity: 0.15,
+            size: ModalSize.Sm,
+        }
+
         return (
             <ModalBase
-                isVisible={this.props.pictureSelector.showPictureSelectorModal}
-                onBackdropPress={this.onBackdropPressModal.bind(this)}
-                title={"Choose"}
-                closeButtonHide={false}
-                needKeyboardAvoid={false}
-                onClose={this.onCloseModal.bind(this)}
-                backdropColor={SpontioColors.Black}
-                backdropOpacity={0.15}
-                size={ModalSize.Sm}
+                modalProps={_modalProps}
             >
                 <View>
                     <ModalPictureSelector></ModalPictureSelector>
@@ -115,7 +120,7 @@ const styles = StyleSheet.create({
 });
 
 interface IStateProps {
-    pictureSelector: PictureSelectorObject 
+    pictureSelector: PictureSelectorObject
 }
 
 const mapStateToProps = (state: TRootReducer): IStateProps => {
