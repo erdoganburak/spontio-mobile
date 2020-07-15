@@ -15,7 +15,6 @@ import { showPictureSelectorModal } from '../../redux/actions/pictureSelector';
 class ProfilePictureViewer extends Component<Props, State> {
 
     public readonly state: State = {
-
     }
 
     async componentDidMount() {
@@ -49,7 +48,7 @@ class ProfilePictureViewer extends Component<Props, State> {
                 modalProps={_modalProps}
             >
                 <View>
-                    <ModalPictureSelector></ModalPictureSelector>
+                    <ModalPictureSelector onPictureSelectedFromGallery = {this.props.onPictureSelectedFromGallery}></ModalPictureSelector>
                 </View>
             </ModalBase>
         );
@@ -57,10 +56,12 @@ class ProfilePictureViewer extends Component<Props, State> {
 
     private onCloseModal(): void {
         this.props.showPictureSelectorModal(false);
+
     }
 
     private onBackdropPressModal(): void {
         this.props.showPictureSelectorModal(false);
+
     }
 
     render() {
@@ -88,7 +89,7 @@ class ProfilePictureViewer extends Component<Props, State> {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: SpontioColors.Primary
+        backgroundColor: SpontioColors.PrimaryDark
     },
     buttonWrapper: {
         flex: 0.5,
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
         borderColor: SpontioColors.PrimaryLight,
         borderWidth: 4,
         padding: moderateScale(10),
-        backgroundColor: SpontioColors.Primary,
+        backgroundColor: SpontioColors.PrimaryDark,
     },
     camera: {
 
@@ -131,6 +132,7 @@ const mapStateToProps = (state: TRootReducer): IStateProps => {
 
 export interface OwnProps {
     picture: string,
+    onPictureSelectedFromGallery: () => void;
 }
 
 interface IDispatchProps {
@@ -144,7 +146,6 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
 }
 
 type State = {
-
 }
 
 type Props = IStateProps & IDispatchProps & OwnProps

@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     container: {
         width: scale(50),
         height: moderateScale(45),
-        backgroundColor: SpontioColors.Primary,
+        backgroundColor: SpontioColors.PrimaryDark,
         borderColor: SpontioColors.PrimaryLight,
         borderWidth: 2
     },

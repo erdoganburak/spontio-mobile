@@ -21,6 +21,7 @@ import NavigationManager from '../../managers/navigation.manager';
 import CameraManager from '../../managers/camera.manager';
 import { PictureSelectorObject } from '../../redux/reducer/pictureSelectorReducer';
 import { showPictureSelectorModal } from '../../redux/actions/pictureSelector';
+import ImagePicker, { ImagePickerOptions } from 'react-native-image-picker';
 
 class UserProfile extends Component<Props, State> {
 
@@ -48,12 +49,41 @@ class UserProfile extends Component<Props, State> {
         NavigationManager.setCurrentRoute(this.props.navigation.dangerouslyGetState());
     }
 
-    private onPictureSave() {
+    public onPictureSave() {
         if (this.props.camera.picture) {
             this.props.changeUserProfilePicture(this.props.camera.picture);
             this.props.showPictureSelectorModal(false);
         }
     }
+
+    public onPictureSelectedFromGallery() {
+        let options: ImagePickerOptions = {
+            title: 'Select Image',
+            customButtons: [
+                {
+                    name: 'customOptionKey',
+                    title: 'Choose file from Custom Option'
+                },
+            ],
+            storageOptions: {
+                skipBackup: true,
+                path: 'images',
+            },
+        };
+
+        // Open Image Library
+        ImagePicker.launchImageLibrary(options, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else {
+                this.props.changeUserProfilePicture(response.uri);
+                this.props.showPictureSelectorModal(false);
+            }
+        });
+    }
+
 
     private onSaveClicked() {
 
@@ -78,7 +108,7 @@ class UserProfile extends Component<Props, State> {
             <KeyboardAvoidingView style={styles.container}>
                 <ScrollView>
                     <View style={styles.pictureSelectorContainer}>
-                        <PictureSelector picture={this.props.user.profilePicture}></PictureSelector>
+                        <PictureSelector onPictureSelectedFromGallery={this.onPictureSelectedFromGallery.bind(this)} picture={this.props.user.profilePicture}></PictureSelector>
                     </View>
                     <View style={styles.other}>
                         <View style={styles.inputContainer}>
@@ -149,7 +179,7 @@ class UserProfile extends Component<Props, State> {
 const styles = StyleSheet.create({
     container: {
         flex: 2,
-        backgroundColor: SpontioColors.Primary
+        backgroundColor: SpontioColors.PrimaryDark
     },
     pictureSelectorContainer: {
         flex: 0.5,
@@ -170,7 +200,7 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         flex: 1,
-        backgroundColor: SpontioColors.Primary,
+        backgroundColor: SpontioColors.PrimaryDark,
         alignSelf: 'center'
     },
     subWrapper: {
@@ -189,7 +219,7 @@ const styles = StyleSheet.create({
 interface IStateProps {
     camera: Camera,
     user: User,
-    pictureSelector: PictureSelectorObject 
+    pictureSelector: PictureSelectorObject
 }
 
 const mapStateToProps = (state: TRootReducer): IStateProps => {

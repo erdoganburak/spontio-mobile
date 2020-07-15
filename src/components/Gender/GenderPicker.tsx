@@ -5,7 +5,6 @@ import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import { connect } from 'react-redux';
 import ButtonGender from './ButtonGender';
 import { Gender } from '../../enums/gender.enum';
-import { TextInput } from 'react-native-gesture-handler';
 
 class GenderPicker extends Component<Props, State> {
 
@@ -60,7 +59,7 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         flex: 0.6,
-        backgroundColor: SpontioColors.Primary,
+        backgroundColor: SpontioColors.PrimaryDark,
     },
     text: {
         fontSize: moderateScale(12),

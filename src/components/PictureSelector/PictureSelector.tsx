@@ -25,11 +25,11 @@ class PictureSelector extends Component<Props, State> {
             <View style={styles.container}>
                 {this.props.picture ?
                     (
-                        <ProfilePictureViewer picture={this.props.picture}></ProfilePictureViewer>
+                        <ProfilePictureViewer onPictureSelectedFromGallery = {this.props.onPictureSelectedFromGallery} picture={this.props.picture}></ProfilePictureViewer>
                     )
                     :
                     (
-                        <NoPictureViewer ></NoPictureViewer>
+                        <NoPictureViewer onPictureSelectedFromGallery = {this.props.onPictureSelectedFromGallery}></NoPictureViewer>
                     )
                 }
 
@@ -59,6 +59,7 @@ const mapStateToProps = (state: TRootReducer): IStateProps => {
 export interface OwnProps {
     navigation: NavigationProp<any>;
     picture: string,
+    onPictureSelectedFromGallery: () => void;
 }
 
 interface IDispatchProps {

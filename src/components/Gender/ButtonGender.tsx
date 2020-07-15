@@ -36,7 +36,7 @@ const styles = (props: OwnProps) =>
         container: {
             width: scale(50),
             height: moderateScale(45),
-            backgroundColor: props.selected ? SpontioColors.PrimaryDark : SpontioColors.Primary,
+            backgroundColor: props.selected ? SpontioColors.Primary : SpontioColors.PrimaryDark,
             borderColor: SpontioColors.PrimaryLight,
             borderWidth: 2
         },

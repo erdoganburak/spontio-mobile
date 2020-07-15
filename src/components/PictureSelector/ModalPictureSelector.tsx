@@ -10,8 +10,6 @@ import { TRootReducer } from '../../redux/store';
 import { Camera } from '../../redux/reducer/cameraReducer';
 import NavigationManager from '../../managers/navigation.manager';
 import { User } from '../../redux/reducer/userReducer';
-import GalleryManager from '../../managers/gallery.manager';
-import { Role } from '../../enums/role.enum';
 import { showPictureSelectorModal } from '../../redux/actions/pictureSelector';
 import { PictureSelectorObject } from '../../redux/reducer/pictureSelectorReducer';
 
@@ -32,8 +30,8 @@ class ModalPictureSelector extends Component<Props, State> {
     }
 
     private onPressGallery() {
-        // TODO this will come from USER redux
-        GalleryManager.openGallery(Role.User);
+        if(this.props.onPictureSelectedFromGallery)
+        this.props.onPictureSelectedFromGallery();  
     }
     render() {
         return (
@@ -116,7 +114,7 @@ const mapStateToProps = (state: TRootReducer): IStateProps => {
 }
 
 export interface OwnProps {
-
+    onPictureSelectedFromGallery: () => void;
 }
 
 interface IDispatchProps {

@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         flex: 0.8,
-        backgroundColor: SpontioColors.Primary,
+        backgroundColor: SpontioColors.PrimaryDark,
     },
     text: {
         fontSize: moderateScale(14),
