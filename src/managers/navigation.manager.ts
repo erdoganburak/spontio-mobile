@@ -115,47 +115,37 @@ export class NavigationManagerInstance {
       case translate("navigation.settings"):
         this.setHeaderOptions(true, true, false, true);
         break;
+      case translate("navigation.help"):
+        this.setHeaderOptions(true, true, false, true);
+        break;
       case translate("navigation.language_selection"):
         this.setHeaderOptions(true, true, true, false);
         break;
       case translate("navigation.user_profile"):
         this.setHeaderOptions(true, true, false, true);
         break;
+      case translate("navigation.who_we_are"):
+        this.setHeaderOptions(true, true, true, false);
+        break;
+      case translate("navigation.social_media"):
+        this.setHeaderOptions(true, true, true, false);
+        break;
+      case translate("navigation.faq"):
+        this.setHeaderOptions(true, true, true, false);
+        break;
+      case translate("navigation.terms_of_use"):
+        this.setHeaderOptions(true, true, true, false);
+        break;
+      case translate("navigation.contact_us"):
+        this.setHeaderOptions(true, true, true, false);
+        break;
+      case translate("navigation.privacy"):
+        this.setHeaderOptions(true, true, true, false);
+        break;
       default:
         break;
     }
   }
-
-  /**
-  * TODO Delete this function.
-  * Decides which route to go back. This function is for iOS.
-  */
-  public whereToGoBack(): string {
-    let currentRoute = store.getState().navigationReducer.navigationProperty.currentRoute;
-    if (currentRoute) {
-      switch (currentRoute) {
-        case translate("navigation.login"):
-          return translate("navigation.welcome");
-        case translate("navigation.settings"):
-          return translate("navigation.home");
-        case translate("navigation.language_selection"):
-          return translate("navigation.settings");
-        case translate("navigation.user_profile"):
-          if (store.getState().cameraReducer.camera.showCamera || store.getState().cameraReducer.camera.showTakenPicture) {
-            CameraManager.resetCamera();
-            return translate("navigation.user_profile");
-          }
-          return translate("navigation.home");
-        case translate("navigation.new_user"):
-          return translate("navigation.new_customer");
-        case translate("navigation.new_customer"):
-          return translate("navigation.welcome");
-        default:
-          break;
-      }
-    }
-  }
-
 
 }
 

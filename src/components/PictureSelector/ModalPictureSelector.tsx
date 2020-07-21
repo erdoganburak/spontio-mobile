@@ -13,7 +13,7 @@ import { User } from '../../redux/reducer/userReducer';
 import { showPictureSelectorModal } from '../../redux/actions/pictureSelector';
 import { PictureSelectorObject } from '../../redux/reducer/pictureSelectorReducer';
 import GalleryManager from '../../managers/gallery.manager';
-import { Session } from 'src/redux/reducer/sessionReducer';
+import { Session } from '../../redux/reducer/sessionReducer';
 
 class ModalPictureSelector extends Component<Props, State> {
 
@@ -32,7 +32,7 @@ class ModalPictureSelector extends Component<Props, State> {
     }
 
     private onPressGallery() {
-        GalleryManager.openImagePicker();
+        GalleryManager.openGallery();
     }
     
     render() {

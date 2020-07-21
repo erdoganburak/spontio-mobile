@@ -13,7 +13,6 @@ import { TRootReducer } from '../../../redux/store';
 import { AnyAction } from 'redux';
 import { showGoBackButton } from '../../../redux/actions/navigation';
 import { NavigationProperty } from '../../../redux/reducer/navigationReducer';
-import HelperUtils from '../../../utils/helper.utils';
 import NavigationManager from '../../../managers/navigation.manager';
 
 class LanguageSelection extends Component<Props, State> {
@@ -31,7 +30,6 @@ class LanguageSelection extends Component<Props, State> {
   private async handleFocus() {
     console.log("focused on language selection");
     NavigationManager.setCurrentRoute(this.props.navigation.dangerouslyGetState());
-    //this.props.showGoBackButton(true);
   }
 
   async componentWillUnmount() {

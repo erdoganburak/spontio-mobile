@@ -5,17 +5,16 @@ import { connect } from 'react-redux';
 import { NavigationProp } from '@react-navigation/native';
 import { Session } from '../../redux/reducer/sessionReducer';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
-import SettingsItem from './SettingsItem';
 import { translate } from '../../managers/language.manager';
-import { SettingsActions } from '../../constants/settings-actions.constant';
-import { SettingAction } from '../../enums/settingAction.enum';
 import { SpontioColors } from '../../enums/spontioColors.enum';
 import { NavigationProperty } from '../../redux/reducer/navigationReducer';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import SessionManager from '../../managers/session.manager';
 import NavigationManager from '../../managers/navigation.manager';
+import HelpItem from './HelpItem';
+import { HelpActions } from '../../constants/help-actions.constant';
+import { HelpAction } from '../../enums/helpAction.enum';
+import { AboutUsActions } from '../../constants/about-us-actions.constant';
 
-class Settings extends Component<Props, State> {
+class Help extends Component<Props, State> {
 
   public readonly state: State = {
 
@@ -44,48 +43,61 @@ class Settings extends Component<Props, State> {
   render() {
     return (
       <View>
-        <View style={styles.settingItemContainer}>
-          <Text style={styles.settingItemHeader}>{translate("settings.more.title_more")}</Text>
+        <View style={styles.helpItemContainer}>
+          <Text style={styles.helpItemHeader}>{translate("help.about_us")}</Text>
           {
-            SettingsActions.map((value, index) => {
-              return <SettingsItem key={index} onPress={this.onPressSettingItem.bind(this, value.key)} icon={value.icon} title={translate(value.value)}></SettingsItem>
+            AboutUsActions.map((value, index) => {
+              return <HelpItem key={index} onPress={this.onPressHelpItem.bind(this, value.key)} title={translate(value.value)}></HelpItem>
             })
           }
         </View>
-        <TouchableOpacity onPress={this.onPressLogout.bind(this)}>
-          <Text style={styles.logout}>
-            Logout
-          </Text>
-        </TouchableOpacity>
+        <View style={styles.helpItemContainer}>
+          <Text style={styles.helpItemHeader}>{translate("help.help")}</Text>
+          {
+            HelpActions.map((value, index) => {
+              return <HelpItem key={index} onPress={this.onPressHelpItem.bind(this, value.key)} title={translate(value.value)}></HelpItem>
+            })
+          }
+        </View>
       </View >
     )
   }
 
-  private onPressSettingItem(key: SettingAction): void {
+  private onPressHelpItem(key: HelpAction): void {
     switch (key) {
-      case SettingAction.LanguageSelection:
-        this.props.navigation.navigate(translate("navigation.language_selection"));
+      case HelpAction.WhoWeAre:
+        this.props.navigation.navigate(translate("navigation.who_we_are"));
+        break;
+      case HelpAction.SocialMedia:
+        this.props.navigation.navigate(translate("navigation.social_media"));
+        break;
+      case HelpAction.FAQ:
+        this.props.navigation.navigate(translate("navigation.faq"));
+        break;
+      case HelpAction.TermsOfUse:
+        this.props.navigation.navigate(translate("navigation.terms_of_use"));
+        break;
+      case HelpAction.ContactUs:
+        this.props.navigation.navigate(translate("navigation.contact_us"));
+        break;
+      case HelpAction.Privacy:
+        this.props.navigation.navigate(translate("navigation.privacy"));
         break;
       default:
         break;
     }
   }
 
-  private async onPressLogout() {
-    //this.props.navigation.navigate("Welcome");
-    await SessionManager.logout();
-  }
-
 }
 
 const styles = StyleSheet.create({
-  settingItemHeader: {
+  helpItemHeader: {
     fontSize: moderateScale(18),
     fontWeight: 'bold',
     color: SpontioColors.Primary,
     paddingVertical: moderateScale(10)
   },
-  settingItemContainer: {
+  helpItemContainer: {
     padding: moderateScale(20)
   },
   logout: {
@@ -118,4 +130,4 @@ export interface OwnProps {
 
 type Props = IStateProps & OwnProps
 
-export default connect<IStateProps, {}, OwnProps>(mapStateToProps, null)(Settings);
+export default connect<IStateProps, {}, OwnProps>(mapStateToProps, null)(Help);

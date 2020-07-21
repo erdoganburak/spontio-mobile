@@ -25,7 +25,13 @@
 		"company_profile": "Company Profile",
 		"welcome": "Welcome",
 		"new_customer": "New Customer",
-		"new_user": "New User"
+		"new_user": "New User",
+		"who_we_are": "Who we are",
+		"social_media": "Social Media",
+		"faq": "FAQ",
+		"terms_of_use":"Terms of Use",
+		"contact_us": "Contact Us",
+		"privacy": "Privacy"
 	},
 	"settings": {
 		"notifications": {
@@ -38,5 +44,9 @@
 			"recommend_us": "Empfehlen Sie uns weiter",
 			"logout": "Ausloggen"
 		}
+	},
+	"help": {
+		"about_us": "About Us",
+		"help": "Help"
 	}
 }

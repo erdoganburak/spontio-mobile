@@ -14,6 +14,7 @@ import { translate } from '../../managers/language.manager';
 import UserProfileStack from './UserProfileStack';
 import CompanyProfileStack from './CompanyProfileStack';
 import { Role } from '../../enums/role.enum';
+import HelpStack from './HelpStack';
 
 const Drawer = createDrawerNavigator();
 
@@ -64,7 +65,7 @@ class InitializeNavigationScreen extends Component<Props, State> {
               />
               <Drawer.Screen
                 name={translate("navigation.help")}
-                component={MainStack}
+                component={HelpStack}
                 options={{
                   drawerIcon: config => <FontAwesomeIcon icon="question-circle" size={scale(22)} color={SpontioColors.White} />
                 }}

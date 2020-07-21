@@ -20,7 +20,10 @@ const options: ImagePickerOptions = {
 
 class GalleryManagerInstance {
 
-	public openImagePicker(): void {
+	/**
+	* Opens gallery
+	*/
+	public openGallery(): void {
 		let role = store.getState().sessionReducer.session.role;
 		ImagePicker.launchImageLibrary(options, (response) => {
 			 console.log(role);
