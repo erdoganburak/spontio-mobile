@@ -2,20 +2,21 @@ import React, { Component, Dispatch } from 'react';
 import { View, StyleSheet, Text, Image } from 'react-native';
 import { SpontioColors } from '../../enums/spontioColors.enum';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
-import { NavigationProp, TabActions, CommonActions } from '@react-navigation/native';
+import { NavigationProp, CommonActions } from '@react-navigation/native';
 import { TRootReducer } from '../../redux/store';
 import { AnyAction } from 'redux';
 import { connect } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ModalBase, { IProps } from '../Modal/ModalBase';
 import TermsAndConditions from '../TermsAndConditions/TermsAndConditions';
-import { changeLoggedInState } from '../../redux/actions/session';
+import { changeLoggedInState, changeRole } from '../../redux/actions/session';
 import { translate } from '../../managers/language.manager';
 import { Session } from '../../redux/reducer/sessionReducer';
 import ButtonPrimary from '../Button/ButtonPrimary';
 import ButtonOutline from '../Button/ButtonOutline';
 import { NavigationProperty } from '../../redux/reducer/navigationReducer';
 import NavigationManager from '../../managers/navigation.manager';
+import { Role } from '../../enums/role.enum';
 
 class Welcome extends Component<Props, State> {
 
@@ -82,6 +83,7 @@ class Welcome extends Component<Props, State> {
     private onClickGuestLogin(): void {
         this.props.changeLoggedInState(true);
         NavigationManager.setHeaderOptions(true, true, false, true);
+        this.props.changeRole(Role.Guest);
         this.props.navigation.dispatch(
             CommonActions.reset({
                 index: 0,
@@ -217,11 +219,13 @@ const mapStateToProps = (state: TRootReducer): IStateProps => {
 
 interface IDispatchProps {
     changeLoggedInState: (loggedIn: boolean) => void;
+    changeRole: (role: Role) => void;
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
     return {
         changeLoggedInState: (loggedIn: boolean) => dispatch(changeLoggedInState(loggedIn)),
+        changeRole: (role: Role) => dispatch(changeRole(role)),
     }
 }
 

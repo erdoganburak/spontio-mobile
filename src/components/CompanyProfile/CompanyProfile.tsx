@@ -1,5 +1,5 @@
 import React, { Component, Dispatch } from 'react';
-import { View, StyleSheet, StatusBar, KeyboardAvoidingView, Image } from 'react-native';
+import { View, StyleSheet, StatusBar, KeyboardAvoidingView } from 'react-native';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import { NavigationProp } from '@react-navigation/native';
 import { connect } from 'react-redux';
@@ -10,21 +10,17 @@ import { TRootReducer } from '../../redux/store';
 import { AnyAction } from 'redux';
 import { showCamera, showTakenPicture, changePicture } from '../../redux/actions/camera';
 import { User } from '../../redux/reducer/userReducer';
-import { changeUserProfilePicture } from '../../redux/actions/user';
+import { changeCompanyProfilePicture } from '../../redux/actions/user';
 import { SpontioColors } from '../../enums/spontioColors.enum';
 import { TextInput, ScrollView } from 'react-native-gesture-handler';
 import ButtonOutline from '../Button/ButtonOutline';
-import CalendarPicker from '../Calendar/CalendarPicker';
-import GenderPicker from '../Gender/GenderPicker';
 import { Gender } from '../../enums/gender.enum';
 import NavigationManager from '../../managers/navigation.manager';
 import CameraManager from '../../managers/camera.manager';
 import { PictureSelectorObject } from '../../redux/reducer/pictureSelectorReducer';
 import { showPictureSelectorModal } from '../../redux/actions/pictureSelector';
-import { Role } from '../../enums/role.enum';
-import GalleryManager from '../../managers/gallery.manager';
 
-class UserProfile extends Component<Props, State> {
+class CompanyProfile extends Component<Props, State> {
 
     private focusListener;
 
@@ -52,23 +48,13 @@ class UserProfile extends Component<Props, State> {
 
     public onPictureSave() {
         if (this.props.camera.picture) {
-            this.props.changeUserProfilePicture(this.props.camera.picture);
+            this.props.changeCompanyProfilePicture(this.props.camera.picture);
             this.props.showPictureSelectorModal(false);
         }
     }
 
     private onSaveClicked() {
 
-    }
-
-    private onDateChange(event, date) {
-        console.log("date changed")
-        if (date != null)
-            this.setState({ date: date })
-    }
-
-    private onClickGender(gender: Gender) {
-        this.setState({ selectedGender: gender })
     }
 
     render() {
@@ -80,7 +66,7 @@ class UserProfile extends Component<Props, State> {
             <KeyboardAvoidingView style={styles.container}>
                 <ScrollView>
                     <View style={styles.pictureSelectorContainer}>
-                        <PictureSelector picture={this.props.user.userProfilePicture}></PictureSelector>
+                        <PictureSelector picture={this.props.user.companyProfilePicture}></PictureSelector>
                     </View>
                     <View style={styles.other}>
                         <View style={styles.inputContainer}>
@@ -100,7 +86,7 @@ class UserProfile extends Component<Props, State> {
                                 autoCapitalize={'none'}
                                 autoCorrect={false}
                                 keyboardType="default"
-                                placeholder={"Name"}
+                                placeholder={"Address"}
                                 placeholderTextColor="rgba(255,255,255,0.8)"
                                 style={styles.input}
                                 returnKeyType="next"
@@ -111,7 +97,7 @@ class UserProfile extends Component<Props, State> {
                                 autoCapitalize={'none'}
                                 autoCorrect={false}
                                 keyboardType="default"
-                                placeholder={"Surname"}
+                                placeholder={"Website"}
                                 placeholderTextColor="rgba(255,255,255,0.8)"
                                 style={styles.input}
                                 returnKeyType="next"
@@ -129,14 +115,6 @@ class UserProfile extends Component<Props, State> {
                             //value={this.props.user.username}
                             //onChangeText={(username) => this.props.changeUserName(username)}
                             />
-                            <View style={styles.subWrapper}>
-                                <View style={styles.calenderPicker}>
-                                    <CalendarPicker title={"Birthdate"} date={this.state.date} onDateChange={this.onDateChange.bind(this)}></CalendarPicker>
-                                </View>
-                                <View style={styles.genderSelector}>
-                                    <GenderPicker title={"Gender"} onClickGender={this.onClickGender.bind(this)}></GenderPicker>
-                                </View>
-                            </View>
                             <View>
                                 <ButtonOutline title={"SAVE"} onPress={this.onSaveClicked.bind(this)}></ButtonOutline>
                             </View>
@@ -174,18 +152,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: SpontioColors.PrimaryDark,
         alignSelf: 'center'
-    },
-    subWrapper: {
-        flex: 2,
-        paddingBottom: moderateScale(20),
-    },
-    calenderPicker: {
-        flex: 1,
-    },
-    genderSelector: {
-        flex: 1,
-        paddingBottom: moderateScale(10),
-    },
+    }
 });
 
 interface IStateProps {
@@ -208,7 +175,7 @@ export interface OwnProps {
 
 interface IDispatchProps {
     showCamera: (show: boolean) => void;
-    changeUserProfilePicture: (userProfilePicture: string) => void
+    changeCompanyProfilePicture: (companyProfilePicture: string) => void
     showTakenPicture: (showTakenPicture: boolean) => void;
     changePicture: (picture: string) => void;
     showPictureSelectorModal: (show: boolean) => void;
@@ -217,7 +184,7 @@ interface IDispatchProps {
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
     return {
         showCamera: (show: boolean) => dispatch(showCamera(show)),
-        changeUserProfilePicture: (userProfilePicture: string) => dispatch(changeUserProfilePicture(userProfilePicture)),
+        changeCompanyProfilePicture: (companyProfilePicture: string) => dispatch(changeCompanyProfilePicture(companyProfilePicture)),
         showTakenPicture: (show: boolean) => dispatch(showTakenPicture(show)),
         changePicture: (picture: string) => dispatch(changePicture(picture)),
         showPictureSelectorModal: (show: boolean) => dispatch(showPictureSelectorModal(show)),
@@ -232,4 +199,4 @@ type State = {
 
 type Props = IStateProps & IDispatchProps & OwnProps
 
-export default connect<IStateProps, IDispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(UserProfile);
+export default connect<IStateProps, IDispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(CompanyProfile);

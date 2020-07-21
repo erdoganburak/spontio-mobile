@@ -4,6 +4,7 @@ import { showCamera, showTakenPicture, changePicture } from "../redux/actions/ca
 /**
  * Manages camera actions.
  */
+
 class CameraManagerInstance {
 
 	/**
@@ -27,6 +28,5 @@ class CameraManagerInstance {
 	}
 
 }
-
 const CameraManager = new CameraManagerInstance();
 export default CameraManager;

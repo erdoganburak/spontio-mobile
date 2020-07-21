@@ -10,12 +10,12 @@ import { moderateScale } from 'react-native-size-matters';
 import { translate } from '../../managers/language.manager';
 import HeaderDrawerButton from '../Header/HeaderDrawerButton/HeaderDrawerButton';
 import { NavigationProperty } from '../../redux/reducer/navigationReducer';
-import UserProfile from '../UserProfile/UserProfile';
 import HeaderBackButton from '../Header/HeaderBackButton/HeaderBackButton';
+import CompanyProfile from '../CompanyProfile/CompanyProfile';
 
-const UserProfileStackNavigator = createStackNavigator();
+const CompanyProfileStackNavigator = createStackNavigator();
 
-class UserProfileStack extends Component<Props, State> {
+class CompanyProfileStack extends Component<Props, State> {
 
   public readonly state: State = {
 
@@ -27,7 +27,7 @@ class UserProfileStack extends Component<Props, State> {
 
   render() {
     return (
-      <UserProfileStackNavigator.Navigator screenOptions={{
+      <CompanyProfileStackNavigator.Navigator screenOptions={{
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         headerBackground: (props) => (
           <View style={{ backgroundColor: SpontioColors.Primary, flex: 1 }}>
@@ -67,9 +67,9 @@ class UserProfileStack extends Component<Props, State> {
         ),
       }}>
         <>
-          <UserProfileStackNavigator.Screen name={translate("navigation.user_profile")} component={UserProfile} />
+          <CompanyProfileStackNavigator.Screen name={translate("navigation.company_profile")} component={CompanyProfile} />
         </>
-      </UserProfileStackNavigator.Navigator>
+      </CompanyProfileStackNavigator.Navigator>
     );
   }
 
@@ -79,7 +79,7 @@ class UserProfileStack extends Component<Props, State> {
   }
 
   private onPressBackButton(): void {
-    console.log("Pressing back from user profile");
+    console.log("Pressing back from company profile");
     this.props.navigation.goBack();
   }
 
@@ -97,7 +97,7 @@ interface IStateProps {
 const mapStateToProps = (state: TRootReducer): IStateProps => {
   return {
     session: state.sessionReducer.session,
-    navigationProperty: state.navigationReducer.navigationProperty,
+    navigationProperty: state.navigationReducer.navigationProperty
   }
 }
 
@@ -111,4 +111,4 @@ export interface OwnProps {
 
 type Props = IStateProps & OwnProps;
 
-export default connect<IStateProps, {}, OwnProps>(mapStateToProps, null)(UserProfileStack);
+export default connect<IStateProps, {}, OwnProps>(mapStateToProps, null)(CompanyProfileStack);

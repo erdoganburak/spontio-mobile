@@ -48,7 +48,7 @@ class NoPictureViewer extends Component<Props, State> {
                 modalProps={_modalProps}
             >
                 <View>
-                    <ModalPictureSelector onPictureSelectedFromGallery={this.props.onPictureSelectedFromGallery} ></ModalPictureSelector>
+                    <ModalPictureSelector></ModalPictureSelector>
                 </View>
             </ModalBase>
         );
@@ -111,7 +111,6 @@ const mapStateToProps = (state: TRootReducer): IStateProps => {
 
 export interface OwnProps {
     picture: string,
-    onPictureSelectedFromGallery: () => void;
 }
 
 interface IDispatchProps {

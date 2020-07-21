@@ -12,6 +12,8 @@ import NavigationManager from '../../managers/navigation.manager';
 import { User } from '../../redux/reducer/userReducer';
 import { showPictureSelectorModal } from '../../redux/actions/pictureSelector';
 import { PictureSelectorObject } from '../../redux/reducer/pictureSelectorReducer';
+import GalleryManager from '../../managers/gallery.manager';
+import { Session } from 'src/redux/reducer/sessionReducer';
 
 class ModalPictureSelector extends Component<Props, State> {
 
@@ -30,9 +32,9 @@ class ModalPictureSelector extends Component<Props, State> {
     }
 
     private onPressGallery() {
-        if(this.props.onPictureSelectedFromGallery)
-        this.props.onPictureSelectedFromGallery();  
+        GalleryManager.openImagePicker();
     }
+    
     render() {
         return (
             <View style={styles.container}>
@@ -102,19 +104,21 @@ const styles = StyleSheet.create({
 interface IStateProps {
     camera: Camera,
     user: User,
-    pictureSelector: PictureSelectorObject 
+    pictureSelector: PictureSelectorObject,
+    session: Session
 }
 
 const mapStateToProps = (state: TRootReducer): IStateProps => {
     return {
         camera: state.cameraReducer.camera,
         user: state.userReducer.user,
-        pictureSelector: state.pictureSelectorReducer.pictureSelectorObject
+        pictureSelector: state.pictureSelectorReducer.pictureSelectorObject,
+        session: state.sessionReducer.session
     }
 }
 
 export interface OwnProps {
-    onPictureSelectedFromGallery: () => void;
+
 }
 
 interface IDispatchProps {

@@ -1,7 +1,10 @@
-import { CHANGE_USER_PROFILE_PICTURE } from "../actions/user";
+import { CHANGE_USER_PROFILE_PICTURE, CHANGE_COMPANY_PROFILE_PICTURE, CHANGE_USERNAME, CHANGE_PASSWORD } from "../actions/user";
 
 export class User {
-    profilePicture: string;
+    userProfilePicture: string;
+    companyProfilePicture: string;
+    username: string;
+    password: string;
     constructor() {
     }
 }
@@ -14,7 +17,19 @@ const userReducers = (state = initialState, action) => {
     switch (action.type) {
         case CHANGE_USER_PROFILE_PICTURE:
             return {
-                user: { ...state.user, profilePicture: action.profilePicture }
+                user: { ...state.user, userProfilePicture: action.userProfilePicture }
+            };
+        case CHANGE_COMPANY_PROFILE_PICTURE:
+            return {
+                user: { ...state.user, companyProfilePicture: action.companyProfilePicture }
+            };
+        case CHANGE_USERNAME:
+            return {
+                user: { ...state.user, username: action.username }
+            };
+        case CHANGE_PASSWORD:
+            return {
+                user: { ...state.user, password: action.password }
             };
         default:
             return state;
