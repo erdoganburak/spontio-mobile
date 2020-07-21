@@ -1,8 +1,6 @@
 import store from "../redux/store";
 import { showHeader, showGoBackButton, showHeaderLogo, changeCurrentRoute, showDrawer } from '../redux/actions/navigation';
 import { translate } from "./language.manager";
-import { Platform } from 'react-native';
-import CameraManager from "./camera.manager";
 
 /**
  * Manages navigation actions.

@@ -13,13 +13,13 @@ class SettingsItem extends Component<Props, State> {
       <TouchableOpacity style={styles.container} onPress={this.props.onPress}>
         <View style={styles.subContainer}>
           <View style={styles.iconContainer}>
-            <FontAwesomeIcon style={styles.icon} icon={this.props.icon as IconName} size={scale(16)} />
+            <FontAwesomeIcon style={styles.icon} icon={this.props.icon as IconName} size={scale(13)} />
           </View>
           <View style={styles.buttonContainer}>
             <Text style={styles.buttonText}>{this.props.title}</Text>
           </View>
           <View style={styles.actionIconContainer}>
-            <FontAwesomeIcon style={styles.actionIcon} icon="chevron-right" size={scale(15)} />
+            <FontAwesomeIcon style={styles.actionIcon} icon="chevron-right" size={scale(13)} />
           </View>
         </View>
       </TouchableOpacity>
@@ -42,7 +42,7 @@ const styles = StyleSheet.create(
     iconContainer: {
       flex: 0.5,
       justifyContent: 'center',
-      alignItems: 'flex-start',
+      alignItems: 'center',
     },
     icon: {
       color: SpontioColors.Primary

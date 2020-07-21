@@ -15,7 +15,7 @@ class HelpItem extends Component<Props, State> {
             <Text style={styles.buttonText}>{this.props.title}</Text>
           </View>
           <View style={styles.actionIconContainer}>
-            <FontAwesomeIcon style={styles.actionIcon} icon="chevron-right" size={scale(15)} />
+            <FontAwesomeIcon style={styles.actionIcon} icon="chevron-right" size={scale(13)} />
           </View>
         </View>
       </TouchableOpacity>

@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
 
     },
     image: {
-        borderColor: SpontioColors.PrimaryLight,
+        borderColor: SpontioColors.White,
         borderWidth: 4,
         width: moderateScale(200),
         height: moderateScale(200),
