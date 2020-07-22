@@ -4,13 +4,15 @@ import navigationReducers from "./reducer/navigationReducer";
 import cameraReducers from "./reducer/cameraReducer";
 import userReducers from "./reducer/userReducer";
 import pictureSelectorReducers from "./reducer/pictureSelectorReducer";
+import newOfferReducers from "./reducer/newOfferReducer";
 
 const rootReducer = combineReducers({
     sessionReducer: sessionReducers,
     navigationReducer: navigationReducers,
     cameraReducer: cameraReducers,
     userReducer: userReducers,
-    pictureSelectorReducer: pictureSelectorReducers
+    pictureSelectorReducer: pictureSelectorReducers,
+    newOfferReducer: newOfferReducers
 })
 
 const store = createStore(rootReducer);

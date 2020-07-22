@@ -21,8 +21,6 @@ import NavigationManager from '../../managers/navigation.manager';
 import CameraManager from '../../managers/camera.manager';
 import { PictureSelectorObject } from '../../redux/reducer/pictureSelectorReducer';
 import { showPictureSelectorModal } from '../../redux/actions/pictureSelector';
-import { Role } from '../../enums/role.enum';
-import GalleryManager from '../../managers/gallery.manager';
 
 class UserProfile extends Component<Props, State> {
 

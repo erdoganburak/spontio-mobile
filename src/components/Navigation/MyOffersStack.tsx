@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import { TRootReducer } from '../../redux/store';
 import { connect } from 'react-redux';
-import { NavigationProp, DrawerActions } from '@react-navigation/native';
+import { NavigationProp, DrawerActions, StackActions } from '@react-navigation/native';
 import { Session } from '../../redux/reducer/sessionReducer';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import { SpontioColors } from '../../enums/spontioColors.enum';
@@ -10,12 +10,13 @@ import { translate } from '../../managers/language.manager';
 import HeaderDrawerButton from '../Header/HeaderDrawerButton/HeaderDrawerButton';
 import { NavigationProperty } from '../../redux/reducer/navigationReducer';
 import HeaderBackButton from '../Header/HeaderBackButton/HeaderBackButton';
-import CompanyProfile from '../CompanyProfile/CompanyProfile';
 import SpontioHeaderBackground from '../Header/HeaderBackground/SpontioHeaderBackground';
+import MyOffers from '../MyOffers/MyOffers';
+import NewOffer from '../MyOffers/NewOffer/NewOffer';
 
-const CompanyProfileStackNavigator = createStackNavigator();
+const MyOffersStackNavigator = createStackNavigator();
 
-class CompanyProfileStack extends Component<Props, State> {
+class MyOffersStack extends Component<Props, State> {
 
   public readonly state: State = {
 
@@ -27,7 +28,7 @@ class CompanyProfileStack extends Component<Props, State> {
 
   render() {
     return (
-      <CompanyProfileStackNavigator.Navigator screenOptions={{
+      <MyOffersStackNavigator.Navigator screenOptions={{
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         headerBackground: (props) => (
           <SpontioHeaderBackground></SpontioHeaderBackground>
@@ -61,9 +62,12 @@ class CompanyProfileStack extends Component<Props, State> {
         ),
       }}>
         <>
-          <CompanyProfileStackNavigator.Screen name={translate("navigation.company_profile")} component={CompanyProfile} />
+          <MyOffersStackNavigator.Screen name={translate("navigation.my_offers")} component={MyOffers} />
         </>
-      </CompanyProfileStackNavigator.Navigator>
+        <>
+          <MyOffersStackNavigator.Screen name={translate("navigation.new_offer")} component={NewOffer} />
+        </>
+      </MyOffersStackNavigator.Navigator>
     );
   }
 
@@ -73,8 +77,8 @@ class CompanyProfileStack extends Component<Props, State> {
   }
 
   private onPressBackButton(): void {
-    console.log("Pressing back from company profile");
-    this.props.navigation.goBack();
+    console.log("Pressing back from my offers");
+    this.props.navigation.dispatch(StackActions.pop(1));
   }
 
 }
@@ -91,7 +95,7 @@ interface IStateProps {
 const mapStateToProps = (state: TRootReducer): IStateProps => {
   return {
     session: state.sessionReducer.session,
-    navigationProperty: state.navigationReducer.navigationProperty
+    navigationProperty: state.navigationReducer.navigationProperty,
   }
 }
 
@@ -105,4 +109,4 @@ export interface OwnProps {
 
 type Props = IStateProps & OwnProps;
 
-export default connect<IStateProps, {}, OwnProps>(mapStateToProps, null)(CompanyProfileStack);
+export default connect<IStateProps, {}, OwnProps>(mapStateToProps, null)(MyOffersStack);

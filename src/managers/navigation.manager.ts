@@ -7,6 +7,16 @@ import { translate } from "./language.manager";
  */
 export class NavigationManagerInstance {
 
+  private _currentRouteName: string;
+ 
+  public get currentRouteName(): string {
+    return this._currentRouteName;
+  }
+  
+  public set currentRouteName(value: string) {
+    this._currentRouteName = value;
+  }
+
   /**
   * Manages header styling.
   * 
@@ -97,7 +107,8 @@ export class NavigationManagerInstance {
   public setCurrentRoute(navigationState): void {
     let currentRoute = this.getActiveRouteMetadata(navigationState);
     if (currentRoute && currentRoute.name) {
-      console.log("Current route is => " + currentRoute.name)
+      console.log("Current route is => " + currentRoute.name);
+      this.currentRouteName = currentRoute.name;
       store.dispatch(changeCurrentRoute(currentRoute.name));
       this.manageNavigationActions(currentRoute.name);
     }
@@ -110,11 +121,20 @@ export class NavigationManagerInstance {
   */
   private manageNavigationActions(routeName: string): void {
     switch (routeName) {
+      case translate("navigation.login"):
+        this.setHeaderOptions(true, false, true, false);
+        break;
       case translate("navigation.settings"):
         this.setHeaderOptions(true, true, false, true);
         break;
       case translate("navigation.help"):
         this.setHeaderOptions(true, true, false, true);
+        break;
+      case translate("navigation.my_offers"):
+        this.setHeaderOptions(true, true, false, true);
+        break;
+      case translate("navigation.new_offer"):
+        this.setHeaderOptions(true, true, true, false);
         break;
       case translate("navigation.language_selection"):
         this.setHeaderOptions(true, true, true, false);

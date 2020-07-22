@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet} from 'react-native';
 import { TRootReducer } from '../../redux/store';
 import { connect } from 'react-redux';
 import { NavigationProp, DrawerActions } from '@react-navigation/native';
 import { Session } from '../../redux/reducer/sessionReducer';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import { SpontioColors } from '../../enums/spontioColors.enum';
-import { moderateScale } from 'react-native-size-matters';
 import { translate } from '../../managers/language.manager';
 import HeaderDrawerButton from '../Header/HeaderDrawerButton/HeaderDrawerButton';
 import { NavigationProperty } from '../../redux/reducer/navigationReducer';
 import UserProfile from '../UserProfile/UserProfile';
 import HeaderBackButton from '../Header/HeaderBackButton/HeaderBackButton';
+import SpontioHeaderBackground from '../Header/HeaderBackground/SpontioHeaderBackground';
 
 const UserProfileStackNavigator = createStackNavigator();
 
@@ -30,13 +30,7 @@ class UserProfileStack extends Component<Props, State> {
       <UserProfileStackNavigator.Navigator screenOptions={{
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         headerBackground: (props) => (
-          <View style={{ backgroundColor: SpontioColors.Primary, flex: 1 }}>
-            <Image
-              style={{ width: moderateScale(140), height: moderateScale(40), backgroundColor: SpontioColors.Primary, alignSelf: 'center', justifyContent: 'center', flex: 1 }}
-              source={require('../../assets/spontio_name_logo1.png')}
-              resizeMode='contain'
-            />
-          </View>
+          <SpontioHeaderBackground></SpontioHeaderBackground>
         ),
         headerStyle: {
           backgroundColor: SpontioColors.Primary,

@@ -15,6 +15,7 @@ import UserProfileStack from './UserProfileStack';
 import CompanyProfileStack from './CompanyProfileStack';
 import { Role } from '../../enums/role.enum';
 import HelpStack from './HelpStack';
+import MyOffersStack from './MyOffersStack';
 
 const Drawer = createDrawerNavigator();
 
@@ -70,13 +71,16 @@ class InitializeNavigationScreen extends Component<Props, State> {
                   drawerIcon: config => <FontAwesomeIcon icon="question-circle" size={scale(22)} color={SpontioColors.White} />
                 }}
               />
-              <Drawer.Screen
-                name={translate("navigation.settings")}
-                component={SettingsStack}
-                options={{
-                  drawerIcon: config => <FontAwesomeIcon icon="cog" size={scale(22)} color={SpontioColors.White} />
-                }}
-              />
+              {
+                this.props.session.role === Role.Company &&
+                <Drawer.Screen
+                  name={translate("navigation.my_offers")}
+                  component={MyOffersStack}
+                  options={{
+                    drawerIcon: config => <FontAwesomeIcon icon="tag" size={scale(22)} color={SpontioColors.White} />
+                  }}
+                />
+              }
               {
                 this.props.session.role === Role.User &&
                 <Drawer.Screen
@@ -97,6 +101,13 @@ class InitializeNavigationScreen extends Component<Props, State> {
                   }}
                 />
               }
+              <Drawer.Screen
+                name={translate("navigation.settings")}
+                component={SettingsStack}
+                options={{
+                  drawerIcon: config => <FontAwesomeIcon icon="cog" size={scale(22)} color={SpontioColors.White} />
+                }}
+              />
             </Drawer.Navigator>
 
           </NavigationContainer>

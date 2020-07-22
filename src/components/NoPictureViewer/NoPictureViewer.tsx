@@ -86,7 +86,8 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor:SpontioColors.PrimaryDark
+        backgroundColor:SpontioColors.PrimaryDark,
+        padding:moderateScale(20)
     },
     cameraContainer: {
         borderRadius: 100,

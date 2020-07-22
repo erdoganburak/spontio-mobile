@@ -65,6 +65,6 @@ type State = {
 
 }
 
-type Props = IStateProps  & OwnProps
+type Props = IStateProps & OwnProps
 
 export default connect<IStateProps, {}, OwnProps>(mapStateToProps, null)(ContactUs);

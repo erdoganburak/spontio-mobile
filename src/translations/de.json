@@ -31,7 +31,9 @@
 		"faq": "FAQ",
 		"terms_of_use":"Terms of Use",
 		"contact_us": "Contact Us",
-		"privacy": "Privacy"
+		"privacy": "Privacy",
+		"my_offers": "My Offers",
+		"new_offer": "New Offer"
 	},
 	"settings": {
 		"notifications": {

@@ -5,7 +5,7 @@ import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import { NavigationProp } from '@react-navigation/native';
 import { connect } from 'react-redux';
 
-class ButtonPrimary extends Component<Props, State> {
+class ButtonNewOffer extends Component<Props, State> {
 
     async componentDidMount() {
 
@@ -21,7 +21,7 @@ class ButtonPrimary extends Component<Props, State> {
         return (
             <TouchableOpacity style={styleDefinitions.button} onPress={this.props.onPress}>
                 <Text style={styleDefinitions.text}>
-                    {this.props.title}
+                    +
                 </Text>
             </TouchableOpacity>
         );
@@ -32,20 +32,21 @@ class ButtonPrimary extends Component<Props, State> {
 const styles = (props: Props) =>
     StyleSheet.create({
         button: {
-            width: scale(props.width ? props.width : 300),
-            height: moderateScale(45),
+            width: moderateScale(50),
+            height: moderateScale(50),
+            borderRadius: moderateScale(50 / 2),
             marginBottom: moderateScale(10),
-            backgroundColor: SpontioColors.White,
+            backgroundColor: SpontioColors.Primary,
             borderColor: SpontioColors.Primary,
-            borderWidth: 2
+            borderWidth: 2,
         },
         text: {
-            color: SpontioColors.Primary,
+            color: SpontioColors.White,
             fontWeight: "bold",
             flex: 1,
             textAlign: 'center',
-            paddingVertical: moderateScale(12),
-            fontSize: moderateScale(14),
+            paddingVertical: moderateScale(7),
+            fontSize: moderateScale(25),
         }
     });
 
@@ -56,8 +57,6 @@ interface IStateProps {
 export interface OwnProps {
     navigation: NavigationProp<any>;
     onPress: () => void;
-    title: string,
-    width: number
 }
 
 type State = {
@@ -65,4 +64,4 @@ type State = {
 
 type Props = IStateProps & OwnProps
 
-export default connect<IStateProps, {}, OwnProps>(null, null)(ButtonPrimary);
+export default connect<IStateProps, {}, OwnProps>(null, null)(ButtonNewOffer);

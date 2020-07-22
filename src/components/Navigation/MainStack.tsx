@@ -1,5 +1,5 @@
 import React, { Component, Dispatch } from 'react';
-import { StyleSheet, Image, View } from 'react-native';
+import { StyleSheet} from 'react-native';
 import { TRootReducer } from '../../redux/store';
 import { connect } from 'react-redux';
 import { NavigationProp, DrawerActions } from '@react-navigation/native';
@@ -9,7 +9,6 @@ import { SpontioColors } from '../../enums/spontioColors.enum';
 import HomeTabs from './HomeTabs';
 import NewCustomerStack from './NewCustomerStack';
 import Welcome from '../Welcome/Welcome';
-import { moderateScale } from 'react-native-size-matters';
 import Login from '../Login/Login';
 import HeaderDrawerButton from '../Header/HeaderDrawerButton/HeaderDrawerButton';
 import { NavigationProperty } from '../../redux/reducer/navigationReducer';
@@ -19,6 +18,7 @@ import { showCamera, showTakenPicture, changePicture } from '../../redux/actions
 import { changeUserProfilePicture } from '../../redux/actions/user';
 import { translate } from '../../managers/language.manager';
 import HeaderBackButton from '../Header/HeaderBackButton/HeaderBackButton';
+import SpontioHeaderBackground from '../Header/HeaderBackground/SpontioHeaderBackground';
 
 const MainStackNavigator = createStackNavigator();
 
@@ -38,13 +38,7 @@ class MainStack extends Component<Props, State> {
         screenOptions={{
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
           headerBackground: (props) => (
-            <View style={{ backgroundColor: SpontioColors.Primary, flex: 1 }}>
-              {this.props.navigationProperty.showHeaderLogo ? <Image
-                style={{ marginTop:moderateScale(10), width: moderateScale(140), height: moderateScale(40), backgroundColor: SpontioColors.Primary, alignSelf: 'center', justifyContent: 'center', flex: 1 }}
-                source={require('../../assets/spontio_name_logo1.png')}
-                resizeMode='contain'
-              /> : < View ></View>}
-            </ View>
+            <SpontioHeaderBackground></SpontioHeaderBackground>
           ),
           headerStyle: {
             backgroundColor: SpontioColors.Primary,

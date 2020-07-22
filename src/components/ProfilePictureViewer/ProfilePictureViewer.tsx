@@ -89,7 +89,8 @@ class ProfilePictureViewer extends Component<Props, State> {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: SpontioColors.PrimaryDark
+        backgroundColor: SpontioColors.PrimaryDark,
+        padding: moderateScale(20)
     },
     buttonWrapper: {
         flex: 0.5,

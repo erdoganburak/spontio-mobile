@@ -21,6 +21,7 @@ import { faBolt } from '@fortawesome/free-solid-svg-icons'
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
 import { faMale } from '@fortawesome/free-solid-svg-icons'
 import { faFemale } from '@fortawesome/free-solid-svg-icons'
+import { faTag } from '@fortawesome/free-solid-svg-icons'
 
 /**
  * Manages icons
@@ -52,6 +53,7 @@ class IconManagerInstance {
         library.add(fab, faCalendarAlt);
         library.add(fab, faMale);
         library.add(fab, faFemale);
+        library.add(fab, faTag);
     }
 
 }
