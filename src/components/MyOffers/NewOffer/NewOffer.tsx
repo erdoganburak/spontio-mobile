@@ -1,7 +1,7 @@
 import React, { Component, Dispatch } from 'react';
 import { View, StyleSheet, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
-import { NavigationProp } from '@react-navigation/native';
+import { NavigationProp, StackActions } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { TRootReducer } from '../../../redux/store';
 import { SpontioColors } from '../../../enums/spontioColors.enum';
@@ -21,6 +21,8 @@ import NewOfferPhoto from './NewOfferPhoto';
 import NewOfferDescription from './NewOfferProductDescription';
 import NewOfferDescriptionOffer from './NewOfferDescription';
 import ButtonPrimary from '../../../components/Button/ButtonPrimary';
+import OfferManager from '../../../managers/offer.manager';
+import { CompanyOfferObject } from '../../../redux/reducer/companyOfferReducer';
 
 class NewOffer extends Component<Props, State> {
 
@@ -46,11 +48,40 @@ class NewOffer extends Component<Props, State> {
         NavigationManager.setCurrentRoute(this.props.navigation.dangerouslyGetState());
     }
 
-    public onPictureSave() {
+    private onPictureSave(): void {
         if (this.props.camera.picture) {
             this.props.changeNewOfferPhoto(this.props.camera.picture);
             this.props.showPictureSelectorModal(false);
         }
+    }
+
+    private onPressSave(): void {
+        //if (!this.validateFields())
+         //   return;
+        OfferManager.addNewCompanyOffer(this.createCompanyOfferObject())
+        this.props.navigation.dispatch(StackActions.pop(1));
+    }
+
+    private createCompanyOfferObject(): CompanyOfferObject {
+        let companyOffer: CompanyOfferObject = new CompanyOfferObject();
+        companyOffer.title = this.props.newOffer.newOfferTitle;
+        companyOffer.offerPhoto = this.props.newOffer.newOfferPhoto;
+        companyOffer.offerDescription = this.props.newOffer.newOfferDescription;
+        companyOffer.productDescription = this.props.newOffer.newOfferProductDescription;
+        return companyOffer;
+    }
+
+    private validateFields(): boolean {
+        if (!this.props.newOffer.newOfferPhoto) {
+            return false;
+        } else if (!this.props.newOffer.newOfferDescription) {
+            return false;
+        } else if (!this.props.newOffer.newOfferProductDescription) {
+            return false;
+        } else if (!this.props.newOffer.newOfferTitle) {
+            return false;
+        }
+        return true;
     }
 
     render() {
@@ -70,7 +101,7 @@ class NewOffer extends Component<Props, State> {
                     <NewOfferDescription></NewOfferDescription>
                     <NewOfferDescriptionOffer></NewOfferDescriptionOffer>
                     <View style={styles.buttonSave}>
-                        <ButtonPrimary title={"Save"}></ButtonPrimary>
+                        <ButtonPrimary title={"Save"} onPress={this.onPressSave.bind(this)}></ButtonPrimary>
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>
@@ -90,8 +121,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: moderateScale(15)
     },
     buttonSave: {
-        alignSelf:'center',
-        paddingVertical:moderateScale(10)
+        alignSelf: 'center',
+        paddingVertical: moderateScale(10)
     }
 });
 

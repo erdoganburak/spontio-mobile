@@ -7,8 +7,8 @@ import { TRootReducer } from '../../../redux/store';
 import { SpontioColors } from '../../../enums/spontioColors.enum';
 import { NavigationProperty } from '../../../redux/reducer/navigationReducer';
 import { AnyAction } from 'redux';
-import { showCamera } from '../../../redux/actions/camera';
 import { NewOfferObject } from '../../../redux/reducer/newOfferReducer';
+import { changeNewOfferProductDescription } from '../../../redux/actions/newOffer';
 
 class NewOfferProductDescription extends Component<Props, State> {
 
@@ -32,8 +32,8 @@ class NewOfferProductDescription extends Component<Props, State> {
                             placeholderTextColor={SpontioColors.Primary}
                             style={styles.input}
                             returnKeyType="default"
-                        //value={this.props.user.username}
-                        //onChangeText={(username) => this.props.changeUsername(username)}
+                            value={this.props.newOffer.newOfferProductDescription}
+                            onChangeText={(newOfferProductDescription) => this.props.changeNewOfferProductDescription(newOfferProductDescription)}
                         />
                     </View>
                 </View>
@@ -81,12 +81,12 @@ const mapStateToProps = (state: TRootReducer): IStateProps => {
 }
 
 interface IDispatchProps {
-    showCamera: (show: boolean) => void;
+    changeNewOfferProductDescription: (newOfferProductDescription: string) => void;
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
     return {
-        showCamera: (show: boolean) => dispatch(showCamera(show)),
+        changeNewOfferProductDescription: (newOfferProductDescription: string) => dispatch(changeNewOfferProductDescription(newOfferProductDescription)),
     }
 }
 

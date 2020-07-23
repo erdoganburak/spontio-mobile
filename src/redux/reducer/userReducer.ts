@@ -1,11 +1,14 @@
-import { CHANGE_USER_PROFILE_PICTURE, CHANGE_COMPANY_PROFILE_PICTURE, CHANGE_USERNAME, CHANGE_PASSWORD } from "../actions/user";
+import { CHANGE_USER_PROFILE_PICTURE, CHANGE_COMPANY_PROFILE_PICTURE, CHANGE_USERNAME, CHANGE_PASSWORD, UPDATE_OFFER_LIST } from "../actions/user";
+import { CompanyOfferObject } from "./companyOfferReducer";
 
 export class User {
     userProfilePicture: string;
     companyProfilePicture: string;
     username: string;
     password: string;
+    companyOfferList: Array<CompanyOfferObject>;
     constructor() {
+        this.companyOfferList = new Array<CompanyOfferObject>();
     }
 }
 
@@ -30,6 +33,10 @@ const userReducers = (state = initialState, action) => {
         case CHANGE_PASSWORD:
             return {
                 user: { ...state.user, password: action.password }
+            };
+        case UPDATE_OFFER_LIST:
+            return {
+                user: { ...state.user, companyOfferList: action.companyOfferList }
             };
         default:
             return state;

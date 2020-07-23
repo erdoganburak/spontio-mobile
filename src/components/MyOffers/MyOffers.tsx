@@ -11,6 +11,7 @@ import { translate } from '../../managers/language.manager';
 import { AnyAction } from 'redux';
 import { changeNewOfferPhoto } from '../../redux/actions/newOffer';
 import ButtonNewOffer from '../Button/ButtonNewOffer';
+import OfferManager from '../../managers/offer.manager';
 
 class MyOffers extends Component<Props, State> {
 
@@ -36,6 +37,15 @@ class MyOffers extends Component<Props, State> {
     render() {
         return (
             <View style={styles.container}>
+                <View style={styles.offers}>
+                    {
+                        this.props.user.companyOfferList.slice(0).reverse().map((value, index) => {
+                            return <Text>
+                                {value.title}
+                            </Text>
+                        })
+                    }
+                </View>
                 <View style={styles.buttonNewOffer}>
                     <ButtonNewOffer onPress={this.onPressNewOffer.bind(this)}></ButtonNewOffer>
                 </View>
@@ -44,13 +54,16 @@ class MyOffers extends Component<Props, State> {
     }
 
     private onPressNewOffer() {
-        this.props.changeNewOfferPhoto(null);
+        OfferManager.resetNewOffer();
         this.props.navigation.navigate(translate("navigation.new_offer"));
     }
 }
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
+    },
+    offers: {
         flex: 1,
     },
     buttonNewOffer: {
