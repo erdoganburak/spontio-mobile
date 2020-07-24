@@ -1,5 +1,5 @@
 import React, { Component, Dispatch } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import { NavigationProp } from '@react-navigation/native';
 import { connect } from 'react-redux';
@@ -12,6 +12,7 @@ import { AnyAction } from 'redux';
 import { changeNewOfferPhoto } from '../../redux/actions/newOffer';
 import ButtonNewOffer from '../Button/ButtonNewOffer';
 import OfferManager from '../../managers/offer.manager';
+import Offer from '../Offer/Offer';
 
 class MyOffers extends Component<Props, State> {
 
@@ -37,15 +38,15 @@ class MyOffers extends Component<Props, State> {
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.offers}>
+                <ScrollView style={styles.offers}>
                     {
                         this.props.user.companyOfferList.slice(0).reverse().map((value, index) => {
-                            return <Text>
-                                {value.title}
-                            </Text>
+                            return <View style={styles.offerContainer}>
+                                <Offer companyOffer={value}></Offer>
+                            </View>
                         })
                     }
-                </View>
+                </ScrollView>
                 <View style={styles.buttonNewOffer}>
                     <ButtonNewOffer onPress={this.onPressNewOffer.bind(this)}></ButtonNewOffer>
                 </View>
@@ -62,14 +63,22 @@ class MyOffers extends Component<Props, State> {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: SpontioColors.DarkWhite
     },
     offers: {
-        flex: 1,
+        flex: 1
     },
     buttonNewOffer: {
         position: 'absolute',
         bottom: moderateScale(10),
         right: moderateScale(10),
+    },
+    offerContainer: {
+        flex: 1,
+        width: '95%',
+        alignSelf: 'center',
+        marginVertical: moderateScale(10)
+
     }
 });
 

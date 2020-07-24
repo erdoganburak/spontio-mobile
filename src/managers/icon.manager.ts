@@ -1,7 +1,7 @@
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
-import { faTimes, faFile } from '@fortawesome/free-solid-svg-icons'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faGripLines } from '@fortawesome/free-solid-svg-icons'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
@@ -22,6 +22,8 @@ import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
 import { faMale } from '@fortawesome/free-solid-svg-icons'
 import { faFemale } from '@fortawesome/free-solid-svg-icons'
 import { faTag } from '@fortawesome/free-solid-svg-icons'
+import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
+import { faClock } from '@fortawesome/free-solid-svg-icons'
 
 /**
  * Manages icons
@@ -54,6 +56,8 @@ class IconManagerInstance {
         library.add(fab, faMale);
         library.add(fab, faFemale);
         library.add(fab, faTag);
+        library.add(fab, faMapMarkerAlt)
+        library.add(fab, faClock)
     }
 
 }
