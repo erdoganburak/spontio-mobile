@@ -1,10 +1,12 @@
-import { CHANGE_OFFER_PHOTO, CHANGE_OFFER_PRODUCT_DESCRIPTION, CHANGE_OFFER_DESCRIPTION, CHANGE_OFFER_TITLE } from "../actions/offer";
+import { CHANGE_OFFER_PHOTO, CHANGE_OFFER_PRODUCT_DESCRIPTION, CHANGE_OFFER_DESCRIPTION, CHANGE_OFFER_TITLE, CHANGE_OFFER_SECTOR } from "../actions/offer";
+import { Sector } from "../../enums/sector.enum";
 
 export class CompanyOfferObject {
     offerPhoto: string;
     title: string;
     productDescription: string;
     offerDescription: string;
+    offerSector: Sector
     constructor() {
     }
 }
@@ -30,6 +32,10 @@ const companyOfferReducers = (state = initialState, action) => {
         case CHANGE_OFFER_TITLE:
             return {
                 offer: { ...state.offer, title: action.title }
+            };
+        case CHANGE_OFFER_SECTOR:
+            return {
+                offer: { ...state.offer, offerSector: action.offerSector }
             };
         default:
             return state;

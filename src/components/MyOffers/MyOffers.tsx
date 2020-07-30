@@ -1,5 +1,5 @@
 import React, { Component, Dispatch } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import { NavigationProp } from '@react-navigation/native';
 import { connect } from 'react-redux';

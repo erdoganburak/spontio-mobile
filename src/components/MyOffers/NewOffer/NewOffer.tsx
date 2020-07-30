@@ -23,6 +23,7 @@ import NewOfferDescriptionOffer from './NewOfferDescription';
 import ButtonPrimary from '../../../components/Button/ButtonPrimary';
 import OfferManager from '../../../managers/offer.manager';
 import { CompanyOfferObject } from '../../../redux/reducer/companyOfferReducer';
+import NewOfferSectors from './NewOfferSectors';
 
 class NewOffer extends Component<Props, State> {
 
@@ -57,7 +58,7 @@ class NewOffer extends Component<Props, State> {
 
     private onPressSave(): void {
         //if (!this.validateFields())
-         //   return;
+        //   return;
         OfferManager.addNewCompanyOffer(this.createCompanyOfferObject())
         this.props.navigation.dispatch(StackActions.pop(1));
     }
@@ -100,6 +101,7 @@ class NewOffer extends Component<Props, State> {
                     <NewOfferTitle></NewOfferTitle>
                     <NewOfferDescription></NewOfferDescription>
                     <NewOfferDescriptionOffer></NewOfferDescriptionOffer>
+                    <NewOfferSectors></NewOfferSectors>
                     <View style={styles.buttonSave}>
                         <ButtonPrimary title={"Save"} onPress={this.onPressSave.bind(this)}></ButtonPrimary>
                     </View>

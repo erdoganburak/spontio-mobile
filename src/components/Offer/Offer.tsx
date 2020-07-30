@@ -76,7 +76,6 @@ const styles = StyleSheet.create({
     },
     offerInfoContainer: {
         paddingHorizontal: moderateScale(8),
-
     },
     title: {
         paddingHorizontal: moderateScale(5),

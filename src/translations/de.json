@@ -29,7 +29,7 @@
 		"who_we_are": "Who we are",
 		"social_media": "Social Media",
 		"faq": "FAQ",
-		"terms_of_use":"Terms of Use",
+		"terms_of_use": "Terms of Use",
 		"contact_us": "Contact Us",
 		"privacy": "Privacy",
 		"my_offers": "My Offers",
@@ -50,5 +50,28 @@
 	"help": {
 		"about_us": "About Us",
 		"help": "Help"
+	},
+	"my_offers": {
+		"sectors": {
+			"restaurant_cafe_snack": "Restaurant, Cafe, Snack",
+			"supermarket": "Supermarket",
+			"fashion_clothing": "Fashion Clothing",
+			"furniture": "Furniture",
+			"hardware_store": "Hardware Store",
+			"electronics": "Electronics",
+			"drugstore_perfumery_pharmacy": "Drugstore, Perfumery, Pharmacy",
+			"baby_child_toys": "Baby, Child, Toys",
+			"watches_and_jewellery": "Watches and Jewellery",
+			"travel_holiday": "Travel, Holiday",
+			"car_motorcycle": "Car, Motorcycle",
+			"sport_health_fitness": "Sport, Health, Fitness",
+			"photo_video": "Photo, Video",
+			"petshops_pet_suppplies": "Petshops, Pet Supplies",
+			"garden_plants": "Garden Plants",
+			"optics": "Optics",
+			"finance_banks_insurance": "Finance, Banks, Insurance",
+			"service": "Service",
+			"renovation": "Renovation"
+		}
 	}
 }
