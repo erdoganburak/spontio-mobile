@@ -1,8 +1,9 @@
 import { CompanyOfferObject } from "../redux/reducer/companyOfferReducer";
 import store from "../redux/store";
 import { updateCompanyOfferList } from "../redux/actions/user";
-import { changeNewOfferPhoto, changeNewOfferDescription, changeNewOfferProductDescription, changeNewOfferTitle, changeNewOfferSector } from "../redux/actions/newOffer";
+import { changeNewOfferPhoto, changeNewOfferDescription, changeNewOfferProductDescription, changeNewOfferTitle, changeNewOfferSector, changeNewOfferPriceType } from "../redux/actions/newOffer";
 import { Sector } from "../enums/sector.enum";
+import { OfferPriceType } from "../enums/offerPrice.enum";
 
 const MAX_LIST_SIZE = 5;
 
@@ -31,6 +32,8 @@ class OfferManagerInstance {
 		store.dispatch(changeNewOfferProductDescription(null));
 		store.dispatch(changeNewOfferTitle(null));
 		store.dispatch(changeNewOfferSector(Sector.RestaurantCafeSnack));
+		store.dispatch(changeNewOfferPriceType(OfferPriceType.Price));
+
 	}
 
 	private manageCompanyOfferList(companyOfferList: Array<CompanyOfferObject>): void {

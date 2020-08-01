@@ -24,6 +24,8 @@ import ButtonPrimary from '../../../components/Button/ButtonPrimary';
 import OfferManager from '../../../managers/offer.manager';
 import { CompanyOfferObject } from '../../../redux/reducer/companyOfferReducer';
 import NewOfferSectors from './NewOfferSectors';
+import NewOfferPrice from './NewOfferPrice';
+import { OfferPriceType } from '../../../enums/offerPrice.enum';
 
 class NewOffer extends Component<Props, State> {
 
@@ -69,6 +71,18 @@ class NewOffer extends Component<Props, State> {
         companyOffer.offerPhoto = this.props.newOffer.newOfferPhoto;
         companyOffer.offerDescription = this.props.newOffer.newOfferDescription;
         companyOffer.productDescription = this.props.newOffer.newOfferProductDescription;
+        companyOffer.offerSector = this.props.newOffer.newOfferSector;
+        if (this.props.newOffer.newOfferPriceType === OfferPriceType.Price) {
+            companyOffer.offerNewPrice = this.props.newOffer.newOfferNewPrice;
+            companyOffer.offerOldPrice = this.props.newOffer.newOfferOldPrice;
+        }
+        else if (this.props.newOffer.newOfferPriceType === OfferPriceType.Discount) {
+            companyOffer.offerDiscount = this.props.newOffer.newOfferDiscount;;
+        }
+        else if (this.props.newOffer.newOfferPriceType === OfferPriceType.Quota) {
+            companyOffer.offerQuotaOldPrice = this.props.newOffer.newOfferQuotaOldPrice;
+            companyOffer.offerQuotaNewPrice = this.props.newOffer.newOfferQuotaNewPrice;
+        }
         return companyOffer;
     }
 
@@ -81,6 +95,23 @@ class NewOffer extends Component<Props, State> {
             return false;
         } else if (!this.props.newOffer.newOfferTitle) {
             return false;
+        } else if (!this.props.newOffer.newOfferSector) {
+            return false;
+        } else if (!this.props.newOffer.newOfferPriceType) {
+            return false;
+        }
+
+        if (this.props.newOffer.newOfferPriceType === OfferPriceType.Price) {
+            if (!this.props.newOffer.newOfferOldPrice || !this.props.newOffer.newOfferOldPrice)
+                return false;
+        }
+        else if (this.props.newOffer.newOfferPriceType === OfferPriceType.Discount) {
+            if (!this.props.newOffer.newOfferDiscount)
+                return false;
+        }
+        else if (this.props.newOffer.newOfferPriceType === OfferPriceType.Quota) {
+            if (!this.props.newOffer.newOfferQuotaOldPrice || !this.props.newOffer.newOfferQuotaNewPrice || !this.props.newOffer.newOfferQuota)
+                return false;
         }
         return true;
     }
@@ -102,6 +133,7 @@ class NewOffer extends Component<Props, State> {
                     <NewOfferDescription></NewOfferDescription>
                     <NewOfferDescriptionOffer></NewOfferDescriptionOffer>
                     <NewOfferSectors></NewOfferSectors>
+                    <NewOfferPrice></NewOfferPrice>
                     <View style={styles.buttonSave}>
                         <ButtonPrimary title={"Save"} onPress={this.onPressSave.bind(this)}></ButtonPrimary>
                     </View>

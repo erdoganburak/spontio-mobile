@@ -52,6 +52,11 @@
 		"help": "Help"
 	},
 	"my_offers": {
+		"price_types": {
+			"price": "Price",
+			"discount": "Discount",
+			"quota": "Quota"
+		},
 		"sectors": {
 			"restaurant_cafe_snack": "Restaurant, Cafe, Snack",
 			"supermarket": "Supermarket",
