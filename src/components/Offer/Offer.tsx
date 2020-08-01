@@ -19,8 +19,6 @@ class Offer extends Component<Props, State> {
     }
 
     render() {
-
-
         return (
             <View style={styles.container}>
                 <View style={styles.imageContainer}>
@@ -66,7 +64,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         paddingHorizontal:moderateScale(5),
         marginVertical: moderateScale(12)
-       
     },
     image: {
         width: moderateScale(320),

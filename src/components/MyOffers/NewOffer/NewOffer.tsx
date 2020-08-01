@@ -26,6 +26,7 @@ import { CompanyOfferObject } from '../../../redux/reducer/companyOfferReducer';
 import NewOfferSectors from './NewOfferSectors';
 import NewOfferPrice from './NewOfferPrice';
 import { OfferPriceType } from '../../../enums/offerPrice.enum';
+import NewOfferAvailability from './NewOfferAvailability';
 
 class NewOffer extends Component<Props, State> {
 
@@ -134,6 +135,7 @@ class NewOffer extends Component<Props, State> {
                     <NewOfferDescriptionOffer></NewOfferDescriptionOffer>
                     <NewOfferSectors></NewOfferSectors>
                     <NewOfferPrice></NewOfferPrice>
+                    <NewOfferAvailability></NewOfferAvailability>
                     <View style={styles.buttonSave}>
                         <ButtonPrimary title={"Save"} onPress={this.onPressSave.bind(this)}></ButtonPrimary>
                     </View>

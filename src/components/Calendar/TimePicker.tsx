@@ -3,15 +3,15 @@ import { View, StyleSheet, Text, StatusBar, Platform } from 'react-native';
 import { SpontioColors } from '../../enums/spontioColors.enum';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import { connect } from 'react-redux';
-import AndroidCalendar from './AndroidCalendar';
-import IOSCalendar from './IOSCalendar';
-import ButtonCalendar from './ButtonCalendar';
 import moment from 'moment';
 import { TextInput } from 'react-native-gesture-handler';
 import { ModalSize } from '../../enums/modalSize.enum';
 import ModalBase, { IProps } from '../Modal/ModalBase';
+import AndroidTimePicker from './AndroidTimePicker';
+import IOSTimePicker from './IOSTimePicker';
+import ButtonTimePicker from './ButtonTimePicker';
 
-class CalendarPicker extends Component<Props, State> {
+class TimePicker extends Component<Props, State> {
 
     public readonly state: State = {
         showDatePicker: false,
@@ -32,7 +32,7 @@ class CalendarPicker extends Component<Props, State> {
                 {this.renderDatePicker()}
                 {this.renderIOSModal()}
                 <View style={styles.buttonContainer}>
-                    <ButtonCalendar onPress={this.onClick.bind(this)}></ButtonCalendar>
+                    <ButtonTimePicker onPress={this.onClick.bind(this)}></ButtonTimePicker>
                 </View>
                 <View style={styles.textContainer}>
                     <StatusBar barStyle="light-content" />
@@ -44,7 +44,7 @@ class CalendarPicker extends Component<Props, State> {
                         placeholderTextColor="rgba(255,255,255,0.8)"
                         style={styles.input}
                         returnKeyType="next"
-                        value={this.props.date ? moment(this.props.date).format('DD/MM/YYYY') : ""}
+                        value={this.props.date ? moment(this.props.date).format('HH:mm') : ""}
                         editable={false}
                     />
                 </View>
@@ -101,7 +101,7 @@ class CalendarPicker extends Component<Props, State> {
                 modalProps={_modalProps}
             >
                 <View>
-                    <IOSCalendar date={this.props.date} onDateChange={this.onDateChange.bind(this)} onTouchCancel={this.onTouchCancel.bind(this)}></IOSCalendar>
+                    <IOSTimePicker date={this.props.date} onDateChange={this.onDateChange.bind(this)} onTouchCancel={this.onTouchCancel.bind(this)}></IOSTimePicker>
                 </View>
             </ModalBase>
         );
@@ -112,7 +112,7 @@ class CalendarPicker extends Component<Props, State> {
             if (Platform.OS === "android") {
                 return (
                     <View>
-                        <AndroidCalendar date={this.props.date} onDateChange={this.onDateChange.bind(this)} onTouchCancel={this.onTouchCancel.bind(this)}></AndroidCalendar>
+                        <AndroidTimePicker date={this.props.date} onDateChange={this.onDateChange.bind(this)} onTouchCancel={this.onTouchCancel.bind(this)}></AndroidTimePicker>
                     </View>
                 );
             }
@@ -171,4 +171,4 @@ type State = {
 
 type Props = IStateProps & OwnProps
 
-export default connect<IStateProps, {}, OwnProps>(null, null)(CalendarPicker);
+export default connect<IStateProps, {}, OwnProps>(null, null)(TimePicker);
