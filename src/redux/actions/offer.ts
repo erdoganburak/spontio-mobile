@@ -1,6 +1,7 @@
 import { Sector } from "../../enums/sector.enum"
 import { OfferPriceType } from "../../enums/offerPrice.enum"
 
+export const CHANGE_OFFER_ID = 'CHANGE_OFFER_ID'
 export const CHANGE_OFFER_PHOTO = 'CHANGE_OFFER_PHOTO'
 export const CHANGE_OFFER_PRODUCT_DESCRIPTION = 'CHANGE_OFFER_PRODUCT_DESCRIPTION'
 export const CHANGE_OFFER_DESCRIPTION = 'CHANGE_OFFER_DESCRIPTION'
@@ -13,7 +14,14 @@ export const CHANGE_OFFER_DISCOUNT = 'CHANGE_OFFER_DISCOUNT'
 export const CHANGE_OFFER_QUOTA = 'CHANGE_OFFER_QUOTA'
 export const CHANGE_OFFER_QUOTA_OLD_PRICE = 'CHANGE_OFFER_QUOTA_OLD_PRICE'
 export const CHANGE_OFFER_QUOTA_NEW_PRICE = 'CHANGE_OFFER_QUOTA_NEW_PRICE'
+export const CHANGE_OFFER_START_DATE = 'CHANGE_OFFER_START_DATE'
+export const CHANGE_OFFER_START_TIME = 'CHANGE_OFFER_START_TIME'
+export const CHANGE_OFFER_END_DATE = 'CHANGE_OFFER_END_DATE'
+export const CHANGE_OFFER_END_TIME = 'CHANGE_OFFER_END_TIME'
 
+export const changeOfferId = (id: string) => {
+    return { type: CHANGE_OFFER_ID, id };
+}
 
 export const changeOfferPhoto = (offerPhoto: string) => {
     return { type: CHANGE_OFFER_PHOTO, offerPhoto };
@@ -62,6 +70,25 @@ export const changeOfferQuotaOldPrice = (offerQuotaOldPrice: string) => {
 export const changeOfferQuotaNewPrice = (offerQuotaNewPrice: string) => {
     return { type: CHANGE_OFFER_QUOTA_NEW_PRICE, offerQuotaNewPrice };
 }
+
+export const changeOfferStartDate = (offerStartDate: Date) => {
+    return { type: CHANGE_OFFER_START_DATE, offerStartDate };
+}
+
+export const changeOfferStartTime = (offerStartTime: Date) => {
+    return { type: CHANGE_OFFER_START_TIME, offerStartTime };
+}
+
+export const changeOfferEndDate = (offerEndDate: Date) => {
+    return { type: CHANGE_OFFER_END_DATE, offerEndDate };
+}
+
+export const changeOfferEndTime = (offerEndTime: Date) => {
+    return { type: CHANGE_OFFER_END_TIME, offerEndTime };
+}
+
+
+
 
 
 

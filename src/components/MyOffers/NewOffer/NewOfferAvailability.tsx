@@ -1,5 +1,5 @@
 import React, { Component, Dispatch } from 'react';
-import { View, StyleSheet, Text, TextInput } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import { NavigationProp } from '@react-navigation/native';
 import { connect } from 'react-redux';
@@ -8,38 +8,38 @@ import { SpontioColors } from '../../../enums/spontioColors.enum';
 import { NavigationProperty } from '../../../redux/reducer/navigationReducer';
 import { AnyAction } from 'redux';
 import { NewOfferObject } from '../../../redux/reducer/newOfferReducer';
-import { changeNewOfferTitle } from '../../../redux/actions/newOffer';
+import { changeNewOfferStartDate, changeNewOfferStartTime, changeNewOfferEndDate, changeNewOfferEndTime } from '../../../redux/actions/newOffer';
 import CalendarPicker from '../../../components/Calendar/CalendarPicker';
 import TimePicker from '../../../components/Calendar/TimePicker';
 
 class NewOfferAvailability extends Component<Props, State> {
 
+    // States inside component seems useless but they are used to fix accuracy issues with redux.
     public readonly state: State = {
-        startDate: new Date(),
-        endDate: new Date(),
-        startTime: new Date(),
-        endTime: new Date()
+        startDate: this.props.newOffer.newOfferStartDate ? this.props.newOffer.newOfferStartDate : new Date(),
+        startTime: this.props.newOffer.newOfferStartTime ? this.props.newOffer.newOfferStartTime : new Date(),
+        endDate: this.props.newOffer.newOfferEndDate ? this.props.newOffer.newOfferEndDate : new Date(),
+        endTime: this.props.newOffer.newOfferEndTime ? this.props.newOffer.newOfferEndTime : new Date()
     }
 
     private onStartDateChange(event, date) {
-        if (date != null)
-            this.setState({ startDate: date })
+        this.setState({ startDate: date });
+        this.props.changeNewOfferStartDate(date);
     }
 
     private onStartTimeChange(event, date) {
-        console.log(date)
-        if (date != null)
-            this.setState({ startTime: date })
+        this.setState({ startTime: date });
+        this.props.changeNewOfferStartTime(date);
     }
 
     private onEndDateChange(event, date) {
-        if (date != null)
-            this.setState({ endDate: date })
+        this.setState({ endDate: date });
+        this.props.changeNewOfferEndDate(date);
     }
 
     private onEndTimeChange(event, date) {
-        if (date != null)
-            this.setState({ endTime: date })
+        this.setState({ endTime: date });
+        this.props.changeNewOfferEndTime(date);
     }
 
     render() {
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     },
     calenderPicker: {
         flex: 1,
-        paddingTop:moderateScale(20)
+        paddingTop: moderateScale(20)
     },
 });
 
@@ -99,12 +99,18 @@ const mapStateToProps = (state: TRootReducer): IStateProps => {
 }
 
 interface IDispatchProps {
-    changeNewOfferTitle: (newOfferTitle: string) => void;
+    changeNewOfferStartDate: (newOfferStartDate: Date) => void;
+    changeNewOfferStartTime: (newOfferStartTime: Date) => void;
+    changeNewOfferEndDate: (newOfferEndDate: Date) => void;
+    changeNewOfferEndTime: (newOfferEndTime: Date) => void;
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
     return {
-        changeNewOfferTitle: (newOfferTitle: string) => dispatch(changeNewOfferTitle(newOfferTitle)),
+        changeNewOfferStartDate: (newOfferStartDate: Date) => dispatch(changeNewOfferStartDate(newOfferStartDate)),
+        changeNewOfferStartTime: (newOfferStartTime: Date) => dispatch(changeNewOfferStartTime(newOfferStartTime)),
+        changeNewOfferEndDate: (newOfferEndDate: Date) => dispatch(changeNewOfferEndDate(newOfferEndDate)),
+        changeNewOfferEndTime: (newOfferEndTime: Date) => dispatch(changeNewOfferEndTime(newOfferEndTime)),
     }
 }
 
@@ -114,8 +120,8 @@ export interface OwnProps {
 
 type State = {
     startDate: Date,
-    endDate: Date,
     startTime: Date,
+    endDate: Date,
     endTime: Date
 }
 

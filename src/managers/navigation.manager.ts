@@ -8,11 +8,11 @@ import { translate } from "./language.manager";
 export class NavigationManagerInstance {
 
   private _currentRouteName: string;
- 
+
   public get currentRouteName(): string {
     return this._currentRouteName;
   }
-  
+
   public set currentRouteName(value: string) {
     this._currentRouteName = value;
   }
@@ -134,6 +134,9 @@ export class NavigationManagerInstance {
         this.setHeaderOptions(true, true, false, true);
         break;
       case translate("navigation.new_offer"):
+        this.setHeaderOptions(true, true, true, false);
+        break;
+      case translate("navigation.offer_preview"):
         this.setHeaderOptions(true, true, true, false);
         break;
       case translate("navigation.language_selection"):

@@ -32,6 +32,8 @@ class NewOfferPrice extends Component<Props, State> {
     componentDidMount() {
         let option = OfferPriceTypes.find(
             priceType => priceType.value === this.props.newOffer.newOfferPriceType);
+            console.log("price type: " + this.props.newOffer.newOfferPriceType)
+            console.log("OPTION: " + option);
         this.setState({ selectedOption: option })
     }
 

@@ -1,5 +1,5 @@
 import React, { Component, Dispatch } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import { NavigationProp } from '@react-navigation/native';
 import { connect } from 'react-redux';
@@ -13,6 +13,7 @@ import { changeNewOfferPhoto } from '../../redux/actions/newOffer';
 import ButtonNewOffer from '../Button/ButtonNewOffer';
 import OfferManager from '../../managers/offer.manager';
 import Offer from '../Offer/Offer';
+import { CompanyOfferObject } from '../../redux/reducer/companyOfferReducer';
 
 class MyOffers extends Component<Props, State> {
 
@@ -41,9 +42,12 @@ class MyOffers extends Component<Props, State> {
                 <ScrollView style={styles.offers}>
                     {
                         this.props.user.companyOfferList.slice(0).reverse().map((value, index) => {
-                            return <View style={styles.offerContainer}>
-                                <Offer companyOffer={value}></Offer>
-                            </View>
+                            return <TouchableOpacity onPress={this.onPressOffer.bind(this, value)}>
+                                <View style={styles.offerContainer}>
+                                    <Offer companyOffer={value}></Offer>
+                                </View>
+                            </TouchableOpacity>
+
                         })
                     }
                 </ScrollView>
@@ -57,6 +61,10 @@ class MyOffers extends Component<Props, State> {
     private onPressNewOffer() {
         OfferManager.resetNewOffer();
         this.props.navigation.navigate(translate("navigation.new_offer"));
+    }
+
+    private onPressOffer(offer: CompanyOfferObject) {
+        this.props.navigation.navigate(translate("navigation.offer_preview"), {offer});
     }
 }
 

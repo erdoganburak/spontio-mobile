@@ -13,6 +13,7 @@ import HeaderBackButton from '../Header/HeaderBackButton/HeaderBackButton';
 import SpontioHeaderBackground from '../Header/HeaderBackground/SpontioHeaderBackground';
 import MyOffers from '../MyOffers/MyOffers';
 import NewOffer from '../MyOffers/NewOffer/NewOffer';
+import OfferPreview from '../OfferPreview/OfferPreview';
 
 const MyOffersStackNavigator = createStackNavigator();
 
@@ -66,6 +67,9 @@ class MyOffersStack extends Component<Props, State> {
         </>
         <>
           <MyOffersStackNavigator.Screen name={translate("navigation.new_offer")} component={NewOffer} />
+        </>
+        <>
+          <MyOffersStackNavigator.Screen name={translate("navigation.offer_preview")} component={OfferPreview} />
         </>
       </MyOffersStackNavigator.Navigator>
     );

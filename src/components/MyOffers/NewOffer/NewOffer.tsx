@@ -33,7 +33,7 @@ class NewOffer extends Component<Props, State> {
     private focusListener;
 
     public readonly state: State = {
-
+        isEditMode: this.props.newOffer.newOfferTitle ? true : false
     }
 
     async componentDidMount() {
@@ -62,28 +62,39 @@ class NewOffer extends Component<Props, State> {
     private onPressSave(): void {
         //if (!this.validateFields())
         //   return;
-        OfferManager.addNewCompanyOffer(this.createCompanyOfferObject())
+        if (this.state.isEditMode) {
+            OfferManager.editCompanyOffer(this.createCompanyOfferObject());
+        } else {
+            OfferManager.addNewCompanyOffer(this.createCompanyOfferObject());
+        }
         this.props.navigation.dispatch(StackActions.pop(1));
     }
 
     private createCompanyOfferObject(): CompanyOfferObject {
         let companyOffer: CompanyOfferObject = new CompanyOfferObject();
+        // TODO Delete this line after endpoints implemented
+        companyOffer.id = this.props.newOffer.id
         companyOffer.title = this.props.newOffer.newOfferTitle;
         companyOffer.offerPhoto = this.props.newOffer.newOfferPhoto;
         companyOffer.offerDescription = this.props.newOffer.newOfferDescription;
         companyOffer.productDescription = this.props.newOffer.newOfferProductDescription;
         companyOffer.offerSector = this.props.newOffer.newOfferSector;
+        companyOffer.offerPriceType = this.props.newOffer.newOfferPriceType;
         if (this.props.newOffer.newOfferPriceType === OfferPriceType.Price) {
             companyOffer.offerNewPrice = this.props.newOffer.newOfferNewPrice;
             companyOffer.offerOldPrice = this.props.newOffer.newOfferOldPrice;
         }
         else if (this.props.newOffer.newOfferPriceType === OfferPriceType.Discount) {
-            companyOffer.offerDiscount = this.props.newOffer.newOfferDiscount;;
+            companyOffer.offerDiscount = this.props.newOffer.newOfferDiscount;
         }
         else if (this.props.newOffer.newOfferPriceType === OfferPriceType.Quota) {
             companyOffer.offerQuotaOldPrice = this.props.newOffer.newOfferQuotaOldPrice;
             companyOffer.offerQuotaNewPrice = this.props.newOffer.newOfferQuotaNewPrice;
         }
+        companyOffer.offerStartDate = this.props.newOffer.newOfferStartDate;
+        companyOffer.offerStartTime = this.props.newOffer.newOfferStartTime;
+        companyOffer.offerEndDate = this.props.newOffer.newOfferEndDate;
+        companyOffer.offerEndTime = this.props.newOffer.newOfferEndTime;
         return companyOffer;
     }
 
@@ -201,7 +212,7 @@ export interface OwnProps {
 }
 
 type State = {
-
+    isEditMode: boolean;
 }
 
 type Props = IStateProps & IDispatchProps & OwnProps

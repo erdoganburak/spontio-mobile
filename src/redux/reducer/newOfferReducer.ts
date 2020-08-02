@@ -1,8 +1,9 @@
-import { CHANGE_NEW_OFFER_NEW_PRICE, CHANGE_NEW_OFFER_PRICE_TYPE, CHANGE_NEW_OFFER_PHOTO, CHANGE_NEW_OFFER_PRODUCT_DESCRIPTION, CHANGE_NEW_OFFER_DESCRIPTION, CHANGE_NEW_OFFER_TITLE, CHANGE_NEW_OFFER_SECTOR, CHANGE_NEW_OFFER_OLD_PRICE, CHANGE_NEW_OFFER_DISCOUNT, CHANGE_NEW_OFFER_QUOTA, CHANGE_NEW_OFFER_QUOTA_OLD_PRICE, CHANGE_NEW_OFFER_QUOTA_NEW_PRICE } from "../actions/newOffer";
+import { CHANGE_NEW_OFFER_NEW_PRICE, CHANGE_NEW_OFFER_PRICE_TYPE, CHANGE_NEW_OFFER_PHOTO, CHANGE_NEW_OFFER_PRODUCT_DESCRIPTION, CHANGE_NEW_OFFER_DESCRIPTION, CHANGE_NEW_OFFER_TITLE, CHANGE_NEW_OFFER_SECTOR, CHANGE_NEW_OFFER_OLD_PRICE, CHANGE_NEW_OFFER_DISCOUNT, CHANGE_NEW_OFFER_QUOTA, CHANGE_NEW_OFFER_QUOTA_OLD_PRICE, CHANGE_NEW_OFFER_QUOTA_NEW_PRICE, CHANGE_NEW_OFFER_START_DATE, CHANGE_NEW_OFFER_START_TIME, CHANGE_NEW_OFFER_END_DATE, CHANGE_NEW_OFFER_END_TIME, CHANGE_NEW_OFFER_OBJECT, CHANGE_NEW_OFFER_ID } from "../actions/newOffer";
 import { Sector } from "../../enums/sector.enum";
 import { OfferPriceType } from "../../enums/offerPrice.enum";
 
 export class NewOfferObject {
+    id: string;
     newOfferPhoto: string;
     newOfferTitle: string;
     newOfferProductDescription: string;
@@ -15,9 +16,12 @@ export class NewOfferObject {
     newOfferQuota: string;
     newOfferQuotaOldPrice: string;
     newOfferQuotaNewPrice: string;
-
+    newOfferStartDate: Date;
+    newOfferStartTime: Date;
+    newOfferEndDate: Date;
+    newOfferEndTime: Date;
     constructor() {
-    
+
     }
 }
 
@@ -27,6 +31,14 @@ const initialState = {
 
 const newOfferReducers = (state = initialState, action) => {
     switch (action.type) {
+        case CHANGE_NEW_OFFER_OBJECT:
+            return {
+                newOffer: { ...state.newOffer, ...action.newOffer }
+            };
+        case CHANGE_NEW_OFFER_ID:
+            return {
+                newOffer: { ...state.newOffer, id: action.id }
+            };
         case CHANGE_NEW_OFFER_PHOTO:
             return {
                 newOffer: { ...state.newOffer, newOfferPhoto: action.newOfferPhoto }
@@ -74,6 +86,22 @@ const newOfferReducers = (state = initialState, action) => {
         case CHANGE_NEW_OFFER_QUOTA_NEW_PRICE:
             return {
                 newOffer: { ...state.newOffer, newOfferQuotaNewPrice: action.newOfferQuotaNewPrice }
+            };
+        case CHANGE_NEW_OFFER_START_DATE:
+            return {
+                newOffer: { ...state.newOffer, newOfferStartDate: action.newOfferStartDate }
+            };
+        case CHANGE_NEW_OFFER_START_TIME:
+            return {
+                newOffer: { ...state.newOffer, newOfferStartTime: action.newOfferStartTime }
+            };
+        case CHANGE_NEW_OFFER_END_DATE:
+            return {
+                newOffer: { ...state.newOffer, newOfferEndDate: action.newOfferEndDate }
+            };
+        case CHANGE_NEW_OFFER_END_TIME:
+            return {
+                newOffer: { ...state.newOffer, newOfferEndTime: action.newOfferEndTime }
             };
         default:
             return state;
