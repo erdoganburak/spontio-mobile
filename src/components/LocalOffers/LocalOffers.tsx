@@ -1,11 +1,12 @@
 import React, { Component, Dispatch } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { TRootReducer } from '../../redux/store';
 import { connect } from 'react-redux';
 import { NavigationProp } from '@react-navigation/native';
 import { Session } from '../../redux/reducer/sessionReducer';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import NavigationManager from '../../managers/navigation.manager';
+import LottieView from 'lottie-react-native';
 
 class LocalOffers extends Component<Props, State> {
 
@@ -35,8 +36,12 @@ class LocalOffers extends Component<Props, State> {
 
   render() {
     return (
-      <View>
-        <Text>Local Offers</Text>
+      <View style={styles.container}>
+        <View style={styles.content}>
+          <Text>
+            <LottieView style={styles.lottieView} source={require('../../assets/animations/sad_face.json')} autoPlay loop />
+          </Text>
+        </View >
       </View >
     )
   }
@@ -44,7 +49,18 @@ class LocalOffers extends Component<Props, State> {
 }
 
 const styles = StyleSheet.create({
-
+  container: {
+    flex: 1
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  lottieView: {
+    width: moderateScale(280),
+    height: moderateScale(280)
+  }
 });
 
 interface IStateProps {
