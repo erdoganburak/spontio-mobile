@@ -17,6 +17,7 @@ import ButtonOutline from '../Button/ButtonOutline';
 import { NavigationProperty } from '../../redux/reducer/navigationReducer';
 import NavigationManager from '../../managers/navigation.manager';
 import { Role } from '../../enums/role.enum';
+import FastImage from 'react-native-fast-image'
 
 class Welcome extends Component<Props, State> {
 
@@ -35,9 +36,22 @@ class Welcome extends Component<Props, State> {
         NavigationManager.showHeader(false);
     }
 
+    componentWillMount() {
+
+        /*
+                <FastImage
+                style={{ width: moderateScale(300), height: moderateScale(80) }}
+                source={require('../../assets/images/spontio_logo.png')}
+                resizeMode={FastImage.resizeMode.contain}
+               
+        />
+         */
+    }
+
     async componentWillUnmount() {
         // Remove the event listener
         this.focusListener = this.props.navigation.removeListener('focus', async () => this.handleFocus());
+
     }
 
     render() {
@@ -47,7 +61,10 @@ class Welcome extends Component<Props, State> {
                     {this.renderModal()}
                 </View>
                 <View style={styles.logoContainer}>
-                    <Image style={{ width: moderateScale(300), height: moderateScale(80) }} source={require('../../assets/spontio_name_logo1.png')} />
+                    <Image 
+                    style={{ width: moderateScale(300), height: moderateScale(80) }} 
+                    source={require('../../assets/images/spontio_logo.png')} 
+                    />
                 </View>
                 <View style={styles.buttonContainer}>
                     <ButtonOutline title={translate("welcome.guest_login")} onPress={this.onClickGuestLogin.bind(this)} ></ButtonOutline>

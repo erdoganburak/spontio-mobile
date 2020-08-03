@@ -42,7 +42,7 @@ class Login extends Component<Props, State> {
         return (
             <View style={styles.container}>
                 <View style={styles.logoContainer}>
-                    <Image style={{ width: moderateScale(300), height: moderateScale(80) }} source={require('../../assets/spontio_name_logo1.png')} />
+                    <Image style={{ width: moderateScale(300), height: moderateScale(80) }} source={require('../../assets/images/spontio_logo.png')} />
                 </View>
                 <View style={styles.inputContainer}>
                     <StatusBar barStyle="light-content" />

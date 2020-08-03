@@ -31,7 +31,7 @@ class SpontioHeaderBackground extends Component<Props, State> {
           this.props.navigationProperty.showHeaderLogo &&
           <Image
             style={{ width: moderateScale(140), height: moderateScale(40), backgroundColor: SpontioColors.Primary, alignSelf: 'center', justifyContent: 'center', flex: 1 }}
-            source={require('../../../assets/spontio_name_logo1.png')}
+            source={require('../../../assets/images/spontio_logo.png')}
             resizeMode='contain'
           />
         }
