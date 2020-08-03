@@ -7,11 +7,11 @@ import { TRootReducer } from '../../../redux/store';
 import { SpontioColors } from '../../../enums/spontioColors.enum';
 import { NavigationProperty } from '../../../redux/reducer/navigationReducer';
 import { AnyAction } from 'redux';
-import { NewOfferObject } from '../../../redux/reducer/newOfferReducer';
-import { changeNewOfferSector } from '../../../redux/actions/newOffer';
 import { Sector } from '../../../enums/sector.enum';
 import { Sectors } from '../../../constants/sector.constant';
 import { translate } from '../../../managers/language.manager';
+import { OfferObject } from '../../../models/offerObject.model';
+import { changeOfferSector } from '../../../redux/actions/newOffer';
 
 class NewOfferSectors extends Component<Props, State> {
 
@@ -28,7 +28,7 @@ class NewOfferSectors extends Component<Props, State> {
                             Sectors
                         </Text>
                         <Picker
-                            selectedValue={this.props.newOffer.newOfferSector}
+                            selectedValue={this.props.newOffer.sector}
                             style={styles.picker}
                             onValueChange={(itemValue, itemIndex) => this.setSelectedValue(itemValue)}
                         >
@@ -46,7 +46,7 @@ class NewOfferSectors extends Component<Props, State> {
     }
 
     private setSelectedValue(itemValue: Sector) {
-        this.props.changeNewOfferSector(itemValue);
+        this.props.changeOfferSector(itemValue);
     }
 
 }
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
 
 interface IStateProps {
     navigationProperty: NavigationProperty,
-    newOffer: NewOfferObject
+    newOffer: OfferObject
 }
 
 const mapStateToProps = (state: TRootReducer): IStateProps => {
@@ -85,12 +85,12 @@ const mapStateToProps = (state: TRootReducer): IStateProps => {
 }
 
 interface IDispatchProps {
-    changeNewOfferSector: (newOfferSector: Sector) => void;
+    changeOfferSector: (sector: Sector) => void;
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
     return {
-        changeNewOfferSector: (newOfferSector: Sector) => dispatch(changeNewOfferSector(newOfferSector)),
+        changeOfferSector: (sector: Sector) => dispatch(changeOfferSector(sector)),
     }
 }
 

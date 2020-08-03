@@ -14,26 +14,25 @@ import { Camera } from '../../..//redux/reducer/cameraReducer';
 import CameraManager from '../../../managers/camera.manager';
 import CameraComponent from '../../../components/Camera/CameraComponent';
 import { User } from '../../../redux/reducer/userReducer';
-import { NewOfferObject } from '../../../redux/reducer/newOfferReducer';
-import { changeNewOfferPhoto } from '../../../redux/actions/newOffer';
 import NewOfferTitle from './NewOfferTitle';
 import NewOfferPhoto from './NewOfferPhoto';
 import NewOfferDescription from './NewOfferProductDescription';
 import NewOfferDescriptionOffer from './NewOfferDescription';
 import ButtonPrimary from '../../../components/Button/ButtonPrimary';
 import OfferManager from '../../../managers/offer.manager';
-import { CompanyOfferObject } from '../../../redux/reducer/companyOfferReducer';
 import NewOfferSectors from './NewOfferSectors';
 import NewOfferPrice from './NewOfferPrice';
 import { OfferPriceType } from '../../../enums/offerPrice.enum';
 import NewOfferAvailability from './NewOfferAvailability';
+import { OfferObject } from '../../../models/offerObject.model';
+import { changeOfferPhoto } from '../../../redux/actions/newOffer';
 
 class NewOffer extends Component<Props, State> {
 
     private focusListener;
 
     public readonly state: State = {
-        isEditMode: this.props.newOffer.newOfferTitle ? true : false
+        isEditMode: this.props.newOffer.title ? true : false
     }
 
     async componentDidMount() {
@@ -54,7 +53,7 @@ class NewOffer extends Component<Props, State> {
 
     private onPictureSave(): void {
         if (this.props.camera.picture) {
-            this.props.changeNewOfferPhoto(this.props.camera.picture);
+            this.props.changeOfferPhoto(this.props.camera.picture);
             this.props.showPictureSelectorModal(false);
         }
     }
@@ -63,66 +62,72 @@ class NewOffer extends Component<Props, State> {
         //if (!this.validateFields())
         //   return;
         if (this.state.isEditMode) {
-            OfferManager.editCompanyOffer(this.createCompanyOfferObject());
+            OfferManager.editCompanyOffer(this.createOfferObject());
+            console.log("editing")
+            this.props.navigation.dispatch(StackActions.pop(2));
+
         } else {
-            OfferManager.addNewCompanyOffer(this.createCompanyOfferObject());
+            OfferManager.addNewCompanyOffer(this.createOfferObject());
+            console.log("inserting")
+            this.props.navigation.dispatch(StackActions.pop(1));
+
         }
-        this.props.navigation.dispatch(StackActions.pop(1));
     }
 
-    private createCompanyOfferObject(): CompanyOfferObject {
-        let companyOffer: CompanyOfferObject = new CompanyOfferObject();
+    private createOfferObject(): OfferObject {
+        let companyOffer: OfferObject = new OfferObject();
         // TODO Delete this line after endpoints implemented
         companyOffer.id = this.props.newOffer.id
-        companyOffer.title = this.props.newOffer.newOfferTitle;
-        companyOffer.offerPhoto = this.props.newOffer.newOfferPhoto;
-        companyOffer.offerDescription = this.props.newOffer.newOfferDescription;
-        companyOffer.productDescription = this.props.newOffer.newOfferProductDescription;
-        companyOffer.offerSector = this.props.newOffer.newOfferSector;
-        companyOffer.offerPriceType = this.props.newOffer.newOfferPriceType;
-        if (this.props.newOffer.newOfferPriceType === OfferPriceType.Price) {
-            companyOffer.offerNewPrice = this.props.newOffer.newOfferNewPrice;
-            companyOffer.offerOldPrice = this.props.newOffer.newOfferOldPrice;
+        
+        companyOffer.title = this.props.newOffer.title;
+        companyOffer.photo = this.props.newOffer.photo;
+        companyOffer.offerDescription = this.props.newOffer.offerDescription;
+        companyOffer.productDescription = this.props.newOffer.productDescription;
+        companyOffer.sector = this.props.newOffer.sector;
+        companyOffer.priceType = this.props.newOffer.priceType;
+        if (this.props.newOffer.priceType === OfferPriceType.Price) {
+            companyOffer.newPrice = this.props.newOffer.newPrice;
+            companyOffer.oldPrice = this.props.newOffer.oldPrice;
         }
-        else if (this.props.newOffer.newOfferPriceType === OfferPriceType.Discount) {
-            companyOffer.offerDiscount = this.props.newOffer.newOfferDiscount;
+        else if (this.props.newOffer.priceType === OfferPriceType.Discount) {
+            companyOffer.discount = this.props.newOffer.discount;
         }
-        else if (this.props.newOffer.newOfferPriceType === OfferPriceType.Quota) {
-            companyOffer.offerQuotaOldPrice = this.props.newOffer.newOfferQuotaOldPrice;
-            companyOffer.offerQuotaNewPrice = this.props.newOffer.newOfferQuotaNewPrice;
+        else if (this.props.newOffer.priceType === OfferPriceType.Quota) {
+            companyOffer.quotaOldPrice = this.props.newOffer.quotaOldPrice;
+            companyOffer.quotaNewPrice = this.props.newOffer.quotaNewPrice;
         }
-        companyOffer.offerStartDate = this.props.newOffer.newOfferStartDate;
-        companyOffer.offerStartTime = this.props.newOffer.newOfferStartTime;
-        companyOffer.offerEndDate = this.props.newOffer.newOfferEndDate;
-        companyOffer.offerEndTime = this.props.newOffer.newOfferEndTime;
+        companyOffer.startDate = this.props.newOffer.startDate;
+        companyOffer.startTime = this.props.newOffer.startTime;
+        companyOffer.endDate = this.props.newOffer.endDate;
+        companyOffer.endTime = this.props.newOffer.endTime;
         return companyOffer;
     }
 
     private validateFields(): boolean {
-        if (!this.props.newOffer.newOfferPhoto) {
+        if (!this.props.newOffer.photo) {
             return false;
-        } else if (!this.props.newOffer.newOfferDescription) {
+        } else if (!this.props.newOffer.offerDescription) {
             return false;
-        } else if (!this.props.newOffer.newOfferProductDescription) {
+        } else if (!this.props.newOffer.productDescription) {
             return false;
-        } else if (!this.props.newOffer.newOfferTitle) {
+        } else if (!this.props.newOffer.title) {
             return false;
-        } else if (!this.props.newOffer.newOfferSector) {
+        } else if (!this.props.newOffer.sector) {
             return false;
-        } else if (!this.props.newOffer.newOfferPriceType) {
+        } else if (!this.props.newOffer.priceType) {
             return false;
         }
 
-        if (this.props.newOffer.newOfferPriceType === OfferPriceType.Price) {
-            if (!this.props.newOffer.newOfferOldPrice || !this.props.newOffer.newOfferOldPrice)
+        if (this.props.newOffer.priceType === OfferPriceType.Price) {
+            if (!this.props.newOffer.oldPrice || !this.props.newOffer.newPrice)
                 return false;
         }
-        else if (this.props.newOffer.newOfferPriceType === OfferPriceType.Discount) {
-            if (!this.props.newOffer.newOfferDiscount)
+        else if (this.props.newOffer.priceType === OfferPriceType.Discount) {
+            if (!this.props.newOffer.discount)
                 return false;
         }
-        else if (this.props.newOffer.newOfferPriceType === OfferPriceType.Quota) {
-            if (!this.props.newOffer.newOfferQuotaOldPrice || !this.props.newOffer.newOfferQuotaNewPrice || !this.props.newOffer.newOfferQuota)
+        else if (this.props.newOffer.priceType === OfferPriceType.Quota) {
+            if (!this.props.newOffer.oldPrice || !this.props.newOffer.newPrice || !this.props.newOffer.quota)
                 return false;
         }
         return true;
@@ -177,7 +182,7 @@ interface IStateProps {
     camera: Camera,
     user: User,
     navigationProperty: NavigationProperty,
-    newOffer: NewOfferObject
+    newOffer: OfferObject
 }
 
 const mapStateToProps = (state: TRootReducer): IStateProps => {
@@ -191,7 +196,7 @@ const mapStateToProps = (state: TRootReducer): IStateProps => {
 
 interface IDispatchProps {
     showCamera: (show: boolean) => void;
-    changeNewOfferPhoto: (newOfferPhoto: string) => void
+    changeOfferPhoto: (photo: string) => void
     showTakenPicture: (showTakenPicture: boolean) => void;
     changePicture: (picture: string) => void;
     showPictureSelectorModal: (show: boolean) => void;
@@ -200,7 +205,7 @@ interface IDispatchProps {
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
     return {
         showCamera: (show: boolean) => dispatch(showCamera(show)),
-        changeNewOfferPhoto: (newOfferPhoto: string) => dispatch(changeNewOfferPhoto(newOfferPhoto)),
+        changeOfferPhoto: (photo: string) => dispatch(changeOfferPhoto(photo)),
         showTakenPicture: (show: boolean) => dispatch(showTakenPicture(show)),
         changePicture: (picture: string) => dispatch(changePicture(picture)),
         showPictureSelectorModal: (show: boolean) => dispatch(showPictureSelectorModal(show)),

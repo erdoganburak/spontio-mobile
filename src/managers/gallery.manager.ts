@@ -5,7 +5,7 @@ import { showPictureSelectorModal } from "../redux/actions/pictureSelector";
 import { changeUserProfilePicture, changeCompanyProfilePicture } from "../redux/actions/user";
 import NavigationManager from "./navigation.manager";
 import { translate } from "./language.manager";
-import { changeNewOfferPhoto } from "../redux/actions/newOffer";
+import { changeOfferPhoto } from "../redux/actions/newOffer";
 
 const options: ImagePickerOptions = {
 	title: 'Select Image',
@@ -43,7 +43,7 @@ class GalleryManagerInstance {
 					if (NavigationManager.currentRouteName === translate("navigation.company_profile")) {
 						store.dispatch(changeCompanyProfilePicture(response.uri));
 					} else if (NavigationManager.currentRouteName === translate("navigation.new_offer")) {
-						store.dispatch(changeNewOfferPhoto(response.uri));
+						store.dispatch(changeOfferPhoto(response.uri));
 					}
 				}
 				store.dispatch(showPictureSelectorModal(false));

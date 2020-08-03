@@ -7,10 +7,9 @@ import { AnyAction } from 'redux';
 import { SpontioColors } from '../../enums/spontioColors.enum';
 import { User } from '../../redux/reducer/userReducer';
 import { NavigationProperty } from '../../redux/reducer/navigationReducer';
-import { NewOfferObject } from '../../redux/reducer/newOfferReducer';
 import { TRootReducer } from '../../redux/store';
-import { CompanyOfferObject } from '../../redux/reducer/companyOfferReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { OfferObject } from '../../models/offerObject.model';
 
 class Offer extends Component<Props, State> {
 
@@ -22,14 +21,14 @@ class Offer extends Component<Props, State> {
         return (
             <View style={styles.container}>
                 <View style={styles.imageContainer}>
-                    <Image style={styles.image} source={{ uri: this.props.companyOffer.offerPhoto }} />
+                    <Image style={styles.image} source={{ uri: this.props.offer.photo }} />
                 </View>
                 <View style={styles.offerInfoContainer}>
                     <Text style={styles.title}>
-                        {this.props.companyOffer.title}
+                        {this.props.offer.title}
                     </Text>
                     <Text style={styles.description}>
-                        {this.props.companyOffer.offerDescription}
+                        {this.props.offer.offerDescription}
                     </Text>
                 </View>
                 <View style={styles.offerDetailContainer}>
@@ -129,15 +128,13 @@ const styles = StyleSheet.create({
 
 interface IStateProps {
     user: User,
-    navigationProperty: NavigationProperty,
-    newOffer: NewOfferObject
+    navigationProperty: NavigationProperty
 }
 
 const mapStateToProps = (state: TRootReducer): IStateProps => {
     return {
         navigationProperty: state.navigationReducer.navigationProperty,
-        user: state.userReducer.user,
-        newOffer: state.newOfferReducer.newOffer
+        user: state.userReducer.user
     }
 }
 
@@ -153,7 +150,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
 
 export interface OwnProps {
     navigation: NavigationProp<any>;
-    companyOffer: CompanyOfferObject;
+    offer: OfferObject;
 }
 
 type State = {

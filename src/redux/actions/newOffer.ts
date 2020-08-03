@@ -1,103 +1,94 @@
 import { Sector } from "../../enums/sector.enum"
 import { OfferPriceType } from "../../enums/offerPrice.enum"
-import { NewOfferObject } from "../reducer/newOfferReducer"
+import { OfferObject } from "../../models/offerObject.model"
 
 export const CHANGE_NEW_OFFER_OBJECT = 'CHANGE_NEW_OFFER_OBJECT'
-export const CHANGE_NEW_OFFER_ID = 'CHANGE_NEW_OFFER_ID'
-export const CHANGE_NEW_OFFER_PHOTO = 'CHANGE_NEW_OFFER_PHOTO'
-export const CHANGE_NEW_OFFER_PRODUCT_DESCRIPTION = 'CHANGE_NEW_OFFER_PRODUCT_DESCRIPTION'
-export const CHANGE_NEW_OFFER_DESCRIPTION = 'CHANGE_NEW_OFFER_DESCRIPTION'
-export const CHANGE_NEW_OFFER_TITLE = 'CHANGE_NEW_OFFER_TITLE'
-export const CHANGE_NEW_OFFER_SECTOR = 'CHANGE_NEW_OFFER_SECTOR'
-export const CHANGE_NEW_OFFER_PRICE_TYPE = 'CHANGE_NEW_OFFER_PRICE_TYPE'
-export const CHANGE_NEW_OFFER_OLD_PRICE = 'CHANGE_NEW_OFFER_OLD_PRICE'
-export const CHANGE_NEW_OFFER_NEW_PRICE = 'CHANGE_NEW_OFFER_NEW_PRICE'
-export const CHANGE_NEW_OFFER_DISCOUNT = 'CHANGE_NEW_OFFER_DISCOUNT'
-export const CHANGE_NEW_OFFER_QUOTA = 'CHANGE_NEW_OFFER_QUOTA'
-export const CHANGE_NEW_OFFER_QUOTA_OLD_PRICE = 'CHANGE_NEW_OFFER_QUOTA_OLD_PRICE'
-export const CHANGE_NEW_OFFER_QUOTA_NEW_PRICE = 'CHANGE_NEW_OFFER_QUOTA_NEW_PRICE'
-export const CHANGE_NEW_OFFER_START_DATE = 'CHANGE_NEW_OFFER_START_DATE'
-export const CHANGE_NEW_OFFER_START_TIME = 'CHANGE_NEW_OFFER_START_TIME'
-export const CHANGE_NEW_OFFER_END_DATE = 'CHANGE_NEW_OFFER_END_DATE'
-export const CHANGE_NEW_OFFER_END_TIME = 'CHANGE_NEW_OFFER_END_TIME'
+export const CHANGE_OFFER_ID = 'CHANGE_OFFER_ID'
+export const CHANGE_OFFER_PHOTO = 'CHANGE_OFFER_PHOTO'
+export const CHANGE_OFFER_PRODUCT_DESCRIPTION = 'CHANGE_OFFER_PRODUCT_DESCRIPTION'
+export const CHANGE_OFFER_DESCRIPTION = 'CHANGE_OFFER_DESCRIPTION'
+export const CHANGE_OFFER_TITLE = 'CHANGE_OFFER_TITLE'
+export const CHANGE_OFFER_SECTOR = 'CHANGE_OFFER_SECTOR'
+export const CHANGE_OFFER_PRICE_TYPE = 'CHANGE_OFFER_PRICE_TYPE'
+export const CHANGE_OFFER_OLD_PRICE = 'CHANGE_OFFER_OLD_PRICE'
+export const CHANGE_OFFER_NEW_PRICE = 'CHANGE_OFFER_NEW_PRICE'
+export const CHANGE_OFFER_DISCOUNT = 'CHANGE_OFFER_DISCOUNT'
+export const CHANGE_OFFER_QUOTA = 'CHANGE_OFFER_QUOTA'
+export const CHANGE_OFFER_QUOTA_OLD_PRICE = 'CHANGE_OFFER_QUOTA_OLD_PRICE'
+export const CHANGE_OFFER_QUOTA_NEW_PRICE = 'CHANGE_OFFER_QUOTA_NEW_PRICE'
+export const CHANGE_OFFER_START_DATE = 'CHANGE_OFFER_START_DATE'
+export const CHANGE_OFFER_START_TIME = 'CHANGE_OFFER_START_TIME'
+export const CHANGE_OFFER_END_DATE = 'CHANGE_OFFER_END_DATE'
+export const CHANGE_OFFER_END_TIME = 'CHANGE_OFFER_END_TIME'
 
-export const changeNewOfferObject = (newOffer: NewOfferObject) => {
+export const changeNewOfferObject = (newOffer: OfferObject) => {
     return { type: CHANGE_NEW_OFFER_OBJECT, newOffer };
 }
 
-export const changeNewOfferId = (id: string) => {
-    return { type: CHANGE_NEW_OFFER_ID, id };
+export const changeOfferId = (id: string) => {
+    return { type: CHANGE_OFFER_ID, id };
 }
 
-export const changeNewOfferPhoto = (newOfferPhoto: string) => {
-    return { type: CHANGE_NEW_OFFER_PHOTO, newOfferPhoto };
+export const changeOfferPhoto = (photo: string) => {
+    return { type: CHANGE_OFFER_PHOTO, photo };
 }
 
-export const changeNewOfferProductDescription = (newOfferProductDescription: string) => {
-    return { type: CHANGE_NEW_OFFER_PRODUCT_DESCRIPTION, newOfferProductDescription };
+export const changeProductDescription = (productDescription: string) => {
+    return { type: CHANGE_OFFER_PRODUCT_DESCRIPTION, productDescription };
 }
 
-export const changeNewOfferDescription = (newOfferDescription: string) => {
-    return { type: CHANGE_NEW_OFFER_DESCRIPTION, newOfferDescription };
+export const changeOfferDescription = (offerDescription: string) => {
+    return { type: CHANGE_OFFER_DESCRIPTION, offerDescription };
 }
 
-export const changeNewOfferTitle = (newOfferTitle: string) => {
-    return { type: CHANGE_NEW_OFFER_TITLE, newOfferTitle };
+export const changeTitle = (title: string) => {
+    return { type: CHANGE_OFFER_TITLE, title };
 }
 
-export const changeNewOfferSector = (newOfferSector: Sector) => {
-    return { type: CHANGE_NEW_OFFER_SECTOR, newOfferSector };
+export const changeOfferSector = (sector: Sector) => {
+    return { type: CHANGE_OFFER_SECTOR, sector };
 }
 
-export const changeNewOfferPriceType = (newOfferPriceType: OfferPriceType) => {
-    return { type: CHANGE_NEW_OFFER_PRICE_TYPE, newOfferPriceType };
+export const changeOfferPriceType = (priceType: OfferPriceType) => {
+    return { type: CHANGE_OFFER_PRICE_TYPE, priceType };
 }
 
-export const changeNewOfferOldPrice = (newOfferOldPrice: string) => {
-    return { type: CHANGE_NEW_OFFER_OLD_PRICE, newOfferOldPrice };
+export const changeOfferOldPrice = (oldPrice: string) => {
+    return { type: CHANGE_OFFER_OLD_PRICE, oldPrice };
 }
 
-export const changeNewOfferNewPrice = (newOfferNewPrice: string) => {
-    return { type: CHANGE_NEW_OFFER_NEW_PRICE, newOfferNewPrice };
+export const changeOfferNewPrice = (newPrice: string) => {
+    return { type: CHANGE_OFFER_NEW_PRICE, newPrice };
 }
 
-export const changeNewOfferDiscount = (newOfferDiscount: string) => {
-    return { type: CHANGE_NEW_OFFER_NEW_PRICE, newOfferDiscount };
+export const changeOfferDiscount = (discount: string) => {
+    return { type: CHANGE_OFFER_NEW_PRICE, discount };
 }
 
-export const changeNewOfferQuota = (newOfferQuota: string) => {
-    return { type: CHANGE_NEW_OFFER_QUOTA, newOfferQuota };
+export const changeOfferQuota = (quota: string) => {
+    return { type: CHANGE_OFFER_QUOTA, quota };
 }
 
-export const changeNewOfferQuotaOldPrice = (newOfferQuotaOldPrice: string) => {
-    return { type: CHANGE_NEW_OFFER_QUOTA_OLD_PRICE, newOfferQuotaOldPrice };
+export const changeOfferQuotaOldPrice = (quotaOldPrice: string) => {
+    return { type: CHANGE_OFFER_QUOTA_OLD_PRICE, quotaOldPrice };
 }
 
-export const changeNewOfferQuotaNewPrice = (newOfferQuotaNewPrice: string) => {
-    return { type: CHANGE_NEW_OFFER_QUOTA_NEW_PRICE, newOfferQuotaNewPrice };
+export const changeOfferQuotaNewPrice = (quotaNewPrice: string) => {
+    return { type: CHANGE_OFFER_QUOTA_NEW_PRICE, quotaNewPrice };
 }
 
-export const changeNewOfferStartDate = (newOfferStartDate: Date) => {
-    return { type: CHANGE_NEW_OFFER_START_DATE, newOfferStartDate };
+export const changeOfferStartDate = (startDate: Date) => {
+    return { type: CHANGE_OFFER_START_DATE, startDate };
 }
 
-export const changeNewOfferStartTime = (newOfferStartTime: Date) => {
-    return { type: CHANGE_NEW_OFFER_START_TIME, newOfferStartTime };
+export const changeOfferStartTime = (startTime: Date) => {
+    return { type: CHANGE_OFFER_START_TIME, startTime };
 }
 
-export const changeNewOfferEndDate = (newOfferEndDate: Date) => {
-    return { type: CHANGE_NEW_OFFER_END_DATE, newOfferEndDate };
+export const changeOfferEndDate = (endDate: Date) => {
+    return { type: CHANGE_OFFER_END_DATE, endDate };
 }
 
-export const changeNewOfferEndTime = (newOfferEndTime: Date) => {
-    return { type: CHANGE_NEW_OFFER_END_TIME, newOfferEndTime };
+export const changeOfferEndTime = (endTime: Date) => {
+    return { type: CHANGE_OFFER_END_TIME, endTime };
 }
-
-
-
-
-
-
-
-
-

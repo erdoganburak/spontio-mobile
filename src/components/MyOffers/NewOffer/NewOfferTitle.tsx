@@ -7,8 +7,8 @@ import { TRootReducer } from '../../../redux/store';
 import { SpontioColors } from '../../../enums/spontioColors.enum';
 import { NavigationProperty } from '../../../redux/reducer/navigationReducer';
 import { AnyAction } from 'redux';
-import { NewOfferObject } from '../../../redux/reducer/newOfferReducer';
-import { changeNewOfferTitle } from '../../../redux/actions/newOffer';
+import { OfferObject } from '../../../models/offerObject.model';
+import { changeTitle } from '../../../redux/actions/newOffer';
 
 class NewOfferTitle extends Component<Props, State> {
 
@@ -32,8 +32,8 @@ class NewOfferTitle extends Component<Props, State> {
                             placeholderTextColor={SpontioColors.Primary}
                             style={styles.input}
                             returnKeyType="default"
-                            value={this.props.newOffer.newOfferTitle}
-                            onChangeText={(newOfferTitle) => this.props.changeNewOfferTitle(newOfferTitle)}
+                            value={this.props.newOffer.title}
+                            onChangeText={(newOfferTitle) => this.props.changeTitle(newOfferTitle)}
                         />
                     </View>
                 </View>
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
 
 interface IStateProps {
     navigationProperty: NavigationProperty,
-    newOffer: NewOfferObject
+    newOffer: OfferObject
 }
 
 const mapStateToProps = (state: TRootReducer): IStateProps => {
@@ -81,12 +81,12 @@ const mapStateToProps = (state: TRootReducer): IStateProps => {
 }
 
 interface IDispatchProps {
-    changeNewOfferTitle: (newOfferTitle: string) => void;
+    changeTitle: (title: string) => void;
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
     return {
-        changeNewOfferTitle: (newOfferTitle: string) => dispatch(changeNewOfferTitle(newOfferTitle)),
+        changeTitle: (title: string) => dispatch(changeTitle(title)),
     }
 }
 

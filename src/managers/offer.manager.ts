@@ -1,12 +1,10 @@
-import { CompanyOfferObject } from "../redux/reducer/companyOfferReducer";
 import store from "../redux/store";
 import { updateCompanyOfferList } from "../redux/actions/user";
-import { changeNewOfferPhoto, changeNewOfferDescription, changeNewOfferProductDescription, changeNewOfferTitle, changeNewOfferSector, changeNewOfferPriceType, changeNewOfferOldPrice, changeNewOfferNewPrice, changeNewOfferDiscount, changeNewOfferQuota, changeNewOfferQuotaOldPrice, changeNewOfferQuotaNewPrice, changeNewOfferStartDate, changeNewOfferStartTime, changeNewOfferEndDate, changeNewOfferEndTime, changeNewOfferObject, changeNewOfferId } from "../redux/actions/newOffer";
 import { Sector } from "../enums/sector.enum";
 import { OfferPriceType } from "../enums/offerPrice.enum";
-import { NewOfferObject } from "../redux/reducer/newOfferReducer";
 import HelperUtils from "../utils/helper.utils";
-import { faClock } from "@fortawesome/free-solid-svg-icons";
+import { OfferObject } from "../models/offerObject.model";
+import { changeOfferId, changeOfferPhoto, changeProductDescription, changeOfferDescription, changeTitle, changeOfferSector, changeOfferPriceType, changeOfferOldPrice, changeOfferNewPrice, changeOfferDiscount, changeOfferQuota, changeOfferQuotaOldPrice, changeOfferQuotaNewPrice, changeOfferStartDate, changeOfferStartTime, changeOfferEndDate, changeOfferEndTime, changeNewOfferObject } from "../redux/actions/newOffer";
 
 const MAX_LIST_SIZE = 5;
 
@@ -17,9 +15,14 @@ class OfferManagerInstance {
   	* 
   	* @param companyOffer New company offer.
   	*/
-	public addNewCompanyOffer(companyOffer: CompanyOfferObject): void {
-		let companyOfferList: Array<CompanyOfferObject> = store.getState().userReducer.user.companyOfferList;
+	public addNewCompanyOffer(companyOffer: OfferObject): void {
+		let companyOfferList: Array<OfferObject> = store.getState().userReducer.user.companyOfferList;
 		this.manageCompanyOfferList(companyOfferList);
+
+		console.log("id: " + companyOffer.id);
+		console.log("title: " + companyOffer.title);
+		console.log("photo: " + companyOffer.photo);
+
 		companyOfferList.push(companyOffer);
 		store.dispatch(updateCompanyOfferList(companyOfferList));
 		this.resetNewOffer();
@@ -30,8 +33,8 @@ class OfferManagerInstance {
   	* 
   	* @param companyOffer Company offer.
   	*/
-	public editCompanyOffer(companyOffer: CompanyOfferObject): void {
-		let companyOfferList: Array<CompanyOfferObject> = store.getState().userReducer.user.companyOfferList;
+	public editCompanyOffer(companyOffer: OfferObject): void {
+		let companyOfferList: Array<OfferObject> = store.getState().userReducer.user.companyOfferList;
 		let offerToUpdateIndex = companyOfferList.findIndex(
 			offer => offer.id === companyOffer.id);
 		console.log("companyOffer.id: " + companyOffer.id)
@@ -47,14 +50,14 @@ class OfferManagerInstance {
   	* 
   	* @param companyOffer Company offer.
   	*/
-	public deleteCompanyOffer(companyOffer: CompanyOfferObject): void {
-		/*let companyOfferList: Array<CompanyOfferObject> = store.getState().userReducer.user.companyOfferList;
-		let offerToDelete = companyOfferList.find(
+	public deleteCompanyOffer(companyOffer: OfferObject): void {
+		let companyOfferList: Array<OfferObject> = store.getState().userReducer.user.companyOfferList;
+		let offerToDeleteIndex = companyOfferList.findIndex(
 			offer => offer.id === companyOffer.id);
-		if (offerToDelete) {
-			offerToUpdate = companyOffer;
+		if (offerToDeleteIndex > -1) {
+			companyOfferList.splice(offerToDeleteIndex, 1);
 			store.dispatch(updateCompanyOfferList(companyOfferList));
-		}*/
+		}
 	}
 
 	/**
@@ -62,23 +65,23 @@ class OfferManagerInstance {
   	* 
   	*/
 	public resetNewOffer(): void {
-		store.dispatch(changeNewOfferId(HelperUtils.generateGuid()))
-		store.dispatch(changeNewOfferPhoto(null));
-		store.dispatch(changeNewOfferDescription(null));
-		store.dispatch(changeNewOfferProductDescription(null));
-		store.dispatch(changeNewOfferTitle(null));
-		store.dispatch(changeNewOfferSector(Sector.RestaurantCafeSnack));
-		store.dispatch(changeNewOfferPriceType(OfferPriceType.Price));
-		store.dispatch(changeNewOfferOldPrice(null));
-		store.dispatch(changeNewOfferNewPrice(null));
-		store.dispatch(changeNewOfferDiscount(null));
-		store.dispatch(changeNewOfferQuota(null));
-		store.dispatch(changeNewOfferQuotaOldPrice(null));
-		store.dispatch(changeNewOfferQuotaNewPrice(null));
-		store.dispatch(changeNewOfferStartDate(new Date()));
-		store.dispatch(changeNewOfferStartTime(new Date()));
-		store.dispatch(changeNewOfferEndDate(new Date()));
-		store.dispatch(changeNewOfferEndTime(new Date()));
+		store.dispatch(changeOfferId(HelperUtils.generateGuid()))
+		store.dispatch(changeOfferPhoto(null));
+		store.dispatch(changeProductDescription(null));
+		store.dispatch(changeOfferDescription(null));
+		store.dispatch(changeTitle(null));
+		store.dispatch(changeOfferSector(Sector.RestaurantCafeSnack));
+		store.dispatch(changeOfferPriceType(OfferPriceType.Price));
+		store.dispatch(changeOfferOldPrice(null));
+		store.dispatch(changeOfferNewPrice(null));
+		store.dispatch(changeOfferDiscount(null));
+		store.dispatch(changeOfferQuota(null));
+		store.dispatch(changeOfferQuotaOldPrice(null));
+		store.dispatch(changeOfferQuotaNewPrice(null));
+		store.dispatch(changeOfferStartDate(new Date()));
+		store.dispatch(changeOfferStartTime(new Date()));
+		store.dispatch(changeOfferEndDate(new Date()));
+		store.dispatch(changeOfferEndTime(new Date()));
 	}
 
 	/**
@@ -86,38 +89,11 @@ class OfferManagerInstance {
 	* 
 	* @param offerObject offer.
 	*/
-	public manageEditMode(offerObject: CompanyOfferObject) {
-		store.dispatch(changeNewOfferObject(this.convertOfferObjectToNewOfferObject(offerObject)));
+	public manageEditMode(offerObject: OfferObject) {
+		store.dispatch(changeNewOfferObject(offerObject));
 	}
 
-	/**
-	* Converts offer object to new offer object for editing.
-	* 
-	* @param offerObject offer.
-	*/
-	convertOfferObjectToNewOfferObject(offerObject: CompanyOfferObject): NewOfferObject {
-		let newOffer: NewOfferObject = new NewOfferObject();
-		newOffer.id = offerObject.id;
-		newOffer.newOfferPhoto = offerObject.offerPhoto;
-		newOffer.newOfferDescription = offerObject.offerDescription;
-		newOffer.newOfferProductDescription = offerObject.productDescription;
-		newOffer.newOfferTitle = offerObject.title;
-		newOffer.newOfferSector = offerObject.offerSector;
-		newOffer.newOfferPriceType = offerObject.offerPriceType;
-		newOffer.newOfferOldPrice = offerObject.offerOldPrice;
-		newOffer.newOfferNewPrice = offerObject.offerNewPrice;
-		newOffer.newOfferDiscount = offerObject.offerDiscount;
-		newOffer.newOfferQuota = offerObject.offerQuota;
-		newOffer.newOfferQuotaOldPrice = offerObject.offerQuotaOldPrice;
-		newOffer.newOfferQuotaNewPrice = offerObject.offerQuotaNewPrice;
-		newOffer.newOfferStartDate = offerObject.offerStartDate;
-		newOffer.newOfferStartTime = offerObject.offerStartTime;
-		newOffer.newOfferEndDate = offerObject.offerEndDate;
-		newOffer.newOfferEndTime = offerObject.offerEndTime;
-		return newOffer;
-	}
-
-	private manageCompanyOfferList(companyOfferList: Array<CompanyOfferObject>): void {
+	private manageCompanyOfferList(companyOfferList: Array<OfferObject>): void {
 		if (companyOfferList.length >= MAX_LIST_SIZE) {
 			companyOfferList.shift();
 		}

@@ -1,5 +1,5 @@
 import React, { Component, Dispatch } from 'react';
-import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, ScrollView, TouchableOpacity, Text, RefreshControl } from 'react-native';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import { NavigationProp } from '@react-navigation/native';
 import { connect } from 'react-redux';
@@ -9,18 +9,19 @@ import { SpontioColors } from '../../enums/spontioColors.enum';
 import NavigationManager from '../../managers/navigation.manager';
 import { translate } from '../../managers/language.manager';
 import { AnyAction } from 'redux';
-import { changeNewOfferPhoto } from '../../redux/actions/newOffer';
 import ButtonNewOffer from '../Button/ButtonNewOffer';
 import OfferManager from '../../managers/offer.manager';
 import Offer from '../Offer/Offer';
-import { CompanyOfferObject } from '../../redux/reducer/companyOfferReducer';
+import { OfferObject } from '../../models/offerObject.model';
+import { changeOfferPhoto } from '../../redux/actions/newOffer';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 class MyOffers extends Component<Props, State> {
 
     private focusListener;
 
     public readonly state: State = {
-
+        refreshing: false
     }
 
     async componentDidMount() {
@@ -36,17 +37,29 @@ class MyOffers extends Component<Props, State> {
         NavigationManager.setCurrentRoute(this.props.navigation.dangerouslyGetState());
     }
 
+    private onRefresh() {
+        this.setState({ refreshing: true });
+        setTimeout(() => {
+            console.log("Refreshing...");
+            this.setState({ refreshing: false });
+        }, 2000);
+    }
+
     render() {
         return (
             <View style={styles.container}>
-                <ScrollView style={styles.offers}>
+                <ScrollView style={styles.offers}
+                    refreshControl={
+                        <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh.bind(this)} />
+                    }
+                >
                     {
                         this.props.user.companyOfferList.slice(0).reverse().map((value, index) => {
-                            return <TouchableOpacity onPress={this.onPressOffer.bind(this, value)}>
+                            return <TouchableWithoutFeedback onPress={this.onPressOffer.bind(this, value)}>
                                 <View style={styles.offerContainer}>
-                                    <Offer companyOffer={value}></Offer>
+                                    <Offer offer={value}></Offer>
                                 </View>
-                            </TouchableOpacity>
+                            </TouchableWithoutFeedback>
 
                         })
                     }
@@ -63,8 +76,8 @@ class MyOffers extends Component<Props, State> {
         this.props.navigation.navigate(translate("navigation.new_offer"));
     }
 
-    private onPressOffer(offer: CompanyOfferObject) {
-        this.props.navigation.navigate(translate("navigation.offer_preview"), {offer});
+    private onPressOffer(offer: OfferObject) {
+        this.props.navigation.navigate(translate("navigation.offer_preview"), { offer });
     }
 }
 
@@ -105,17 +118,17 @@ export interface OwnProps {
 }
 
 interface IDispatchProps {
-    changeNewOfferPhoto: (newOfferPhoto: string) => void
+    changeOfferPhoto: (photo: string) => void
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
     return {
-        changeNewOfferPhoto: (newOfferPhoto: string) => dispatch(changeNewOfferPhoto(newOfferPhoto)),
+        changeOfferPhoto: (photo: string) => dispatch(changeOfferPhoto(photo)),
     }
 }
 
 type State = {
-
+    refreshing: boolean
 }
 
 type Props = IStateProps & IDispatchProps & OwnProps

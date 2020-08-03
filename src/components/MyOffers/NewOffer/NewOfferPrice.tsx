@@ -7,18 +7,12 @@ import { TRootReducer } from '../../../redux/store';
 import { SpontioColors } from '../../../enums/spontioColors.enum';
 import { NavigationProperty } from '../../../redux/reducer/navigationReducer';
 import { AnyAction } from 'redux';
-import { NewOfferObject } from '../../../redux/reducer/newOfferReducer';
-import { changeNewOfferPriceType } from '../../../redux/actions/newOffer';
-import { changeNewOfferOldPrice } from '../../../redux/actions/newOffer';
-import { changeNewOfferNewPrice } from '../../../redux/actions/newOffer';
-import { changeNewOfferDiscount } from '../../../redux/actions/newOffer';
-import { changeNewOfferQuota } from '../../../redux/actions/newOffer';
-import { changeNewOfferQuotaOldPrice } from '../../../redux/actions/newOffer';
-import { changeNewOfferQuotaNewPrice } from '../../../redux/actions/newOffer';
 import { translate } from '../../../managers/language.manager';
 import { OfferPriceType } from '../../../enums/offerPrice.enum';
 import { OfferPriceTypes } from '../../../constants/offer-price-types.constant';
 import { SegmentedControls } from 'react-native-radio-buttons'
+import { OfferObject } from '../../../models/offerObject.model';
+import { changeOfferPriceType, changeOfferOldPrice, changeOfferNewPrice, changeOfferDiscount, changeOfferQuota, changeOfferQuotaOldPrice, changeOfferQuotaNewPrice } from '../../../redux/actions/newOffer';
 
 class NewOfferPrice extends Component<Props, State> {
 
@@ -31,16 +25,14 @@ class NewOfferPrice extends Component<Props, State> {
 
     componentDidMount() {
         let option = OfferPriceTypes.find(
-            priceType => priceType.value === this.props.newOffer.newOfferPriceType);
-            console.log("price type: " + this.props.newOffer.newOfferPriceType)
-            console.log("OPTION: " + option);
+            priceType => priceType.value === this.props.newOffer.priceType);
         this.setState({ selectedOption: option })
     }
 
     private setSelectedOption(selectedOption: any) {
         console.log(selectedOption)
         this.setState({ selectedOption: selectedOption })
-        this.props.changeNewOfferPriceType(selectedOption.value);
+        this.props.changeOfferPriceType(selectedOption.value);
     }
 
     render() {
@@ -76,8 +68,8 @@ class NewOfferPrice extends Component<Props, State> {
                                         placeholderTextColor={SpontioColors.Primary}
                                         style={styles.input}
                                         returnKeyType="default"
-                                        value={this.props.newOffer.newOfferOldPrice}
-                                        onChangeText={(newOfferOldPrice) => this.props.changeNewOfferOldPrice(newOfferOldPrice)}
+                                        value={this.props.newOffer.oldPrice}
+                                        onChangeText={(oldPrice) => this.props.changeOfferOldPrice(oldPrice)}
                                     />
                                     <TextInput
                                         autoCapitalize={'none'}
@@ -87,8 +79,8 @@ class NewOfferPrice extends Component<Props, State> {
                                         placeholderTextColor={SpontioColors.Primary}
                                         style={styles.input}
                                         returnKeyType="default"
-                                        value={this.props.newOffer.newOfferNewPrice}
-                                        onChangeText={(newOfferNewPrice) => this.props.changeNewOfferNewPrice(newOfferNewPrice)}
+                                        value={this.props.newOffer.newPrice}
+                                        onChangeText={(newPrice) => this.props.changeOfferNewPrice(newPrice)}
                                     />
                                 </View>
                             }
@@ -103,8 +95,8 @@ class NewOfferPrice extends Component<Props, State> {
                                         placeholderTextColor={SpontioColors.Primary}
                                         style={styles.input}
                                         returnKeyType="default"
-                                        value={this.props.newOffer.newOfferDiscount}
-                                        onChangeText={(newOfferDiscount) => this.props.changeNewOfferDiscount(newOfferDiscount)}
+                                        value={this.props.newOffer.discount}
+                                        onChangeText={(discount) => this.props.changeOfferDiscount(discount)}
                                     />
                                 </View>
                             }
@@ -118,8 +110,8 @@ class NewOfferPrice extends Component<Props, State> {
                                         placeholderTextColor={SpontioColors.Primary}
                                         style={styles.input}
                                         returnKeyType="default"
-                                        value={this.props.newOffer.newOfferQuotaOldPrice}
-                                        onChangeText={(newOfferQuotaOldPrice) => this.props.changeNewOfferQuotaOldPrice(newOfferQuotaOldPrice)}
+                                        value={this.props.newOffer.quotaOldPrice}
+                                        onChangeText={(quotaOldPrice) => this.props.changeOfferQuotaOldPrice(quotaOldPrice)}
                                     />
                                     <TextInput
                                         autoCapitalize={'none'}
@@ -129,8 +121,8 @@ class NewOfferPrice extends Component<Props, State> {
                                         placeholderTextColor={SpontioColors.Primary}
                                         style={styles.input}
                                         returnKeyType="default"
-                                        value={this.props.newOffer.newOfferQuotaNewPrice}
-                                        onChangeText={(newOfferQuotaNewPrice) => this.props.changeNewOfferQuotaNewPrice(newOfferQuotaNewPrice)}
+                                        value={this.props.newOffer.quotaNewPrice}
+                                        onChangeText={(quotaNewPrice) => this.props.changeOfferQuotaNewPrice(quotaNewPrice)}
                                     />
                                     <TextInput
                                         autoCapitalize={'none'}
@@ -140,8 +132,8 @@ class NewOfferPrice extends Component<Props, State> {
                                         placeholderTextColor={SpontioColors.Primary}
                                         style={styles.input}
                                         returnKeyType="default"
-                                        value={this.props.newOffer.newOfferQuota}
-                                        onChangeText={(newOfferQuota) => this.props.changeNewOfferQuotaNewPrice(newOfferQuota)}
+                                        value={this.props.newOffer.quota}
+                                        onChangeText={(offerQuota) => this.props.changeOfferQuota(offerQuota)}
                                     />
                                 </View>
                             }
@@ -194,7 +186,7 @@ const styles = StyleSheet.create({
 
 interface IStateProps {
     navigationProperty: NavigationProperty,
-    newOffer: NewOfferObject
+    newOffer: OfferObject
 }
 
 const mapStateToProps = (state: TRootReducer): IStateProps => {
@@ -205,25 +197,25 @@ const mapStateToProps = (state: TRootReducer): IStateProps => {
 }
 
 interface IDispatchProps {
-    changeNewOfferPriceType: (newOfferPriceType: OfferPriceType) => void;
-    changeNewOfferOldPrice: (newOfferOldPrice: string) => void;
-    changeNewOfferNewPrice: (newOfferNewPrice: string) => void;
-    changeNewOfferDiscount: (newOfferDiscount: string) => void;
-    changeNewOfferQuota: (newOfferQuota: string) => void;
-    changeNewOfferQuotaOldPrice: (newOfferQuotaOldPrice: string) => void;
-    changeNewOfferQuotaNewPrice: (newOfferQuotaNewPrice: string) => void;
+    changeOfferPriceType: (priceType: OfferPriceType) => void;
+    changeOfferOldPrice: (oldPrice: string) => void;
+    changeOfferNewPrice: (newPrice: string) => void;
+    changeOfferDiscount: (discount: string) => void;
+    changeOfferQuota: (quota: string) => void;
+    changeOfferQuotaOldPrice: (quotaOldPrice: string) => void;
+    changeOfferQuotaNewPrice: (quotaNewPrice: string) => void;
 
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
     return {
-        changeNewOfferPriceType: (newOfferPriceType: OfferPriceType) => dispatch(changeNewOfferPriceType(newOfferPriceType)),
-        changeNewOfferOldPrice: (newOfferOldPrice: string) => dispatch(changeNewOfferOldPrice(newOfferOldPrice)),
-        changeNewOfferNewPrice: (newOfferNewPrice: string) => dispatch(changeNewOfferNewPrice(newOfferNewPrice)),
-        changeNewOfferDiscount: (newOfferDiscount: string) => dispatch(changeNewOfferDiscount(newOfferDiscount)),
-        changeNewOfferQuota: (newOfferQuota: string) => dispatch(changeNewOfferQuota(newOfferQuota)),
-        changeNewOfferQuotaOldPrice: (newOfferQuotaOldPrice: string) => dispatch(changeNewOfferQuotaOldPrice(newOfferQuotaOldPrice)),
-        changeNewOfferQuotaNewPrice: (newOfferQuotaNewPrice: string) => dispatch(changeNewOfferQuotaNewPrice(newOfferQuotaNewPrice)),
+        changeOfferPriceType: (priceType: OfferPriceType) => dispatch(changeOfferPriceType(priceType)),
+        changeOfferOldPrice: (oldPrice: string) => dispatch(changeOfferOldPrice(oldPrice)),
+        changeOfferNewPrice: (newPrice: string) => dispatch(changeOfferNewPrice(newPrice)),
+        changeOfferDiscount: (discount: string) => dispatch(changeOfferDiscount(discount)),
+        changeOfferQuota: (quota: string) => dispatch(changeOfferQuota(quota)),
+        changeOfferQuotaOldPrice: (quotaOldPrice: string) => dispatch(changeOfferQuotaOldPrice(quotaOldPrice)),
+        changeOfferQuotaNewPrice: (quotaNewPrice: string) => dispatch(changeOfferQuotaNewPrice(quotaNewPrice)),
     }
 }
 

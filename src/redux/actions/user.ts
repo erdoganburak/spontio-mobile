@@ -1,4 +1,4 @@
-import { CompanyOfferObject } from "../reducer/companyOfferReducer"
+import { OfferObject } from "../../models/offerObject.model"
 
 export const CHANGE_USER_PROFILE_PICTURE = 'CHANGE_USER_PROFILE_PICTURE'
 export const CHANGE_COMPANY_PROFILE_PICTURE = 'CHANGE_COMPANY_PROFILE_PICTURE'
@@ -22,7 +22,7 @@ export const changePassword = (password: string) => {
     return { type: CHANGE_PASSWORD, password };
 }
 
-export const updateCompanyOfferList = (companyOfferList: Array<CompanyOfferObject>) => {
+export const updateCompanyOfferList = (companyOfferList: Array<OfferObject>) => {
     return { type: UPDATE_OFFER_LIST, companyOfferList };
 }
 

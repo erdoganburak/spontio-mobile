@@ -1,14 +1,14 @@
 import { CHANGE_USER_PROFILE_PICTURE, CHANGE_COMPANY_PROFILE_PICTURE, CHANGE_USERNAME, CHANGE_PASSWORD, UPDATE_OFFER_LIST } from "../actions/user";
-import { CompanyOfferObject } from "./companyOfferReducer";
+import { OfferObject } from "../../models/offerObject.model";
 
 export class User {
     userProfilePicture: string;
     companyProfilePicture: string;
     username: string;
     password: string;
-    companyOfferList: Array<CompanyOfferObject>;
+    companyOfferList: Array<OfferObject>;
     constructor() {
-        this.companyOfferList = new Array<CompanyOfferObject>();
+        this.companyOfferList = new Array<OfferObject>();
     }
 }
 

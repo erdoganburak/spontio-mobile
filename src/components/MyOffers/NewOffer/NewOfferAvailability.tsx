@@ -7,39 +7,39 @@ import { TRootReducer } from '../../../redux/store';
 import { SpontioColors } from '../../../enums/spontioColors.enum';
 import { NavigationProperty } from '../../../redux/reducer/navigationReducer';
 import { AnyAction } from 'redux';
-import { NewOfferObject } from '../../../redux/reducer/newOfferReducer';
-import { changeNewOfferStartDate, changeNewOfferStartTime, changeNewOfferEndDate, changeNewOfferEndTime } from '../../../redux/actions/newOffer';
 import CalendarPicker from '../../../components/Calendar/CalendarPicker';
 import TimePicker from '../../../components/Calendar/TimePicker';
+import { OfferObject } from '../../../models/offerObject.model';
+import { changeOfferStartDate, changeOfferStartTime, changeOfferEndDate, changeOfferEndTime } from '../../../redux/actions/newOffer';
 
 class NewOfferAvailability extends Component<Props, State> {
 
     // States inside component seems useless but they are used to fix accuracy issues with redux.
     public readonly state: State = {
-        startDate: this.props.newOffer.newOfferStartDate ? this.props.newOffer.newOfferStartDate : new Date(),
-        startTime: this.props.newOffer.newOfferStartTime ? this.props.newOffer.newOfferStartTime : new Date(),
-        endDate: this.props.newOffer.newOfferEndDate ? this.props.newOffer.newOfferEndDate : new Date(),
-        endTime: this.props.newOffer.newOfferEndTime ? this.props.newOffer.newOfferEndTime : new Date()
+        startDate: this.props.newOffer.startDate ? this.props.newOffer.startDate : new Date(),
+        startTime: this.props.newOffer.startTime ? this.props.newOffer.startTime : new Date(),
+        endDate: this.props.newOffer.endDate ? this.props.newOffer.endDate : new Date(),
+        endTime: this.props.newOffer.endTime ? this.props.newOffer.endTime : new Date()
     }
 
     private onStartDateChange(event, date) {
         this.setState({ startDate: date });
-        this.props.changeNewOfferStartDate(date);
+        this.props.changeOfferStartDate(date);
     }
 
     private onStartTimeChange(event, date) {
         this.setState({ startTime: date });
-        this.props.changeNewOfferStartTime(date);
+        this.props.changeOfferStartTime(date);
     }
 
     private onEndDateChange(event, date) {
         this.setState({ endDate: date });
-        this.props.changeNewOfferEndDate(date);
+        this.props.changeOfferEndDate(date);
     }
 
     private onEndTimeChange(event, date) {
         this.setState({ endTime: date });
-        this.props.changeNewOfferEndTime(date);
+        this.props.changeOfferEndTime(date);
     }
 
     render() {
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
 
 interface IStateProps {
     navigationProperty: NavigationProperty,
-    newOffer: NewOfferObject
+    newOffer: OfferObject
 }
 
 const mapStateToProps = (state: TRootReducer): IStateProps => {
@@ -99,18 +99,18 @@ const mapStateToProps = (state: TRootReducer): IStateProps => {
 }
 
 interface IDispatchProps {
-    changeNewOfferStartDate: (newOfferStartDate: Date) => void;
-    changeNewOfferStartTime: (newOfferStartTime: Date) => void;
-    changeNewOfferEndDate: (newOfferEndDate: Date) => void;
-    changeNewOfferEndTime: (newOfferEndTime: Date) => void;
+    changeOfferStartDate: (offerStartDate: Date) => void;
+    changeOfferStartTime: (startTime: Date) => void;
+    changeOfferEndDate: (endDate: Date) => void;
+    changeOfferEndTime: (endTime: Date) => void;
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
     return {
-        changeNewOfferStartDate: (newOfferStartDate: Date) => dispatch(changeNewOfferStartDate(newOfferStartDate)),
-        changeNewOfferStartTime: (newOfferStartTime: Date) => dispatch(changeNewOfferStartTime(newOfferStartTime)),
-        changeNewOfferEndDate: (newOfferEndDate: Date) => dispatch(changeNewOfferEndDate(newOfferEndDate)),
-        changeNewOfferEndTime: (newOfferEndTime: Date) => dispatch(changeNewOfferEndTime(newOfferEndTime)),
+        changeOfferStartDate: (startDate: Date) => dispatch(changeOfferStartDate(startDate)),
+        changeOfferStartTime: (startTime: Date) => dispatch(changeOfferStartTime(startTime)),
+        changeOfferEndDate: (endDate: Date) => dispatch(changeOfferEndDate(endDate)),
+        changeOfferEndTime: (endTime: Date) => dispatch(changeOfferEndTime(endTime)),
     }
 }
 

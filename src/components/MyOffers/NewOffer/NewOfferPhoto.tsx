@@ -1,5 +1,5 @@
 import React, { Component, Dispatch } from 'react';
-import { View, StyleSheet, Text, TextInput, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { View, StyleSheet, Text} from 'react-native';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import { NavigationProp } from '@react-navigation/native';
 import { connect } from 'react-redux';
@@ -13,8 +13,8 @@ import { Camera } from '../../..//redux/reducer/cameraReducer';
 import CameraComponent from '../../../components/Camera/CameraComponent';
 import PictureSelector from '../../../components/PictureSelector/PictureSelector';
 import { User } from '../../../redux/reducer/userReducer';
-import { NewOfferObject } from '../../../redux/reducer/newOfferReducer';
-import { changeNewOfferPhoto } from '../../../redux/actions/newOffer';
+import { OfferObject } from '../../../models/offerObject.model';
+import { changeOfferPhoto } from '../../../redux/actions/newOffer';
 
 class NewOfferPhoto extends Component<Props, State> {
 
@@ -26,7 +26,7 @@ class NewOfferPhoto extends Component<Props, State> {
 
     public onPictureSave() {
         if (this.props.camera.picture) {
-            this.props.changeNewOfferPhoto(this.props.camera.picture);
+            this.props.changeOfferPhoto(this.props.camera.picture);
             this.props.showPictureSelectorModal(false);
         }
     }
@@ -44,7 +44,7 @@ class NewOfferPhoto extends Component<Props, State> {
                                 Add some photos
                             </Text>
                             <View style={styles.pictureSelectorContainer}>
-                                <PictureSelector picture={this.props.newOffer.newOfferPhoto}></PictureSelector>
+                                <PictureSelector picture={this.props.newOffer.photo}></PictureSelector>
                             </View>
                         </View>
                     </View>
@@ -81,7 +81,7 @@ interface IStateProps {
     camera: Camera,
     user: User,
     navigationProperty: NavigationProperty,
-    newOffer: NewOfferObject
+    newOffer: OfferObject
 }
 
 const mapStateToProps = (state: TRootReducer): IStateProps => {
@@ -95,7 +95,7 @@ const mapStateToProps = (state: TRootReducer): IStateProps => {
 
 interface IDispatchProps {
     showCamera: (show: boolean) => void;
-    changeNewOfferPhoto: (newOfferPhoto: string) => void
+    changeOfferPhoto: (photo: string) => void
     showTakenPicture: (showTakenPicture: boolean) => void;
     changePicture: (picture: string) => void;
     showPictureSelectorModal: (show: boolean) => void;
@@ -104,7 +104,7 @@ interface IDispatchProps {
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
     return {
         showCamera: (show: boolean) => dispatch(showCamera(show)),
-        changeNewOfferPhoto: (newOfferPhoto: string) => dispatch(changeNewOfferPhoto(newOfferPhoto)),
+        changeOfferPhoto: (photo: string) => dispatch(changeOfferPhoto(photo)),
         showTakenPicture: (show: boolean) => dispatch(showTakenPicture(show)),
         changePicture: (picture: string) => dispatch(changePicture(picture)),
         showPictureSelectorModal: (show: boolean) => dispatch(showPictureSelectorModal(show)),

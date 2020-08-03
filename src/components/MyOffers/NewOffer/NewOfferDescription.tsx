@@ -7,8 +7,8 @@ import { TRootReducer } from '../../../redux/store';
 import { SpontioColors } from '../../../enums/spontioColors.enum';
 import { NavigationProperty } from '../../../redux/reducer/navigationReducer';
 import { AnyAction } from 'redux';
-import { NewOfferObject } from '../../../redux/reducer/newOfferReducer';
-import { changeNewOfferDescription } from '../../../redux/actions/newOffer';
+import { OfferObject } from '../../../models/offerObject.model';
+import { changeOfferDescription } from '../../../redux/actions/newOffer';
 
 class NewOfferDescription extends Component<Props, State> {
 
@@ -32,8 +32,8 @@ class NewOfferDescription extends Component<Props, State> {
                             placeholderTextColor={SpontioColors.Primary}
                             style={styles.input}
                             returnKeyType="default"
-                            value={this.props.newOffer.newOfferDescription}
-                            onChangeText={(newOfferDescription) => this.props.changeNewOfferDescription(newOfferDescription)}
+                            value={this.props.newOffer.offerDescription}
+                            onChangeText={(offerDescription) => this.props.changeOfferDescription(offerDescription)}
                         />
                     </View>
                 </View>
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
 
 interface IStateProps {
     navigationProperty: NavigationProperty,
-    newOffer: NewOfferObject
+    newOffer: OfferObject
 }
 
 const mapStateToProps = (state: TRootReducer): IStateProps => {
@@ -81,12 +81,12 @@ const mapStateToProps = (state: TRootReducer): IStateProps => {
 }
 
 interface IDispatchProps {
-    changeNewOfferDescription: (newOfferDescription: string) => void;
+    changeOfferDescription: (offerDescription: string) => void;
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
     return {
-        changeNewOfferDescription: (newOfferDescription: string) => dispatch(changeNewOfferDescription(newOfferDescription)),
+        changeOfferDescription: (offerDescription: string) => dispatch(changeOfferDescription(offerDescription)),
     }
 }
 

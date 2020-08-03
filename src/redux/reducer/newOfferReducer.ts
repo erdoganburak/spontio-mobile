@@ -1,32 +1,9 @@
-import { CHANGE_NEW_OFFER_NEW_PRICE, CHANGE_NEW_OFFER_PRICE_TYPE, CHANGE_NEW_OFFER_PHOTO, CHANGE_NEW_OFFER_PRODUCT_DESCRIPTION, CHANGE_NEW_OFFER_DESCRIPTION, CHANGE_NEW_OFFER_TITLE, CHANGE_NEW_OFFER_SECTOR, CHANGE_NEW_OFFER_OLD_PRICE, CHANGE_NEW_OFFER_DISCOUNT, CHANGE_NEW_OFFER_QUOTA, CHANGE_NEW_OFFER_QUOTA_OLD_PRICE, CHANGE_NEW_OFFER_QUOTA_NEW_PRICE, CHANGE_NEW_OFFER_START_DATE, CHANGE_NEW_OFFER_START_TIME, CHANGE_NEW_OFFER_END_DATE, CHANGE_NEW_OFFER_END_TIME, CHANGE_NEW_OFFER_OBJECT, CHANGE_NEW_OFFER_ID } from "../actions/newOffer";
-import { Sector } from "../../enums/sector.enum";
-import { OfferPriceType } from "../../enums/offerPrice.enum";
+import { OfferObject } from "../../models/offerObject.model";
+import { CHANGE_OFFER_ID, CHANGE_OFFER_PHOTO, CHANGE_NEW_OFFER_OBJECT, CHANGE_OFFER_PRODUCT_DESCRIPTION, CHANGE_OFFER_DESCRIPTION, CHANGE_OFFER_TITLE, CHANGE_OFFER_SECTOR, CHANGE_OFFER_PRICE_TYPE, CHANGE_OFFER_OLD_PRICE, CHANGE_OFFER_NEW_PRICE, CHANGE_OFFER_DISCOUNT, CHANGE_OFFER_QUOTA, CHANGE_OFFER_QUOTA_OLD_PRICE, CHANGE_OFFER_QUOTA_NEW_PRICE, CHANGE_OFFER_START_DATE, CHANGE_OFFER_START_TIME, CHANGE_OFFER_END_DATE, CHANGE_OFFER_END_TIME } from "../actions/newOffer";
 
-export class NewOfferObject {
-    id: string;
-    newOfferPhoto: string;
-    newOfferTitle: string;
-    newOfferProductDescription: string;
-    newOfferDescription: string;
-    newOfferSector: Sector;
-    newOfferPriceType: OfferPriceType;
-    newOfferOldPrice: string;
-    newOfferNewPrice: string;
-    newOfferDiscount: string;
-    newOfferQuota: string;
-    newOfferQuotaOldPrice: string;
-    newOfferQuotaNewPrice: string;
-    newOfferStartDate: Date;
-    newOfferStartTime: Date;
-    newOfferEndDate: Date;
-    newOfferEndTime: Date;
-    constructor() {
-
-    }
-}
 
 const initialState = {
-    newOffer: new NewOfferObject()
+    newOffer: new OfferObject()
 }
 
 const newOfferReducers = (state = initialState, action) => {
@@ -35,73 +12,73 @@ const newOfferReducers = (state = initialState, action) => {
             return {
                 newOffer: { ...state.newOffer, ...action.newOffer }
             };
-        case CHANGE_NEW_OFFER_ID:
+        case CHANGE_OFFER_ID:
             return {
                 newOffer: { ...state.newOffer, id: action.id }
             };
-        case CHANGE_NEW_OFFER_PHOTO:
+        case CHANGE_OFFER_PHOTO:
             return {
-                newOffer: { ...state.newOffer, newOfferPhoto: action.newOfferPhoto }
+                newOffer: { ...state.newOffer, photo: action.photo }
             };
-        case CHANGE_NEW_OFFER_PRODUCT_DESCRIPTION:
+        case CHANGE_OFFER_PRODUCT_DESCRIPTION:
             return {
-                newOffer: { ...state.newOffer, newOfferProductDescription: action.newOfferProductDescription }
+                newOffer: { ...state.newOffer, productDescription: action.productDescription }
             };
-        case CHANGE_NEW_OFFER_DESCRIPTION:
+        case CHANGE_OFFER_DESCRIPTION:
             return {
-                newOffer: { ...state.newOffer, newOfferDescription: action.newOfferDescription }
+                newOffer: { ...state.newOffer, offerDescription: action.offerDescription }
             };
-        case CHANGE_NEW_OFFER_TITLE:
+        case CHANGE_OFFER_TITLE:
             return {
-                newOffer: { ...state.newOffer, newOfferTitle: action.newOfferTitle }
+                newOffer: { ...state.newOffer, title: action.title }
             };
-        case CHANGE_NEW_OFFER_SECTOR:
+        case CHANGE_OFFER_SECTOR:
             return {
-                newOffer: { ...state.newOffer, newOfferSector: action.newOfferSector }
+                newOffer: { ...state.newOffer, sector: action.sector }
             };
-        case CHANGE_NEW_OFFER_PRICE_TYPE:
+        case CHANGE_OFFER_PRICE_TYPE:
             return {
-                newOffer: { ...state.newOffer, newOfferPriceType: action.newOfferPriceType }
+                newOffer: { ...state.newOffer, priceType: action.priceType }
             };
-        case CHANGE_NEW_OFFER_OLD_PRICE:
+        case CHANGE_OFFER_OLD_PRICE:
             return {
-                newOffer: { ...state.newOffer, newOfferOldPrice: action.newOfferOldPrice }
+                newOffer: { ...state.newOffer, oldPrice: action.oldPrice }
             };
-        case CHANGE_NEW_OFFER_NEW_PRICE:
+        case CHANGE_OFFER_NEW_PRICE:
             return {
-                newOffer: { ...state.newOffer, newOfferNewPrice: action.newOfferNewPrice }
+                newOffer: { ...state.newOffer, newPrice: action.newPrice }
             };
-        case CHANGE_NEW_OFFER_DISCOUNT:
+        case CHANGE_OFFER_DISCOUNT:
             return {
-                newOffer: { ...state.newOffer, newOfferDiscount: action.newOfferDiscount }
+                newOffer: { ...state.newOffer, discount: action.discount }
             };
-        case CHANGE_NEW_OFFER_QUOTA:
+        case CHANGE_OFFER_QUOTA:
             return {
-                newOffer: { ...state.newOffer, newOfferQuota: action.newOfferQuota }
+                newOffer: { ...state.newOffer, quota: action.quota }
             };
-        case CHANGE_NEW_OFFER_QUOTA_OLD_PRICE:
+        case CHANGE_OFFER_QUOTA_OLD_PRICE:
             return {
-                newOffer: { ...state.newOffer, newOfferQuotaOldPrice: action.newOfferQuotaOldPrice }
+                newOffer: { ...state.newOffer, quotaOldPrice: action.quotaOldPrice }
             };
-        case CHANGE_NEW_OFFER_QUOTA_NEW_PRICE:
+        case CHANGE_OFFER_QUOTA_NEW_PRICE:
             return {
-                newOffer: { ...state.newOffer, newOfferQuotaNewPrice: action.newOfferQuotaNewPrice }
+                newOffer: { ...state.newOffer, quotaNewPrice: action.quotaNewPrice }
             };
-        case CHANGE_NEW_OFFER_START_DATE:
+        case CHANGE_OFFER_START_DATE:
             return {
-                newOffer: { ...state.newOffer, newOfferStartDate: action.newOfferStartDate }
+                newOffer: { ...state.newOffer, startDate: action.startDate }
             };
-        case CHANGE_NEW_OFFER_START_TIME:
+        case CHANGE_OFFER_START_TIME:
             return {
-                newOffer: { ...state.newOffer, newOfferStartTime: action.newOfferStartTime }
+                newOffer: { ...state.newOffer, startTime: action.startTime }
             };
-        case CHANGE_NEW_OFFER_END_DATE:
+        case CHANGE_OFFER_END_DATE:
             return {
-                newOffer: { ...state.newOffer, newOfferEndDate: action.newOfferEndDate }
+                newOffer: { ...state.newOffer, endDate: action.endDate }
             };
-        case CHANGE_NEW_OFFER_END_TIME:
+        case CHANGE_OFFER_END_TIME:
             return {
-                newOffer: { ...state.newOffer, newOfferEndTime: action.newOfferEndTime }
+                newOffer: { ...state.newOffer, endTime: action.endTime }
             };
         default:
             return state;

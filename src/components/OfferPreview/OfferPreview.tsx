@@ -1,26 +1,28 @@
 import React, { Component, Dispatch } from 'react';
 import { View, StyleSheet, Image, Text } from 'react-native';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
-import { NavigationProp, Route } from '@react-navigation/native';
+import { NavigationProp, Route, StackActions } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { SpontioColors } from '../../enums/spontioColors.enum';
 import { User } from '../../redux/reducer/userReducer';
 import { NavigationProperty } from '../../redux/reducer/navigationReducer';
-import { NewOfferObject } from '../../redux/reducer/newOfferReducer';
 import { TRootReducer } from '../../redux/store';
-import { CompanyOfferObject } from '../../redux/reducer/companyOfferReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import NavigationManager from '../../managers/navigation.manager';
 import { RouteProp } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { translate } from '../../managers/language.manager';
 import OfferManager from '../../managers/offer.manager';
+import { OfferObject } from '../../models/offerObject.model';
+import DeleteOffer from './DeleteOffer';
+import ModalBase from '../Modal/ModalBase';
+import { ModalSize } from '../../enums/modalSize.enum';
 
 class OfferPreview extends Component<Props, State> {
 
     public readonly state: State = {
-
+        showModal: false
     }
 
     private focusListener;
@@ -44,42 +46,101 @@ class OfferPreview extends Component<Props, State> {
         this.props.navigation.navigate(translate("navigation.new_offer"));
     }
 
+    private onPressDelete() {
+        this.setState({ showModal: true });
+    }
+
+    private onPressYes() {
+        OfferManager.deleteCompanyOffer(this.props.route.params.offer);
+        setTimeout(() => {
+            this.setState({ showModal: false });
+            this.props.navigation.dispatch(StackActions.pop(1));
+        }, 1000)
+
+    }
+
+    private onPressNo() {
+        this.setState({ showModal: false });
+    }
+
+    private renderModal() {
+        const _modalProps: IProps = {
+            isVisible: this.state.showModal,
+            onBackdropPress: this.onBackdropPressModal.bind(this),
+            title: "Delete Offer",
+            closeButtonHide: false,
+            needKeyboardAvoid: false,
+            onClose: this.onCloseModal.bind(this),
+            backdropColor: SpontioColors.Black,
+            backdropOpacity: 0.15,
+            size: ModalSize.Sm
+        }
+        return (
+            <ModalBase
+                modalProps={_modalProps}
+            >
+                <View>
+                    <DeleteOffer onPressYes={this.onPressYes.bind(this)} onPressNo={this.onPressNo.bind(this)}></DeleteOffer>
+                </View>
+            </ModalBase>
+        );
+    }
+
+    private onCloseModal(): void {
+        this.setState({ showModal: false });
+    }
+
+    private onBackdropPressModal(): void {
+        this.setState({ showModal: false });
+    }
+
     render() {
         return (
             <View style={styles.container}>
-                <TouchableOpacity onPress={this.onPressEdit.bind(this)}>
-                    <Text>
-                        EDIT
-                    </Text>
-                </TouchableOpacity>
-                <View style={styles.imageContainer}>
-                    <Image style={styles.image} source={{ uri: this.props.route.params.offer.offerPhoto }} />
+                {this.renderModal()}
+                <View style={styles.actionContainer}>
+                    <TouchableOpacity onPress={this.onPressDelete.bind(this)}>
+                        <View style={styles.iconContainer}>
+                            <FontAwesomeIcon icon="trash" size={scale(24)} color={SpontioColors.Primary} />
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={this.onPressEdit.bind(this)}>
+                        <View style={styles.iconContainer}>
+                            <FontAwesomeIcon icon="edit" size={scale(24)} color={SpontioColors.Primary} />
+                        </View>
+                    </TouchableOpacity>
                 </View>
-                <View style={styles.offerInfoContainer}>
-                    <Text style={styles.title}>
-                        {this.props.route.params.offer.title}
-                    </Text>
-                    <Text style={styles.description}>
-                        {this.props.route.params.offer.offerDescription}
-                    </Text>
-                </View>
-                <View style={styles.offerDetailContainer}>
-                    <Text style={styles.companyTitle}>
-                        SpontioCompany
-                    </Text>
-                    <View style={styles.offerTimeContainer}>
-                        <FontAwesomeIcon icon="clock" size={scale(20)} color={SpontioColors.Primary} />
-                        <Text style={styles.offerTimeText}>
-                            Ended
+                <View style={styles.body}>
+                    <View style={styles.imageContainer}>
+                        <Image style={styles.image} source={{ uri: this.props.route.params.offer.photo }} />
+                    </View>
+                    <View style={styles.offerInfoContainer}>
+                        <Text style={styles.title}>
+                            {this.props.route.params.offer.title}
+                        </Text>
+                        <Text style={styles.description}>
+                            {this.props.route.params.offer.offerDescription}
                         </Text>
                     </View>
-                    <View style={styles.offerLocationContainer}>
-                        <FontAwesomeIcon icon="map-marker-alt" size={scale(20)} color={SpontioColors.Primary} />
-                        <Text style={styles.offerLocationText}>
-                            Ankara
+                    <View style={styles.offerDetailContainer}>
+                        <Text style={styles.companyTitle}>
+                            SpontioCompany
+                    </Text>
+                        <View style={styles.offerTimeContainer}>
+                            <FontAwesomeIcon icon="clock" size={scale(20)} color={SpontioColors.Primary} />
+                            <Text style={styles.offerTimeText}>
+                                Ended
                         </Text>
+                        </View>
+                        <View style={styles.offerLocationContainer}>
+                            <FontAwesomeIcon icon="map-marker-alt" size={scale(20)} color={SpontioColors.Primary} />
+                            <Text style={styles.offerLocationText}>
+                                Ankara
+                        </Text>
+                        </View>
                     </View>
                 </View>
+
             </View>
         );
     }
@@ -100,7 +161,6 @@ const styles = StyleSheet.create({
         width: moderateScale(320),
         height: moderateScale(320),
         resizeMode: "contain"
-
     },
     offerInfoContainer: {
         paddingHorizontal: moderateScale(8),
@@ -121,8 +181,7 @@ const styles = StyleSheet.create({
         color: SpontioColors.Gray,
     },
     offerDetailContainer: {
-        paddingHorizontal: moderateScale(8),
-
+        paddingHorizontal: moderateScale(8)
     },
     companyTitle: {
         paddingHorizontal: moderateScale(5),
@@ -155,13 +214,24 @@ const styles = StyleSheet.create({
         flex: 1,
         alignSelf: 'center',
         color: SpontioColors.Gray
+    },
+    actionContainer: {
+        flexDirection: 'row',
+        padding: moderateScale(20),
+        alignSelf: 'flex-end'
+    },
+    body: {
+        flex:1
+    },
+    iconContainer: {
+        paddingHorizontal: moderateScale(8)
     }
 });
 
 interface IStateProps {
     user: User,
     navigationProperty: NavigationProperty,
-    newOffer: NewOfferObject
+    newOffer: OfferObject
 }
 
 const mapStateToProps = (state: TRootReducer): IStateProps => {
@@ -183,13 +253,13 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
 }
 
 export interface OwnProps {
-    route: RouteProp<{ params: { offer: CompanyOfferObject } }, 'params'>
+    route: RouteProp<{ params: { offer: OfferObject } }, 'params'>
     navigation: NavigationProp<any>;
-    companyOffer: CompanyOfferObject;
+    offer: OfferObject;
 }
 
 type State = {
-
+    showModal: boolean;
 }
 
 type Props = IStateProps & IDispatchProps & OwnProps

@@ -5,7 +5,6 @@ import cameraReducers from "./reducer/cameraReducer";
 import userReducers from "./reducer/userReducer";
 import pictureSelectorReducers from "./reducer/pictureSelectorReducer";
 import newOfferReducers from "./reducer/newOfferReducer";
-import companyOfferReducers from "./reducer/companyOfferReducer";
 
 const rootReducer = combineReducers({
     sessionReducer: sessionReducers,
@@ -13,8 +12,7 @@ const rootReducer = combineReducers({
     cameraReducer: cameraReducers,
     userReducer: userReducers,
     pictureSelectorReducer: pictureSelectorReducers,
-    newOfferReducer: newOfferReducers,
-    companyOfferReducer: companyOfferReducers
+    newOfferReducer: newOfferReducers
 })
 
 const store = createStore(rootReducer);

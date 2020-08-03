@@ -24,6 +24,8 @@ import { faFemale } from '@fortawesome/free-solid-svg-icons'
 import { faTag } from '@fortawesome/free-solid-svg-icons'
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 import { faClock } from '@fortawesome/free-solid-svg-icons'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faEdit } from '@fortawesome/free-solid-svg-icons'
 
 /**
  * Manages icons
@@ -57,7 +59,10 @@ class IconManagerInstance {
         library.add(fab, faFemale);
         library.add(fab, faTag);
         library.add(fab, faMapMarkerAlt)
-        library.add(fab, faClock)
+        library.add(fab, faClock);
+        library.add(fab, faTrash);
+        library.add(fab, faEdit);
+
     }
 
 }
