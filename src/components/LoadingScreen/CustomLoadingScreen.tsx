@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import { SpontioColors } from '../../enums/spontioColors.enum';
 
 export class CustomLoadingScreen extends Component {
