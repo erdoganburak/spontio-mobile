@@ -19,6 +19,7 @@ export class OfferObject {
     startTime: Date;
     endDate: Date;
     endTime: Date;
+    
     constructor() {
 
     }
