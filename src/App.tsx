@@ -6,6 +6,7 @@ import SessionManager from './managers/session.manager';
 import IconManager from './managers/icon.manager';
 import * as RNLocalize from "react-native-localize";
 import LanguageManager from './managers/language.manager';
+import StorageManager from './managers/storage.manager';
 
 type State = {
   loading: boolean,
