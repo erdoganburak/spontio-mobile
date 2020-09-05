@@ -1,5 +1,5 @@
 import React, { Component, Dispatch } from 'react';
-import { View, StyleSheet, Image, StatusBar } from 'react-native';
+import { View, StyleSheet, Image, StatusBar, ActivityIndicator } from 'react-native';
 import { SpontioColors } from '../../enums/spontioColors.enum';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import { NavigationProp, CommonActions } from '@react-navigation/native';
@@ -15,11 +15,14 @@ import { translate } from '../../managers/language.manager';
 import { User } from '../../redux/reducer/userReducer';
 import { changeUsername, changePassword } from '../../redux/actions/user';
 import { Role } from '../../enums/role.enum';
+import SessionManager from '../../managers/session.manager';
+import ToastManager from '../../managers/toast.manager';
 
 class Login extends Component<Props, State> {
 
     public readonly state: State = {
-        showModal: false
+        showModal: false,
+        loading: false
     }
 
     private focusListener;
@@ -40,50 +43,65 @@ class Login extends Component<Props, State> {
 
     render() {
         return (
-            <View style={styles.container}>
-                <View style={styles.logoContainer}>
-                    <Image style={{ width: moderateScale(300), height: moderateScale(80) }} source={require('../../assets/images/spontio_logo.png')} />
-                </View>
-                <View style={styles.inputContainer}>
-                    <StatusBar barStyle="light-content" />
-                    <TextInput
-                        autoCapitalize={'none'}
-                        autoCorrect={false}
-                        keyboardType="email-address"
-                        placeholder={"E-Mail Address"}
-                        placeholderTextColor="rgba(255,255,255,0.8)"
-                        style={styles.input}
-                        returnKeyType="next"
-                        value={this.props.user.username}
-                        onChangeText={(username) => this.props.changeUsername(username)}
-                    />
-                    <TextInput
-                        autoCapitalize={'none'}
-                        autoCorrect={false}
-                        placeholder={"Password"}
-                        placeholderTextColor="rgba(255,255,255,0.8)"
-                        returnKeyType="send"
-                        secureTextEntry
-                        style={styles.input}
-                        value={this.props.user.password}
-                        onChangeText={(password) => this.props.changePassword(password)}
-                    />
-                    <ButtonOutline title={"LOGIN"} onPress={this.onLoginButtonClicked.bind(this)}></ButtonOutline>
-                </View>
-            </View>
+            this.state.loading ?
+                (
+                    <View style={styles.container}>
+                        <ActivityIndicator style={styles.activityIndicator} color={SpontioColors.White}></ActivityIndicator>
+                    </View>
+                ) :
+                (
+                    <View style={styles.container}>
+                        <View style={styles.logoContainer}>
+                            <Image style={{ width: moderateScale(300), height: moderateScale(80) }} source={require('../../assets/images/spontio_logo.png')} />
+                        </View>
+                        <View style={styles.inputContainer}>
+                            <StatusBar barStyle="light-content" />
+                            <TextInput
+                                autoCapitalize={'none'}
+                                autoCorrect={false}
+                                keyboardType="email-address"
+                                placeholder={"E-Mail Address"}
+                                placeholderTextColor="rgba(255,255,255,0.8)"
+                                style={styles.input}
+                                returnKeyType="next"
+                                value={this.props.user.username}
+                                onChangeText={(username) => this.props.changeUsername(username)}
+                            />
+                            <TextInput
+                                autoCapitalize={'none'}
+                                autoCorrect={false}
+                                placeholder={"Password"}
+                                placeholderTextColor="rgba(255,255,255,0.8)"
+                                returnKeyType="send"
+                                secureTextEntry
+                                style={styles.input}
+                                value={this.props.user.password}
+                                onChangeText={(password) => this.props.changePassword(password)}
+                            />
+                            <ButtonOutline title={"LOGIN"} onPress={this.onLoginButtonClicked.bind(this)}></ButtonOutline>
+                        </View>
+                    </View >
+                )
         );
     }
 
-    private onLoginButtonClicked() {
-        this.props.changeLoggedInState(true);
-        NavigationManager.setHeaderOptions(true, true, false, true);
-        // TODO change this later
-        if(this.props.user.username == "user"){
-            this.props.changeRole(Role.User);
-        }else{
+    private async onLoginButtonClicked() {
+        try {
+            this.setState({ loading: true });
+            await SessionManager.login(this.props.user.username, this.props.user.password);
+            this.props.changeLoggedInState(true);
+            NavigationManager.setHeaderOptions(true, true, false, true);
+            // TODO change this later
             this.props.changeRole(Role.Company);
+            this.setState({ loading: false });
+            this.goToHome();
+        } catch (error) {
+            ToastManager.showDanger(translate('error.login_error'));
+            this.setState({ loading: false });
         }
+    }
 
+    private goToHome(): void {
         this.props.navigation.dispatch(
             CommonActions.reset({
                 index: 0,
@@ -122,6 +140,11 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         fontSize: moderateScale(12)
     },
+    activityIndicator: {
+        flex: 1,
+        alignContent: 'center',
+        justifyContent: 'center'
+    }
 });
 
 interface IStateProps {
@@ -158,6 +181,7 @@ export interface OwnProps {
 
 type State = {
     showModal: boolean;
+    loading: boolean;
 }
 
 type Props = IStateProps & IDispatchProps & OwnProps

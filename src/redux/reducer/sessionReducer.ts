@@ -5,6 +5,7 @@ export class Session {
     loggedIn: boolean;
     role: Role;
     constructor() {
+        this.loggedIn = false;
     }
 }
 

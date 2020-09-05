@@ -1,4 +1,4 @@
-export class LoginResponseProviderData {
+export default interface LoginResponseProviderData {
     uid: string;
     displayName: string;
     photoURL: string;

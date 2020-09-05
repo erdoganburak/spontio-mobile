@@ -1,4 +1,4 @@
-export class LoginResponseStsTokenManager {
+export default interface LoginResponseStsTokenManager {
     apiKey: string;
     refreshToken: string;
     accessToken: string;

@@ -79,5 +79,8 @@
 			"service": "Service",
 			"renovation": "Renovation"
 		}
+	},
+	"error": {
+		"login_error": "Error occured when logging in"
 	}
 }

@@ -1,8 +1,8 @@
-import { LoginResponseProviderData } from "./loginResonseProviderData.model";
-import { LoginResponseStsTokenManager } from "./loginResonseStsTokenManager.model";
-import { LoginResponseMultiFactor } from "./loginResonseMultiFactor.model";
+import LoginResponseProviderData from "./loginResonseProviderData.model";
+import LoginResponseStsTokenManager from "./loginResonseStsTokenManager.model";
+import LoginResponseMultiFactor from "./loginResonseMultiFactor.model";
 
-export class LoginResponseUser {
+export default interface LoginResponseUser {
     uid: string;
     displayName: string;
     photoURL: string;

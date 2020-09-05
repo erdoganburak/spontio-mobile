@@ -1,5 +1,5 @@
-import { LoginResponseResult } from "./loginResonseResult.model";
+import LoginResponseResult from "./loginResonseResult.model";
 
-export class LoginResponse {
+export default interface LoginResponse {
     result: LoginResponseResult;
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import { SpontioColors } from '../../enums/spontioColors.enum';
 
 export class CustomLoadingScreen extends Component {
@@ -8,12 +8,12 @@ export class CustomLoadingScreen extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.logoContainer}>
-          <Text>LOADING</Text>
+          <ActivityIndicator style={styles.activityIndicator} color={SpontioColors.Primary}></ActivityIndicator>
         </View>
       </View>
     );
   }
-  
+
 }
 
 const styles = StyleSheet.create({
@@ -22,12 +22,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1
   },
-  icon: {
-    color: SpontioColors.Primary
-  },
   logoContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  activityIndicator: {
+
   }
 });
 

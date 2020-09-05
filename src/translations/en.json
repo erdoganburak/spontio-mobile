@@ -35,7 +35,6 @@
 		"my_offers": "My Offers",
 		"new_offer": "New Offer",
 		"offer_preview": "Offer Preview"
-
 	},
 	"settings": {
 		"notifications": {
@@ -80,5 +79,8 @@
 			"service": "Service",
 			"renovation": "Renovation"
 		}
+	},
+	"error": {
+		"login_error": "Error occured when logging in"
 	}
 }

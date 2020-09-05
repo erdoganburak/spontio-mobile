@@ -17,7 +17,6 @@ import ButtonOutline from '../Button/ButtonOutline';
 import { NavigationProperty } from '../../redux/reducer/navigationReducer';
 import NavigationManager from '../../managers/navigation.manager';
 import { Role } from '../../enums/role.enum';
-import FastImage from 'react-native-fast-image'
 
 class Welcome extends Component<Props, State> {
 
@@ -29,6 +28,17 @@ class Welcome extends Component<Props, State> {
 
     async componentDidMount() {
         this.focusListener = this.props.navigation.addListener('focus', async () => this.handleFocus());
+        if (this.props.session.loggedIn) {
+            NavigationManager.setHeaderOptions(true, true, false, true);
+            this.props.navigation.dispatch(
+                CommonActions.reset({
+                    index: 0,
+                    routes: [
+                        { name: translate("navigation.home") },
+                    ],
+                })
+            );
+        }
     }
 
     private async handleFocus() {
@@ -61,9 +71,9 @@ class Welcome extends Component<Props, State> {
                     {this.renderModal()}
                 </View>
                 <View style={styles.logoContainer}>
-                    <Image 
-                    style={{ width: moderateScale(300), height: moderateScale(80) }} 
-                    source={require('../../assets/images/spontio_logo.png')} 
+                    <Image
+                        style={{ width: moderateScale(300), height: moderateScale(80) }}
+                        source={require('../../assets/images/spontio_logo.png')}
                     />
                 </View>
                 <View style={styles.buttonContainer}>
