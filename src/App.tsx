@@ -30,14 +30,12 @@ export default class App extends React.Component<State, any> {
     await LanguageManager.setI18nConfig();
     await SessionManager.initializeApp();
     // EventManager.addEventListener(EventManager.EVENT_APP_MESSAGE, this.onAppMessageReceived);
-    AppState.addEventListener("change", this._handleAppStateChange);
     this.setState({ loading: false });
   }
 
   componentWillUnmount() {
     RNLocalize.removeEventListener("change", this.handleLocalizationChange);
     //EventManager.removeEventListener(EventManager.EVENT_APP_MESSAGE, this.onAppMessageReceived);
-    AppState.removeEventListener("change", this._handleAppStateChange);
   }
 
   handleLocalizationChange = () => {
@@ -47,16 +45,6 @@ export default class App extends React.Component<State, any> {
 
     })
   };
-
-  _handleAppStateChange = nextAppState => {
-    if (
-      this.state.appState.match(/inactive|background/) &&
-      nextAppState === "active"
-    ) {
-    }
-    this.setState({ appState: nextAppState });
-  };
-
 
   public render() {
     if (this.state.loading) {

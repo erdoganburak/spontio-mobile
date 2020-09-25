@@ -1,31 +1,30 @@
-import { OfferObject } from "../../models/offerObject.model"
+import { Company, StandartUser } from "../reducer/userReducer"
 
-export const CHANGE_USER_PROFILE_PICTURE = 'CHANGE_USER_PROFILE_PICTURE'
-export const CHANGE_COMPANY_PROFILE_PICTURE = 'CHANGE_COMPANY_PROFILE_PICTURE'
-export const CHANGE_USERNAME = 'CHANGE_USERNAME'
+export const CHANGE_PROFILE_PICTURE = 'CHANGE_PROFILE_PICTURE'
+export const CHANGE_EMAIL = 'CHANGE_EMAIL'
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD'
-export const UPDATE_OFFER_LIST = 'UPDATE_OFFER_LIST'
+export const UPDATE_COMPANY = 'UPDATE_COMPANY'
+export const UPDATE_STANDART_USER = 'UPDATE_STANDART_USER'
 
-export const changeUserProfilePicture = (userProfilePicture: string) => {
-    return { type: CHANGE_USER_PROFILE_PICTURE, userProfilePicture };
+export const changeProfilePicture = (picture_id: string) => {
+    return { type: CHANGE_PROFILE_PICTURE, picture_id };
 }
 
-export const changeCompanyProfilePicture = (companyProfilePicture: string) => {
-    return { type: CHANGE_COMPANY_PROFILE_PICTURE, companyProfilePicture };
-}
-
-export const changeUsername = (username: string) => {
-    return { type: CHANGE_USERNAME, username };
+export const changeEmail = (email: string) => {
+    return { type: CHANGE_EMAIL, email };
 }
 
 export const changePassword = (password: string) => {
     return { type: CHANGE_PASSWORD, password };
 }
 
-export const updateCompanyOfferList = (companyOfferList: Array<OfferObject>) => {
-    return { type: UPDATE_OFFER_LIST, companyOfferList };
+export const updateCompany = (company: Company) => {
+    return { type: UPDATE_COMPANY, company };
 }
 
+export const updateStandartUser = (standartUser: StandartUser) => {
+    return { type: UPDATE_STANDART_USER, standartUser };
+}
 
 
 

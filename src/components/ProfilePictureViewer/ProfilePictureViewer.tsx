@@ -72,7 +72,7 @@ class ProfilePictureViewer extends Component<Props, State> {
                 </View>
 
                 <View style={styles.imageWrapper}>
-                    <Image style={styles.image} source={{ uri: this.props.picture }} />
+                    <Image style={styles.image} source={{ uri: `data:image/jpeg;base64,${this.props.picture}` }} />
                 </View>
 
                 <View style={styles.buttonWrapper}>

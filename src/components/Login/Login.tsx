@@ -13,7 +13,7 @@ import ButtonOutline from '../Button/ButtonOutline';
 import NavigationManager from '../../managers/navigation.manager';
 import { translate } from '../../managers/language.manager';
 import { User } from '../../redux/reducer/userReducer';
-import { changeUsername, changePassword } from '../../redux/actions/user';
+import { changeEmail, changePassword } from '../../redux/actions/user';
 import { Role } from '../../enums/role.enum';
 import SessionManager from '../../managers/session.manager';
 import ToastManager from '../../managers/toast.manager';
@@ -64,8 +64,8 @@ class Login extends Component<Props, State> {
                                 placeholderTextColor="rgba(255,255,255,0.8)"
                                 style={styles.input}
                                 returnKeyType="next"
-                                value={this.props.user.username}
-                                onChangeText={(username) => this.props.changeUsername(username)}
+                                value={this.props.user.email}
+                                onChangeText={(username) => this.props.changeEmail(username)}
                             />
                             <TextInput
                                 autoCapitalize={'none'}
@@ -88,7 +88,7 @@ class Login extends Component<Props, State> {
     private async onLoginButtonClicked() {
         try {
             this.setState({ loading: true });
-            await SessionManager.login(this.props.user.username, this.props.user.password);
+            await SessionManager.login(this.props.user.email, this.props.user.password);
             this.props.changeLoggedInState(true);
             NavigationManager.setHeaderOptions(true, true, false, true);
             // TODO change this later
@@ -161,7 +161,7 @@ const mapStateToProps = (state: TRootReducer): IStateProps => {
 
 interface IDispatchProps {
     changeLoggedInState: (loggedIn: boolean) => void;
-    changeUsername: (username: string) => void;
+    changeEmail: (username: string) => void;
     changePassword: (password: string) => void;
     changeRole: (role: Role) => void;
 }
@@ -169,7 +169,7 @@ interface IDispatchProps {
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
     return {
         changeLoggedInState: (loggedIn: boolean) => dispatch(changeLoggedInState(loggedIn)),
-        changeUsername: (username: string) => dispatch(changeUsername(username)),
+        changeEmail: (username: string) => dispatch(changeEmail(username)),
         changePassword: (password: string) => dispatch(changePassword(password)),
         changeRole: (role: Role) => dispatch(changeRole(role)),
     }

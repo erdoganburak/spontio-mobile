@@ -1,15 +1,15 @@
 import React, { Component, Dispatch } from 'react';
-import { View, Text, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { View, Text, StyleSheet, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { TRootReducer } from '../../redux/store';
 import { connect } from 'react-redux';
 import { NavigationProp } from '@react-navigation/native';
 import { Session } from '../../redux/reducer/sessionReducer';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import { SpontioColors } from '../../enums/spontioColors.enum';
-import LoginForm from './UserRegistrationForm';
 import NavigationManager from '../../managers/navigation.manager';
+import CompanyRegistrationForm from './CompanyRegistrationForm';
 
-class NewUser extends Component<Props, State> {
+class NewCompany extends Component<Props, State> {
 
   public readonly state: State = {
 
@@ -37,14 +37,13 @@ class NewUser extends Component<Props, State> {
 
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <KeyboardAvoidingView style={styles.keyboardView} behavior="padding">
           <View style={styles.registrationFormContainer}>
-            <LoginForm navigation={this.props.navigation}></LoginForm>
+            <CompanyRegistrationForm></CompanyRegistrationForm>
           </View>
         </KeyboardAvoidingView>
-      </View>
-
+      </ScrollView>
     )
   }
 
@@ -58,11 +57,18 @@ const styles = StyleSheet.create({
   keyboardView: {
     flexGrow: 1
   },
+  titleContainer: {
+    justifyContent: 'center',
+    alignContent: 'center'
+  },
   registrationFormContainer: {
-    flex: 1,
+    flexGrow: 4,
     backgroundColor: SpontioColors.PrimaryDark,
     alignContent: 'center',
-    justifyContent: 'flex-start'
+    justifyContent: 'center'
+  },
+  registerWithFormContainer: {
+    flexGrow: 6
   },
   descriptionContainer: {
     flex: 2,
@@ -96,4 +102,4 @@ export interface OwnProps {
 
 type Props = IStateProps & OwnProps
 
-export default connect<IStateProps, {}, OwnProps>(mapStateToProps, null)(NewUser);
+export default connect<IStateProps, {}, OwnProps>(mapStateToProps, null)(NewCompany);

@@ -41,6 +41,10 @@ class NewCustomer extends Component<Props, State> {
     this.props.navigation.navigate(translate("navigation.new_user"));
   }
 
+  private onClickButtonCompany() {
+    this.props.navigation.navigate(translate("navigation.new_company"));
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -70,7 +74,7 @@ class NewCustomer extends Component<Props, State> {
         </View>
 
         <View style={styles.companyContainer}>
-          <TouchableOpacity style={styles.buttonCompany}>
+          <TouchableOpacity style={styles.buttonCompany} onPress={this.onClickButtonCompany.bind(this)}>
             <View style={styles.companyTitleContainer}>
               <Text style={styles.companyTitleText}>
                 COMPANY

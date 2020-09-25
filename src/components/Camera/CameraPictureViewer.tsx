@@ -46,7 +46,7 @@ class CameraPictureViewer extends Component<Props, State> {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.imageContainer}>
-                    <Image style={styles.image} source={{ uri: this.props.camera.picture }} />
+                    <Image style={styles.image} source={{ uri: `data:image/jpeg;base64,${this.props.camera.picture}` }} />
                 </View>
             </View >
         )

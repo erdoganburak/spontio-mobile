@@ -1,5 +1,5 @@
-import React, { Component, Dispatch } from 'react';
-import { StyleSheet} from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet } from 'react-native';
 import { TRootReducer } from '../../redux/store';
 import { connect } from 'react-redux';
 import { NavigationProp, DrawerActions } from '@react-navigation/native';
@@ -13,9 +13,6 @@ import Login from '../Login/Login';
 import HeaderDrawerButton from '../Header/HeaderDrawerButton/HeaderDrawerButton';
 import { NavigationProperty } from '../../redux/reducer/navigationReducer';
 import { Camera } from '../../redux/reducer/cameraReducer';
-import { AnyAction } from 'redux';
-import { showCamera, showTakenPicture, changePicture } from '../../redux/actions/camera';
-import { changeUserProfilePicture } from '../../redux/actions/user';
 import { translate } from '../../managers/language.manager';
 import HeaderBackButton from '../Header/HeaderBackButton/HeaderBackButton';
 import SpontioHeaderBackground from '../Header/HeaderBackground/SpontioHeaderBackground';
@@ -115,21 +112,7 @@ const mapStateToProps = (state: TRootReducer): IStateProps => {
   }
 }
 
-interface IDispatchProps {
-  showCamera: (show: boolean) => void;
-  changeUserProfilePicture: (profilePicture: string) => void
-  showTakenPicture: (showTakenPicture: boolean) => void;
-  changePicture: (picture: string) => void;
-}
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
-  return {
-    showCamera: (show: boolean) => dispatch(showCamera(show)),
-    changeUserProfilePicture: (profilePicture: string) => dispatch(changeUserProfilePicture(profilePicture)),
-    showTakenPicture: (show: boolean) => dispatch(showTakenPicture(show)),
-    changePicture: (picture: string) => dispatch(changePicture(picture))
-  }
-}
 type State = {
 
 }
@@ -138,6 +121,6 @@ export interface OwnProps {
   navigation: NavigationProp<any>;
 }
 
-type Props = IStateProps & IDispatchProps & OwnProps
+type Props = IStateProps & OwnProps
 
-export default connect<IStateProps, IDispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(MainStack);
+export default connect<IStateProps, {}, OwnProps>(mapStateToProps, null)(MainStack);

@@ -112,7 +112,8 @@ class OfferPreview extends Component<Props, State> {
                 </View>
                 <View style={styles.body}>
                     <View style={styles.imageContainer}>
-                        <Image style={styles.image} source={{ uri: this.props.route.params.offer.photo }} />
+
+                        <Image style={styles.image} source={{ uri: `data:image/jpeg;base64,${this.props.route.params.offer.photo}` }} />
                     </View>
                     <View style={styles.offerInfoContainer}>
                         <Text style={styles.title}>
@@ -221,7 +222,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end'
     },
     body: {
-        flex:1
+        flex: 1
     },
     iconContainer: {
         paddingHorizontal: moderateScale(8)

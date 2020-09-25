@@ -110,11 +110,11 @@ class CameraComponent extends Component<Props, State> {
             if (this.state.cameraType == RNCamera.Constants.Type.front) {
                 _mirrorImage = true;
             }
-            const options = { quality: 0.5, base64: false, mirrorImage: _mirrorImage };
+            const options = { quality: 0.5, base64: true, mirrorImage: _mirrorImage };
             try {
                 const data = await this.camera.takePictureAsync(options);
-                console.log(data.uri)
-                this.props.changePicture(data.uri);
+                console.log(data.base64)
+                this.props.changePicture(data.base64);
                 this.props.showTakenPicture(true);
             } catch (error) {
                 console.log("Error occured while capturing picture => " + error);

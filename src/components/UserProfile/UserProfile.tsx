@@ -10,7 +10,6 @@ import { TRootReducer } from '../../redux/store';
 import { AnyAction } from 'redux';
 import { showCamera, showTakenPicture, changePicture } from '../../redux/actions/camera';
 import { User } from '../../redux/reducer/userReducer';
-import { changeUserProfilePicture } from '../../redux/actions/user';
 import { SpontioColors } from '../../enums/spontioColors.enum';
 import { TextInput, ScrollView } from 'react-native-gesture-handler';
 import ButtonOutline from '../Button/ButtonOutline';
@@ -21,6 +20,7 @@ import NavigationManager from '../../managers/navigation.manager';
 import CameraManager from '../../managers/camera.manager';
 import { PictureSelectorObject } from '../../redux/reducer/pictureSelectorReducer';
 import { showPictureSelectorModal } from '../../redux/actions/pictureSelector';
+import { changeProfilePicture } from '../../redux/actions/user';
 
 class UserProfile extends Component<Props, State> {
 
@@ -50,7 +50,7 @@ class UserProfile extends Component<Props, State> {
 
     public onPictureSave() {
         if (this.props.camera.picture) {
-            this.props.changeUserProfilePicture(this.props.camera.picture);
+            this.props.changeProfilePicture(this.props.camera.picture);
             this.props.showPictureSelectorModal(false);
         }
     }
@@ -78,7 +78,7 @@ class UserProfile extends Component<Props, State> {
             <KeyboardAvoidingView style={styles.container}>
                 <ScrollView>
                     <View style={styles.pictureSelectorContainer}>
-                        <PictureSelector picture={this.props.user.userProfilePicture}></PictureSelector>
+                        <PictureSelector picture={this.props.user.picture_id}></PictureSelector>
                     </View>
                     <View style={styles.other}>
                         <View style={styles.inputContainer}>
@@ -206,7 +206,7 @@ export interface OwnProps {
 
 interface IDispatchProps {
     showCamera: (show: boolean) => void;
-    changeUserProfilePicture: (userProfilePicture: string) => void
+    changeProfilePicture: (picture_id: string) => void
     showTakenPicture: (showTakenPicture: boolean) => void;
     changePicture: (picture: string) => void;
     showPictureSelectorModal: (show: boolean) => void;
@@ -215,7 +215,7 @@ interface IDispatchProps {
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
     return {
         showCamera: (show: boolean) => dispatch(showCamera(show)),
-        changeUserProfilePicture: (userProfilePicture: string) => dispatch(changeUserProfilePicture(userProfilePicture)),
+        changeProfilePicture: (picture_id: string) => dispatch(changeProfilePicture(picture_id)),
         showTakenPicture: (show: boolean) => dispatch(showTakenPicture(show)),
         changePicture: (picture: string) => dispatch(changePicture(picture)),
         showPictureSelectorModal: (show: boolean) => dispatch(showPictureSelectorModal(show)),

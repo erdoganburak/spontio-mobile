@@ -1,5 +1,5 @@
 import store from "../redux/store";
-import { updateCompanyOfferList } from "../redux/actions/user";
+import { updateCompany } from "../redux/actions/user";
 import { Sector } from "../enums/sector.enum";
 import { OfferPriceType } from "../enums/offerPrice.enum";
 import HelperUtils from "../utils/helper.utils";
@@ -11,12 +11,13 @@ const MAX_LIST_SIZE = 5;
 class OfferManagerInstance {
 
 	/**
-  	* Adds new company offer to company offer list.
-  	* 
-  	* @param companyOffer New company offer.
-  	*/
+		* Adds new company offer to company offer list.
+		* 
+		* @param companyOffer New company offer.
+		*/
 	public addNewCompanyOffer(companyOffer: OfferObject): void {
-		let companyOfferList: Array<OfferObject> = store.getState().userReducer.user.companyOfferList;
+		let company = store.getState().userReducer.user.company;
+		let companyOfferList: Array<OfferObject> = company.companyOfferList;
 		this.manageCompanyOfferList(companyOfferList);
 
 		console.log("id: " + companyOffer.id);
@@ -24,46 +25,48 @@ class OfferManagerInstance {
 		console.log("photo: " + companyOffer.photo);
 
 		companyOfferList.push(companyOffer);
-		store.dispatch(updateCompanyOfferList(companyOfferList));
+		store.dispatch(updateCompany(company));
 		this.resetNewOffer();
 	}
 
 	/**
-  	* Edits company offer from company offer list.
-  	* 
-  	* @param companyOffer Company offer.
-  	*/
+		* Edits company offer from company offer list.
+		* 
+		* @param companyOffer Company offer.
+		*/
 	public editCompanyOffer(companyOffer: OfferObject): void {
-		let companyOfferList: Array<OfferObject> = store.getState().userReducer.user.companyOfferList;
+		let company = store.getState().userReducer.user.company;
+		let companyOfferList: Array<OfferObject> = company.companyOfferList;
 		let offerToUpdateIndex = companyOfferList.findIndex(
 			offer => offer.id === companyOffer.id);
 		console.log("companyOffer.id: " + companyOffer.id)
 		console.log("offerToUpdate: " + offerToUpdateIndex)
 		if (offerToUpdateIndex != -1) {
 			companyOfferList[offerToUpdateIndex] = companyOffer;
-			store.dispatch(updateCompanyOfferList(companyOfferList));
+			store.dispatch(updateCompany(company));
 		}
 	}
 
 	/**
-  	* Delete company offer from company offer list.
-  	* 
-  	* @param companyOffer Company offer.
-  	*/
+		* Delete company offer from company offer list.
+		* 
+		* @param companyOffer Company offer.
+		*/
 	public deleteCompanyOffer(companyOffer: OfferObject): void {
-		let companyOfferList: Array<OfferObject> = store.getState().userReducer.user.companyOfferList;
+		let company = store.getState().userReducer.user.company;
+		let companyOfferList: Array<OfferObject> = company.companyOfferList;
 		let offerToDeleteIndex = companyOfferList.findIndex(
 			offer => offer.id === companyOffer.id);
 		if (offerToDeleteIndex > -1) {
 			companyOfferList.splice(offerToDeleteIndex, 1);
-			store.dispatch(updateCompanyOfferList(companyOfferList));
+			store.dispatch(updateCompany(company));
 		}
 	}
 
 	/**
-  	* Resets new offer object
-  	* 
-  	*/
+		* Resets new offer object
+		* 
+		*/
 	public resetNewOffer(): void {
 		store.dispatch(changeOfferId(HelperUtils.generateGuid()))
 		store.dispatch(changeOfferPhoto(null));

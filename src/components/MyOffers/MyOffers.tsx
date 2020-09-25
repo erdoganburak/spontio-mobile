@@ -53,8 +53,8 @@ class MyOffers extends Component<Props, State> {
                         <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh.bind(this)} />
                     }
                 >
-                    {
-                        this.props.user.companyOfferList.slice(0).reverse().map((value, index) => {
+                    {this.props.user && this.props.user.company && this.props.user.company.companyOfferList &&
+                        this.props.user.company.companyOfferList.slice(0).reverse().map((value, index) => {
                             return <TouchableWithoutFeedback onPress={this.onPressOffer.bind(this, value)}>
                                 <View style={styles.offerContainer}>
                                     <Offer offer={value}></Offer>

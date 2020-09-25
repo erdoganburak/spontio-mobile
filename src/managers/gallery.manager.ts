@@ -2,10 +2,10 @@ import store from "../redux/store";
 import ImagePicker, { ImagePickerOptions } from 'react-native-image-picker';
 import { Role } from "../enums/role.enum";
 import { showPictureSelectorModal } from "../redux/actions/pictureSelector";
-import { changeUserProfilePicture, changeCompanyProfilePicture } from "../redux/actions/user";
 import NavigationManager from "./navigation.manager";
 import { translate } from "./language.manager";
 import { changeOfferPhoto } from "../redux/actions/newOffer";
+import { changeProfilePicture } from "../redux/actions/user";
 
 const options: ImagePickerOptions = {
 	title: 'Select Image',
@@ -37,13 +37,13 @@ class GalleryManagerInstance {
 			} else {
 				if (role === Role.User) {
 					if (NavigationManager.currentRouteName === translate("navigation.user_profile")) {
-						store.dispatch(changeUserProfilePicture(response.uri));
+						store.dispatch(changeProfilePicture(response.data));
 					}
 				} else if (role === Role.Company) {
 					if (NavigationManager.currentRouteName === translate("navigation.company_profile")) {
-						store.dispatch(changeCompanyProfilePicture(response.uri));
+						store.dispatch(changeProfilePicture(response.data));
 					} else if (NavigationManager.currentRouteName === translate("navigation.new_offer")) {
-						store.dispatch(changeOfferPhoto(response.uri));
+						store.dispatch(changeOfferPhoto(response.data));
 					}
 				}
 				store.dispatch(showPictureSelectorModal(false));

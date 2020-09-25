@@ -21,7 +21,7 @@ class Offer extends Component<Props, State> {
         return (
             <View style={styles.container}>
                 <View style={styles.imageContainer}>
-                    <Image style={styles.image} source={{ uri: this.props.offer.photo }} />
+                    <Image style={styles.image} source={{ uri: `data:image/jpeg;base64,${this.props.offer.photo}` }} />
                 </View>
                 <View style={styles.offerInfoContainer}>
                     <Text style={styles.title}>
