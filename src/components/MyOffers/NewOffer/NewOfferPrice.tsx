@@ -13,6 +13,7 @@ import { OfferPriceTypes } from '../../../constants/offer-price-types.constant';
 import { SegmentedControls } from 'react-native-radio-buttons'
 import { OfferObject } from '../../../models/offerObject.model';
 import { changeOfferPriceType, changeOfferOldPrice, changeOfferNewPrice, changeOfferDiscount, changeOfferQuota, changeOfferQuotaOldPrice, changeOfferQuotaNewPrice } from '../../../redux/actions/newOffer';
+import { ThunkDispatch } from 'redux-thunk';
 
 class NewOfferPrice extends Component<Props, State> {
 
@@ -207,7 +208,7 @@ interface IDispatchProps {
 
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<AnyAction, {}, any>): IDispatchProps => {
     return {
         changeOfferPriceType: (priceType: OfferPriceType) => dispatch(changeOfferPriceType(priceType)),
         changeOfferOldPrice: (oldPrice: string) => dispatch(changeOfferOldPrice(oldPrice)),

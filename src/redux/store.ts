@@ -1,10 +1,11 @@
-import { combineReducers, createStore } from "redux";
+import { applyMiddleware, combineReducers, createStore } from "redux";
 import sessionReducers from "./reducer/sessionReducer";
 import navigationReducers from "./reducer/navigationReducer";
 import cameraReducers from "./reducer/cameraReducer";
 import userReducers from "./reducer/userReducer";
 import pictureSelectorReducers from "./reducer/pictureSelectorReducer";
 import newOfferReducers from "./reducer/newOfferReducer";
+import thunk, { ThunkMiddleware } from "redux-thunk";
 
 const rootReducer = combineReducers({
     sessionReducer: sessionReducers,
@@ -15,7 +16,7 @@ const rootReducer = combineReducers({
     newOfferReducer: newOfferReducers
 })
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(thunk as ThunkMiddleware));
 
 export default store;
 

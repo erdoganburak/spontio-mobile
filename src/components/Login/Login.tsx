@@ -1,22 +1,20 @@
-import React, { Component, Dispatch } from 'react';
+import React, { Component } from 'react';
 import { View, StyleSheet, Image, StatusBar, ActivityIndicator } from 'react-native';
 import { SpontioColors } from '../../enums/spontioColors.enum';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
-import { NavigationProp, CommonActions } from '@react-navigation/native';
+import { NavigationProp } from '@react-navigation/native';
 import { TRootReducer } from '../../redux/store';
-import { AnyAction } from 'redux';
+import { AnyAction, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { TextInput } from 'react-native-gesture-handler';
-import { changeLoggedInState, changeRole } from '../../redux/actions/session';
+import { boundRequestLogin, changeLoggedInState, changeRole } from '../../redux/actions/session';
 import { Session } from '../../redux/reducer/sessionReducer';
 import ButtonOutline from '../Button/ButtonOutline';
 import NavigationManager from '../../managers/navigation.manager';
-import { translate } from '../../managers/language.manager';
 import { User } from '../../redux/reducer/userReducer';
 import { changeEmail, changePassword } from '../../redux/actions/user';
 import { Role } from '../../enums/role.enum';
-import SessionManager from '../../managers/session.manager';
-import ToastManager from '../../managers/toast.manager';
+import { ThunkDispatch } from 'redux-thunk';
 
 class Login extends Component<Props, State> {
 
@@ -43,7 +41,7 @@ class Login extends Component<Props, State> {
 
     render() {
         return (
-            this.state.loading ?
+            this.props.session.loginRequestState.loading ?
                 (
                     <View style={styles.container}>
                         <ActivityIndicator style={styles.activityIndicator} color={SpontioColors.White}></ActivityIndicator>
@@ -86,31 +84,23 @@ class Login extends Component<Props, State> {
     }
 
     private async onLoginButtonClicked() {
-        try {
-            this.setState({ loading: true });
-            await SessionManager.login(this.props.user.email, this.props.user.password);
-            this.props.changeLoggedInState(true);
-            NavigationManager.setHeaderOptions(true, true, false, true);
-            // TODO change this later
-            this.props.changeRole(Role.Company);
-            this.setState({ loading: false });
-            this.goToHome();
-        } catch (error) {
-            ToastManager.showDanger(translate('error.login_error'));
-            this.setState({ loading: false });
-        }
+        /* try {
+             this.setState({ loading: true });
+             await SessionManager.login(this.props.user.email, this.props.user.password);
+             this.props.changeLoggedInState(true);
+             NavigationManager.setHeaderOptions(true, true, false, true);
+             // TODO change this later
+             this.props.changeRole(Role.Company);
+             this.setState({ loading: false });
+             this.goToHome();
+         } catch (error) {
+             ToastManager.showDanger(translate('error.login_error'));
+             this.setState({ loading: false });
+         }*/
+
+        this.props.boundRequestLogin();
     }
 
-    private goToHome(): void {
-        this.props.navigation.dispatch(
-            CommonActions.reset({
-                index: 0,
-                routes: [
-                    { name: translate("navigation.home") },
-                ],
-            })
-        );
-    }
 }
 
 const styles = StyleSheet.create({
@@ -164,14 +154,16 @@ interface IDispatchProps {
     changeEmail: (username: string) => void;
     changePassword: (password: string) => void;
     changeRole: (role: Role) => void;
+    boundRequestLogin: () => void;
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<AnyAction, {}, any>): IDispatchProps => {
     return {
         changeLoggedInState: (loggedIn: boolean) => dispatch(changeLoggedInState(loggedIn)),
         changeEmail: (username: string) => dispatch(changeEmail(username)),
         changePassword: (password: string) => dispatch(changePassword(password)),
         changeRole: (role: Role) => dispatch(changeRole(role)),
+        boundRequestLogin: bindActionCreators(boundRequestLogin, dispatch)
     }
 }
 

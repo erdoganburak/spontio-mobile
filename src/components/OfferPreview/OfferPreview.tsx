@@ -18,6 +18,7 @@ import { OfferObject } from '../../models/offerObject.model';
 import DeleteOffer from './DeleteOffer';
 import ModalBase from '../Modal/ModalBase';
 import { ModalSize } from '../../enums/modalSize.enum';
+import { ThunkDispatch } from 'redux-thunk';
 
 class OfferPreview extends Component<Props, State> {
 
@@ -247,7 +248,7 @@ interface IDispatchProps {
 
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<AnyAction, {}, any>): IDispatchProps => {
     return {
 
     }

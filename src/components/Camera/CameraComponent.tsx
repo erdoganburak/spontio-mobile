@@ -12,6 +12,7 @@ import { TRootReducer } from '../../redux/store';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import CameraPictureViewer from './CameraPictureViewer';
 import NavigationManager from '../../managers/navigation.manager';
+import { ThunkDispatch } from 'redux-thunk';
 
 class CameraComponent extends Component<Props, State> {
 
@@ -113,7 +114,6 @@ class CameraComponent extends Component<Props, State> {
             const options = { quality: 0.5, base64: true, mirrorImage: _mirrorImage };
             try {
                 const data = await this.camera.takePictureAsync(options);
-                console.log(data.base64)
                 this.props.changePicture(data.base64);
                 this.props.showTakenPicture(true);
             } catch (error) {
@@ -241,7 +241,7 @@ interface IDispatchProps {
     changePicture: (picture: string) => void;
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<AnyAction, {}, any>): IDispatchProps => {
     return {
         showCamera: (show: boolean) => dispatch(showCamera(show)),
         showTakenPicture: (show: boolean) => dispatch(showTakenPicture(show)),

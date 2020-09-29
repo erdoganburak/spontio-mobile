@@ -14,6 +14,7 @@ import { AnyAction } from 'redux';
 import { showGoBackButton } from '../../../redux/actions/navigation';
 import { NavigationProperty } from '../../../redux/reducer/navigationReducer';
 import NavigationManager from '../../../managers/navigation.manager';
+import { ThunkDispatch } from 'redux-thunk';
 
 class LanguageSelection extends Component<Props, State> {
 
@@ -84,7 +85,7 @@ interface IDispatchProps {
   showGoBackButton: (show: boolean) => void;
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<AnyAction, {}, any>): IDispatchProps => {
   return {
     showGoBackButton: (show: boolean) => dispatch(showGoBackButton(show)),
   }

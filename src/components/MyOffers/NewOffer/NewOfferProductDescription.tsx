@@ -9,6 +9,7 @@ import { NavigationProperty } from '../../../redux/reducer/navigationReducer';
 import { AnyAction } from 'redux';
 import { OfferObject } from '../../../models/offerObject.model';
 import { changeProductDescription } from '../../../redux/actions/newOffer';
+import { ThunkDispatch } from 'redux-thunk';
 
 class NewOfferProductDescription extends Component<Props, State> {
 
@@ -84,7 +85,7 @@ interface IDispatchProps {
     changeProductDescription: (productDescription: string) => void;
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<AnyAction, {}, any>): IDispatchProps => {
     return {
         changeProductDescription: (productDescription: string) => dispatch(changeProductDescription(productDescription)),
     }

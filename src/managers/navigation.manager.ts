@@ -1,6 +1,8 @@
 import store from "../redux/store";
 import { showHeader, showGoBackButton, showHeaderLogo, changeCurrentRoute, showDrawer } from '../redux/actions/navigation';
 import { translate } from "./language.manager";
+import { CommonActions } from "@react-navigation/native";
+import { Keyboard } from "react-native";
 
 /**
  * Manages navigation actions.
@@ -8,6 +10,7 @@ import { translate } from "./language.manager";
 export class NavigationManagerInstance {
 
   private _currentRouteName: string;
+  private navigator;
 
   public get currentRouteName(): string {
     return this._currentRouteName;
@@ -15,6 +18,30 @@ export class NavigationManagerInstance {
 
   public set currentRouteName(value: string) {
     this._currentRouteName = value;
+  }
+
+  public setTopLevelNavigator(navigatorRef) {
+    this.navigator = navigatorRef;
+  }
+
+  public navigate(routeName, params) {
+    this.navigator.dispatch(
+      CommonActions.navigate({
+        key: routeName,
+        params: params
+      })
+    );
+  }
+
+  public reset(routeName) {
+    this.navigator.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [
+          { name: routeName },
+        ],
+      })
+    );
   }
 
   /**
@@ -79,11 +106,11 @@ export class NavigationManagerInstance {
   }
 
   /**
-	 * Crawl through navigation state to get route metadata.
-	 *
-	 * @param {*} navigationState
-	 * @returns {*}
-	 */
+   * Crawl through navigation state to get route metadata.
+   *
+   * @param {*} navigationState
+   * @returns {*}
+   */
   public getActiveRouteMetadata(navigationState) {
     if (!navigationState) {
       return null;

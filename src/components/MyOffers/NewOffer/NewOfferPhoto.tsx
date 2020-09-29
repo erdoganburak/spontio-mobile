@@ -15,6 +15,7 @@ import PictureSelector from '../../../components/PictureSelector/PictureSelector
 import { User } from '../../../redux/reducer/userReducer';
 import { OfferObject } from '../../../models/offerObject.model';
 import { changeOfferPhoto } from '../../../redux/actions/newOffer';
+import { ThunkDispatch } from 'redux-thunk';
 
 class NewOfferPhoto extends Component<Props, State> {
 
@@ -101,7 +102,7 @@ interface IDispatchProps {
     showPictureSelectorModal: (show: boolean) => void;
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<AnyAction, {}, any>): IDispatchProps => {
     return {
         showCamera: (show: boolean) => dispatch(showCamera(show)),
         changeOfferPhoto: (photo: string) => dispatch(changeOfferPhoto(photo)),

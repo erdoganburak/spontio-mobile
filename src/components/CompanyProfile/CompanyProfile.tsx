@@ -19,6 +19,7 @@ import CameraManager from '../../managers/camera.manager';
 import { PictureSelectorObject } from '../../redux/reducer/pictureSelectorReducer';
 import { showPictureSelectorModal } from '../../redux/actions/pictureSelector';
 import { changeProfilePicture } from '../../redux/actions/user';
+import { ThunkDispatch } from 'redux-thunk';
 
 class CompanyProfile extends Component<Props, State> {
 
@@ -181,7 +182,7 @@ interface IDispatchProps {
     showPictureSelectorModal: (show: boolean) => void;
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<AnyAction, {}, any>): IDispatchProps => {
     return {
         showCamera: (show: boolean) => dispatch(showCamera(show)),
         changeProfilePicture: (picture_id: string) => dispatch(changeProfilePicture(picture_id)),

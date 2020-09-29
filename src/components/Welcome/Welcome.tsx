@@ -17,6 +17,7 @@ import ButtonOutline from '../Button/ButtonOutline';
 import { NavigationProperty } from '../../redux/reducer/navigationReducer';
 import NavigationManager from '../../managers/navigation.manager';
 import { Role } from '../../enums/role.enum';
+import { ThunkDispatch } from 'redux-thunk';
 
 class Welcome extends Component<Props, State> {
 
@@ -249,7 +250,7 @@ interface IDispatchProps {
     changeRole: (role: Role) => void;
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<AnyAction, {}, any>): IDispatchProps => {
     return {
         changeLoggedInState: (loggedIn: boolean) => dispatch(changeLoggedInState(loggedIn)),
         changeRole: (role: Role) => dispatch(changeRole(role)),

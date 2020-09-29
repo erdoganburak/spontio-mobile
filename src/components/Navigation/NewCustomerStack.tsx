@@ -9,6 +9,7 @@ import NewCustomer from '../NewCustomer/NewCustomer';
 import NewUser from '../NewCustomer/NewUser';
 import { translate } from '../../managers/language.manager';
 import NewCompany from '../NewCustomer/NewCompany';
+import UserRegistrationFormSuccess from '../NewCustomer/UserRegistrationFormSuccess';
 
 const NewCustomerStackNavigator = createStackNavigator();
 
@@ -36,9 +37,9 @@ class NewCustomerStack extends Component<Props, State> {
         <>
           <NewCustomerStackNavigator.Screen name={translate("navigation.new_customer")} component={NewCustomer} />
           <NewCustomerStackNavigator.Screen name={translate("navigation.new_user")} component={NewUser} />
+          <NewCustomerStackNavigator.Screen name={translate("navigation.new_user_success")} component={UserRegistrationFormSuccess} />
           <NewCustomerStackNavigator.Screen name={translate("navigation.new_company")} component={NewCompany} />
         </>
-
       </NewCustomerStackNavigator.Navigator>
     );
   }

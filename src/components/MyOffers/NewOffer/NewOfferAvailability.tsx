@@ -11,6 +11,7 @@ import CalendarPicker from '../../../components/Calendar/CalendarPicker';
 import TimePicker from '../../../components/Calendar/TimePicker';
 import { OfferObject } from '../../../models/offerObject.model';
 import { changeOfferStartDate, changeOfferStartTime, changeOfferEndDate, changeOfferEndTime } from '../../../redux/actions/newOffer';
+import { ThunkDispatch } from 'redux-thunk';
 
 class NewOfferAvailability extends Component<Props, State> {
 
@@ -105,7 +106,7 @@ interface IDispatchProps {
     changeOfferEndTime: (endTime: Date) => void;
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<AnyAction, {}, any>): IDispatchProps => {
     return {
         changeOfferStartDate: (startDate: Date) => dispatch(changeOfferStartDate(startDate)),
         changeOfferStartTime: (startTime: Date) => dispatch(changeOfferStartTime(startTime)),

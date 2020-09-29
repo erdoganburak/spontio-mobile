@@ -35,7 +35,8 @@
 		"privacy": "Privacy",
 		"my_offers": "My Offers",
 		"new_offer": "New Offer",
-		"offer_preview": "Offer Preview"
+		"offer_preview": "Offer Preview",
+		"new_user_success" : "New User Success"
 	},
 	"settings": {
 		"notifications": {

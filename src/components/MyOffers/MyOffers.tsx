@@ -15,6 +15,7 @@ import Offer from '../Offer/Offer';
 import { OfferObject } from '../../models/offerObject.model';
 import { changeOfferPhoto } from '../../redux/actions/newOffer';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { ThunkDispatch } from 'redux-thunk';
 
 class MyOffers extends Component<Props, State> {
 
@@ -121,7 +122,7 @@ interface IDispatchProps {
     changeOfferPhoto: (photo: string) => void
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<AnyAction, {}, any>): IDispatchProps => {
     return {
         changeOfferPhoto: (photo: string) => dispatch(changeOfferPhoto(photo)),
     }

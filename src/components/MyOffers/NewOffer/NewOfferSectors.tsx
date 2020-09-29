@@ -12,6 +12,7 @@ import { Sectors } from '../../../constants/sector.constant';
 import { translate } from '../../../managers/language.manager';
 import { OfferObject } from '../../../models/offerObject.model';
 import { changeOfferSector } from '../../../redux/actions/newOffer';
+import { ThunkDispatch } from 'redux-thunk';
 
 class NewOfferSectors extends Component<Props, State> {
 
@@ -88,7 +89,7 @@ interface IDispatchProps {
     changeOfferSector: (sector: Sector) => void;
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<AnyAction, {}, any>): IDispatchProps => {
     return {
         changeOfferSector: (sector: Sector) => dispatch(changeOfferSector(sector)),
     }

@@ -16,6 +16,7 @@ import CompanyProfileStack from './CompanyProfileStack';
 import { Role } from '../../enums/role.enum';
 import HelpStack from './HelpStack';
 import MyOffersStack from './MyOffersStack';
+import NavigationManager from '../../managers/navigation.manager';
 
 const Drawer = createDrawerNavigator();
 
@@ -41,7 +42,9 @@ class InitializeNavigationScreen extends Component<Props, State> {
     else {
       return (
         <Provider store={store}>
-          <NavigationContainer>
+          <NavigationContainer ref={(navigatorRef) => {
+            NavigationManager.setTopLevelNavigator(navigatorRef)
+          }}>
             <Drawer.Navigator
               initialRouteName="HomeDrawer"
               drawerContentOptions={{

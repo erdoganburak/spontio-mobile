@@ -17,6 +17,7 @@ import { Session } from '../../redux/reducer/sessionReducer';
 import ButtonOutline from '../Button/ButtonOutline';
 import PictureSelector from '../PictureSelector/PictureSelector';
 import { ScrollView } from 'react-native-gesture-handler';
+import { ThunkDispatch } from 'redux-thunk';
 
 class CompanyRegistrationForm extends Component<Props, State> {
 
@@ -208,7 +209,7 @@ interface IDispatchProps {
 
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<AnyAction, {}, any>): IDispatchProps => {
   return {
     changeLoggedInState: (loggedIn: boolean) => dispatch(changeLoggedInState(loggedIn)),
   }

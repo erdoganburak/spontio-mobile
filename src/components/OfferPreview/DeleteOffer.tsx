@@ -7,6 +7,7 @@ import { SpontioColors } from '../../enums/spontioColors.enum';
 import { TRootReducer } from '../../redux/store';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { translate } from '../../managers/language.manager';
+import { ThunkDispatch } from 'redux-thunk';
 
 class DeleteOffer extends Component<Props, State> {
 
@@ -99,7 +100,7 @@ interface IDispatchProps {
 
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<AnyAction, {}, any>): IDispatchProps => {
     return {
 
     }

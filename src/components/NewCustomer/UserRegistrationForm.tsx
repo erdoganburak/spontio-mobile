@@ -1,4 +1,4 @@
-import React, { Component, Dispatch } from 'react';
+import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { TRootReducer } from '../../redux/store';
 import { connect } from 'react-redux'
-import { AnyAction } from 'redux';
+import { AnyAction, bindActionCreators } from 'redux';
 import { NavigationProp } from '@react-navigation/native';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import { SpontioColors } from '../../enums/spontioColors.enum';
@@ -18,17 +18,16 @@ import { User } from '../../redux/reducer/userReducer';
 import { changeEmail, changePassword } from '../../redux/actions/user';
 import ToastManager from '../../managers/toast.manager';
 import HelperUtils from '../../utils/helper.utils';
-import SessionApi from '../../api/session.api';
 import { translate } from '../../managers/language.manager';
 import NavigationManager from '../../managers/navigation.manager';
 import LottieView from 'lottie-react-native';
+import { ThunkDispatch } from 'redux-thunk';
+import { boundRegisterUser } from '../../redux/actions/session';
 
 class UserRegistrationForm extends Component<Props, State> {
 
   public readonly state: State = {
     confirmPassword: "",
-    success: false,
-    loading: false
   }
 
   async componentDidMount() {
@@ -44,7 +43,7 @@ class UserRegistrationForm extends Component<Props, State> {
   render() {
     return (
       <View>
-        {!this.state.success &&
+        {
           <KeyboardAvoidingView
             behavior={Platform.OS == "ios" ? "padding" : "height"}
             style={styles.container}
@@ -74,7 +73,6 @@ class UserRegistrationForm extends Component<Props, State> {
               value={this.props.user.password}
               onChangeText={(password) => this.props.changePassword(password)}
             />
-
             <TextInput
               autoCapitalize={'none'}
               autoCorrect={false}
@@ -91,30 +89,12 @@ class UserRegistrationForm extends Component<Props, State> {
         </Text>
             <View style={styles.buttonContainer}>
               {
-                this.state.loading && <ActivityIndicator style={styles.activityIndicator} color={SpontioColors.White}></ActivityIndicator>
+                this.props.session.registerUserState.loading && <ActivityIndicator style={styles.activityIndicator} color={SpontioColors.White}></ActivityIndicator>
               }
               {
-                !this.state.loading && <ButtonOutline width={250} title={"REGISTER"} onPress={this.onLoginButtonClicked.bind(this)}></ButtonOutline>
+                !this.props.session.registerUserState.loading && <ButtonOutline width={250} title={"REGISTER"} onPress={this.onLoginButtonClicked.bind(this)}></ButtonOutline>
               }
             </View>
-          </KeyboardAvoidingView>
-        }
-        {
-          this.state.success &&
-          <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}
-            style={styles.container}
-            keyboardVerticalOffset={moderateScale(100)}>
-            <View style={styles.successContainer}>
-              <LottieView style={styles.lottieView} source={require('../../assets/animations/mail.json')} autoPlay loop={false} />
-
-              <Text style={styles.successText}>
-                Confirmation E-Mail has sent to your inbox!
-              </Text>
-              <View style={styles.buttonContainer}>
-                <ButtonOutline width={moderateScale(250)} title={"Okay"} onPress={this.onOkButtonClicked.bind(this)}></ButtonOutline>
-              </View>
-            </View>
-
           </KeyboardAvoidingView>
         }
       </View>
@@ -123,15 +103,7 @@ class UserRegistrationForm extends Component<Props, State> {
 
   onLoginButtonClicked = async () => {
     if (this.validateFields()) {
-      try {
-        this.setState({ loading: true });
-        await SessionApi.registerUser(this.props.user.email, this.props.user.password);
-        this.setState({ success: true });
-      } catch (error) {
-        ToastManager.showDanger("Error occured while registering");
-      } finally {
-        this.setState({ loading: false });
-      }
+      this.props.boundRegisterUser();
     }
   }
 
@@ -253,13 +225,14 @@ const mapStateToProps = (state: TRootReducer): IStateProps => {
 interface IDispatchProps {
   changeEmail: (username: string) => void;
   changePassword: (password: string) => void;
-
+  boundRegisterUser: () => void;
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<AnyAction, {}, any>): IDispatchProps => {
   return {
     changeEmail: (username: string) => dispatch(changeEmail(username)),
     changePassword: (password: string) => dispatch(changePassword(password)),
+    boundRegisterUser: bindActionCreators(boundRegisterUser, dispatch)
   }
 }
 
@@ -269,8 +242,6 @@ export interface OwnProps {
 
 interface State {
   confirmPassword: string;
-  success: boolean;
-  loading: boolean;
 }
 
 type Props = IStateProps & IDispatchProps & OwnProps

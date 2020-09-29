@@ -11,6 +11,7 @@ import { NavigationProperty } from '../../redux/reducer/navigationReducer';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import { SpontioColors } from '../../enums/spontioColors.enum';
 import NavigationManager from '../../managers/navigation.manager';
+import { ThunkDispatch } from 'redux-thunk';
 
 class CameraPictureViewer extends Component<Props, State> {
 
@@ -110,7 +111,7 @@ interface IDispatchProps {
     changePicture: (picture: string) => void;
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<AnyAction, {}, any>): IDispatchProps => {
     return {
         showCamera: (show: boolean) => dispatch(showCamera(show)),
         showTakenPicture: (show: boolean) => dispatch(showTakenPicture(show)),

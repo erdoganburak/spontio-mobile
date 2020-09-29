@@ -10,18 +10,42 @@ export const APP_PATH = 'app'
 
 export class BaseApiInstance {
 
+    private _accessToken: string;
+    public get accessToken(): string {
+        return this._accessToken;
+    }
+    public set accessToken(value: string) {
+        this._accessToken = value;
+    }
+
+    private _expirationTime: string;
+    public get expirationTime(): Date {
+        return this._expirationTime ? new Date(this._expirationTime) : null;
+    }
+    public set expirationTime(value: Date) {
+        this._expirationTime = value.toString();
+    }
+
+    private _refreshToken: string;
+    public get currentRefreshToken(): string {
+        return this._refreshToken;
+    }
+    public set currentRefreshToken(value: string) {
+        this._refreshToken = value;
+    }
+
     /**
     * HTTP request get operation
     * @param url url of endpoint
     * @param accessToken access token
     */
-    public async requestGet(url: string, accessToken: string): Promise<any> {
+    public async requestGet(url: string): Promise<any> {
         try {
             let result: FetchBlobResponse = await RNFetchBlob.config({
                 timeout: HTTP_REQUEST_TIMEOUT
             }).fetch("GET", BASE_PATH + '/' + APP_PATH + '/' + url, {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + accessToken
+                'Authorization': 'Bearer ' + this.accessToken
             })
             if (result) {
                 const status = result.info().status;
@@ -43,13 +67,13 @@ export class BaseApiInstance {
     * @param url url of endpoint
     * @param accessToken access token
     */
-    public async requestPost(url: string, params: any, accessToken: string): Promise<any> {
+    public async requestPost(url: string, params: any): Promise<any> {
         try {
             let result: FetchBlobResponse = await RNFetchBlob.config({
                 timeout: HTTP_REQUEST_TIMEOUT
             }).fetch("POST", BASE_PATH + '/' + APP_PATH + '/' + url, {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + accessToken
+                'Authorization': 'Bearer ' + this.accessToken
             }, JSON.stringify(params))
             if (result) {
                 const status = result.info().status;
@@ -124,6 +148,14 @@ export class BaseApiInstance {
             console.error('HTTP REQUEST REGISTER USER ERROR => ' + error);
             return Promise.reject(error);
         }
+    }
+
+    /**
+    * Refresh token operation
+    * @param refreshToken current refresh token
+    */
+    public async refreshToken() {
+
     }
 
 

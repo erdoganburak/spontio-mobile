@@ -14,6 +14,7 @@ import { showPictureSelectorModal } from '../../redux/actions/pictureSelector';
 import { PictureSelectorObject } from '../../redux/reducer/pictureSelectorReducer';
 import GalleryManager from '../../managers/gallery.manager';
 import { Session } from '../../redux/reducer/sessionReducer';
+import { ThunkDispatch } from 'redux-thunk';
 
 class ModalPictureSelector extends Component<Props, State> {
 
@@ -126,7 +127,7 @@ interface IDispatchProps {
     showPictureSelectorModal: (show: boolean) => void;
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<AnyAction, {}, any>): IDispatchProps => {
     return {
         showCamera: (show: boolean) => dispatch(showCamera(show)),
         showPictureSelectorModal: (show: boolean) => dispatch(showPictureSelectorModal(show)),

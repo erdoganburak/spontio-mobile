@@ -11,6 +11,7 @@ import { TRootReducer } from '../../redux/store';
 import { AnyAction } from 'redux';
 import { PictureSelectorObject } from '../../redux/reducer/pictureSelectorReducer';
 import { showPictureSelectorModal } from '../../redux/actions/pictureSelector';
+import { ThunkDispatch } from 'redux-thunk';
 
 class NoPictureViewer extends Component<Props, State> {
 
@@ -118,7 +119,7 @@ interface IDispatchProps {
     showPictureSelectorModal: (show: boolean) => void;
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<AnyAction, {}, any>): IDispatchProps => {
     return {
         showPictureSelectorModal: (show: boolean) => dispatch(showPictureSelectorModal(show)),
     }

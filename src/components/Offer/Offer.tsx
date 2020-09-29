@@ -10,6 +10,7 @@ import { NavigationProperty } from '../../redux/reducer/navigationReducer';
 import { TRootReducer } from '../../redux/store';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { OfferObject } from '../../models/offerObject.model';
+import { ThunkDispatch } from 'redux-thunk';
 
 class Offer extends Component<Props, State> {
 
@@ -142,7 +143,7 @@ interface IDispatchProps {
 
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IDispatchProps => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<AnyAction, {}, any>): IDispatchProps => {
     return {
 
     }
